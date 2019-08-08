@@ -124,7 +124,7 @@ Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **
 ## Request Format
 
 Die Kommentare werden als JSON im Body des Requests gesendet. 
-Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt ein eigenes Kommentar.
+Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt einen neuen Kommentar.
 
 	[ <Kommentar> ]
 
