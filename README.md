@@ -71,7 +71,7 @@ Weitere Fehlercodes und ihre Bedeutung siehe Wikipedia: [HTTP-Statuscode](https:
 
 # Dokumente
 
-Die Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in 
+Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in 
 einen existierenden **Kredit**Smart-Vorgang.
 
 Dokumente können per **HTTP POST** importiert werden.
