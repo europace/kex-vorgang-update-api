@@ -10,10 +10,10 @@
   * [Fehlercodes](#fehlercodes)   
 * [Dokumente](#dokumente)
   * [Request Format](#request-format)
-  * [Beispiel](#post-request-beispiel)
+  * [Beispiel](#request-beispiel)
 * [Kommentare](#kommentare)
   * [Request Format](#request-format-1)
-  * [Beispiel](#post-request-beispiel-1)
+  * [Beispiel](#request-beispiel-1)
 
 # Allgemeines
 
@@ -95,15 +95,18 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 
 Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
 
-### POST Request Beispiel:
+### Request Beispiel:
 
-	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument
-	X-Authentication: xxxxxxx
-	Content-Type: application/json;charset=utf-8
-	{
-		"filename": "Test.pdf",
-		"base64Content": "JVBERi0xLjMKJcTl8uXrp"
-	}
+```bash
+curl -X POST \
+  https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument \
+  -H 'Content-Type: application/json' \
+  -H 'X-Authentication: xxxxxxx' \
+  -d '{
+	"filename": "Test.pdf",
+	"base64Content": "JVBERi0xLjMKJcTl8uXrp"
+}'
+```
 
 
 # Kommentare
@@ -129,9 +132,12 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 	[ <Kommentar> ]
 
 
-### POST Request Beispiel:
+### Request Beispiel:
 
-	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/kommentare
-	X-Authentication: xxxxxxx
-	Content-Type: application/json;charset=utf-8
-	[ "Testkommentar" ]
+```bash
+curl -X POST \
+  https://www.europace2.de/kreditsmart/kex/vorgang/123456/kommentare \
+  -H 'Content-Type: application/json' \
+  -H 'X-Authentication: xxxxxxx' \
+  -d '["Testkommentar"]'
+  ```
