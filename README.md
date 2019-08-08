@@ -1,19 +1,23 @@
-# KEX-Dokumente-Import-API 
+# KEX-Vorgang-Update-API 
 
-Die Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in 
-einen existierenden  **Kredit**Smart-Vorgang.
 
-## Importieren eines neuen Dokuments
+## Inhaltsverzeichnis
 
-Dokumente können per **HTTP POST** importiert werden.
+* [Allgemeines](#allgemeines)
+  * [Authentifizierung](#authentifizierung)
+  * [Nachverfolgbarkeit von Requests](#traceid-zur-nachverfolgbarkeit-von-requests)
+  * [Content-Type](#content-type)
+  * [Fehlercodes](#fehlercodes)   
+* [Dokumente](#dokumente)
+  * [Request Format](#request-format)
+  * [Beispiel](#post-request-beispiel)
+* [Kommentare](#kommentare)
+  * [Request Format](#request-format-1)
+  * [Beispiel](#post-request-beispiel-1)
 
-Die URL ist:
+# Allgemeines
 
-    https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/dokument
-    
-Die Daten werden als JSON Dokument im Body des POST Requests übermittelt.
-
-Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
+Dies ist eine Sammlung von verschiedenen Schnittstellen, die es ermöglichen Daten zu einem __existierenden__ Vorgang hinzuzufügen oder zu ändern.
 
 ## Authentifizierung
 
@@ -21,15 +25,9 @@ Für jeden Request ist eine Authentifizierung erforderlich.
 
 Die Authentifizierung erfolgt über einen HTTP Header.
 
-<table>
-<tr>
-<th>
-Request Header Name</th><th>Beschreibung</th>
-</tr>
-<tr>
-<td>X-Authentication</td><td>	API JWT der Vertriebsorganisation</td>
-</tr>
-</table>
+| Request Header Name | Beschreibung                       |
+|:--------------------|:-----------------------------------|
+| X-Authentication    | API JWT der Vertriebsorganisation  |
 
 
 Das API JWT (JSON Web Token) erhalten Sie von Ihrem Ansprechpartner im **Kredit**Smart-Team. 
@@ -43,47 +41,48 @@ Für jeden Request soll eine eindeutige ID generiert werden, die den Request im 
 Die Übermittlung der X-TraceId erfolgt über einen HTTP Header. Dieser Header ist optional,
 wenn er nicht gesetzt ist, wird eine ID vom System generiert.  
 
-<table>
-<tr>
-<th>Request Header Name</th><th>Beschreibung</th><th>Beispiel</th>
-<tr>
-<td>X-TraceId</td>
-<td>eindeutige Id für jeden Request</td>
-<td>sys12345678</td>
-</tr>
-</table>
+| Request Header Name | Beschreibung                     | Beispiel   |
+|:--------------------|:---------------------------------|:-----------|
+| X-TraceId           | eindeutige Id für jeden Request  |sys12345678 |
 
 ## Content-Type
 
 Die Schnittstelle akzeptiert Daten mit Content-Type "**application/json**".
 
-Entsprechend muss im Request der Content-Type Header gesetzt werden. Zusätzlich das Encoding, wenn es nicht UTF-8 ist.
+Entsprechend muss im Request der Content-Type Header gesetzt werden und zusätzlich das Encoding, wenn es nicht UTF-8 ist.
 
-<table>
-<tr>
-<th>
-Request Header Name</th><th>Header Value</th>
-</tr>
-<tr>
-<td>Content-Type</td><td>	application/json</td>
-</tr>
-</table>
+| Request Header Name | Header Value       |
+|:--------------------|:-------------------|
+| Content-Type          | application/json |
 
 ## Fehlercodes
 
 Wenn der Request nicht erfolgreich verarbeitet werden konnte, liefert die Schnittstelle einen Fehlercode, auf den die aufrufende Anwendung reagieren kann, zurück.
 
-Achtung: In diesem Fall wird kein Dokument in **Kredit**Smart importiert.
-
-<table>
-<tr><th>Fehlercode</th><th>Nachricht</th><th>	Erklärung</th></tr>
-<tr><td>400</td><td>Bad Request</td><td>`filename` oder `base64Content` fehlen</td></tr>
-<tr><td>401</td><td>Unauthorized</td><td>Authentifizierung ist fehlgeschlagen</td></tr>
-<tr><td>403</td><td>Forbidden</td><td>Autorisierung ist fehlgeschlagen</td></tr>
-<tr><td>410</td><td>Gone</td><td>Vorgang ist gelöscht</td></tr>
-</table>
+| Fehlercode | Nachricht    | Erklärung                                                                   |
+|:-----------|:-------------|:----------------------------------------------------------------------------|
+| 400        | Bad Request  | Die Daten entsprechen nicht dem erwarteten Format oder Pflichtfelder fehlen |
+| 401        | Unauthorized | Authentifizierung ist fehlgeschlagen                                        |
+| 403        | Forbidden    | Autorisierung ist fehlgeschlagen                                            |
+| 410        | Gone         | Vorgang ist gelöscht                                                        |
 
 Weitere Fehlercodes und ihre Bedeutung siehe Wikipedia: [HTTP-Statuscode](https://de.wikipedia.org/wiki/HTTP-Statuscode)
+
+
+# Dokumente
+
+Die Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in 
+einen existierenden  **Kredit**Smart-Vorgang.
+
+Dokumente können per **HTTP POST** importiert werden.
+
+Die URL ist:
+
+    https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/dokument
+    
+Die Daten werden als JSON Dokument im Body des POST Requests übermittelt.
+
+Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
 
 ## Request Format
 
@@ -94,6 +93,8 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 		"base64Content": String
 	}
 
+Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
+
 ### POST Request Beispiel:
 
 	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument
@@ -103,3 +104,35 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 		"filename": "Test.pdf",
 		"base64Content": "JVBERi0xLjMKJcTl8uXrp"
 	}
+
+
+# Kommentare
+
+Die Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in 
+einen existierenden  **Kredit**Smart-Vorgang.
+
+Kommentare können per **HTTP POST** importiert werden.
+
+Die URL ist:
+
+    https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/kommentare
+    
+Die Daten werden als JSON Dokument im Body des POST Requests übermittelt.
+
+Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
+
+## Request Format
+
+Die Angaben werden als JSON im Body des Requests gesendet. 
+Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt ein eigenes Kommentar.
+
+	[ <Kommentar> ]
+
+Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
+
+### POST Request Beispiel:
+
+	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument
+	X-Authentication: xxxxxxx
+	Content-Type: application/json;charset=utf-8
+	[ "Testkommentar" ]
