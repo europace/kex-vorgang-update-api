@@ -108,7 +108,7 @@ Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu k�
 
 # Kommentare
 
-Die Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in 
+Diese Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in 
 einen existierenden **Kredit**Smart-Vorgang.
 
 Kommentare können per **HTTP POST** importiert werden.
