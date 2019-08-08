@@ -53,7 +53,7 @@ Entsprechend muss im Request der Content-Type Header gesetzt werden und zusätzl
 
 | Request Header Name | Header Value       |
 |:--------------------|:-------------------|
-| Content-Type          | application/json |
+| Content-Type         | application/json |
 
 ## Fehlercodes
 
