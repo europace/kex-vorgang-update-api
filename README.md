@@ -131,7 +131,7 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 
 ### POST Request Beispiel:
 
-	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument
+	POST https://www.europace2.de/kreditsmart/kex/vorgang/123456/kommentare
 	X-Authentication: xxxxxxx
 	Content-Type: application/json;charset=utf-8
 	[ "Testkommentar" ]
