@@ -123,7 +123,7 @@ Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **
 
 ## Request Format
 
-Die Angaben werden als JSON im Body des Requests gesendet. 
+Die Kommentare werden als JSON im Body des Requests gesendet. 
 Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt ein eigenes Kommentar.
 
 	[ <Kommentar> ]
