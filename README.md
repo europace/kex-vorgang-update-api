@@ -128,7 +128,6 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 
 	[ <Kommentar> ]
 
-Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
 
 ### POST Request Beispiel:
 
