@@ -117,7 +117,7 @@ Die URL ist:
 
     https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/kommentare
     
-Die Daten werden als JSON Dokument im Body des POST Requests übermittelt.
+Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
 
