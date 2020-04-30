@@ -14,6 +14,7 @@
 * [Kommentare](#kommentare)
   * [Request Format](#request-format-1)
   * [Beispiel](#request-beispiel-1)
+* [Nutzungsbedingungen](#nutzungsbedingungen)
 
 # Allgemeines
 
@@ -141,3 +142,6 @@ curl -X POST \
   -H 'X-Authentication: xxxxxxx' \
   -d '["Testkommentar"]'
   ```
+
+## Nutzungsbedingungen
+Die APIs werden unter folgenden [Nutzungsbedingungen](https://developer.europace.de/terms/) zur Verfügung gestellt
