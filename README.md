@@ -107,7 +107,7 @@ Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu k�
 curl -X POST \
   https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument \
   -H 'Content-Type: application/json' \
-  -H 'X-Authentication: xxxxxxx' \
+  -H 'Authorization: Bearer xxxxxxx' \
   -d '{
 	"filename": "Test.pdf",
 	"base64Content": "JVBERi0xLjMKJcTl8uXrp"
@@ -144,7 +144,7 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 curl -X POST \
   https://www.europace2.de/kreditsmart/kex/vorgang/123456/kommentare \
   -H 'Content-Type: application/json' \
-  -H 'X-Authentication: xxxxxxx' \
+  -H 'Authorization: Bearer xxxxxxx' \
   -d '["Testkommentar"]'
   ```
 
