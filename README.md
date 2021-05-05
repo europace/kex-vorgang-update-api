@@ -1,22 +1,6 @@
 # KEX-Vorgang-Update-API 
 
-
-## Inhaltsverzeichnis
-
-* [Allgemeines](#allgemeines)
-  * [Authentifizierung](#authentifizierung)
-  * [Nachverfolgbarkeit von Requests](#traceid-zur-nachverfolgbarkeit-von-requests)
-  * [Content-Type](#content-type)
-  * [Fehlercodes](#fehlercodes)   
-* [Dokumente](#dokumente)
-  * [Request Format](#request-format)
-  * [Beispiel](#request-beispiel)
-* [Kommentare](#kommentare)
-  * [Request Format](#request-format-1)
-  * [Beispiel](#request-beispiel-1)
-* [Nutzungsbedingungen](#nutzungsbedingungen)
-
-# Allgemeines
+## Allgemeines
 
 Dies ist eine Sammlung von verschiedenen Schnittstellen, die es ermöglichen Daten zu einem __existierenden__ Vorgang hinzuzufügen oder zu ändern.
 
