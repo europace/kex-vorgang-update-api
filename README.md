@@ -84,7 +84,7 @@ Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 |------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
 | 401        | Unauthorized          | Authentifizierung ist fehlgeschlagen                                                                        |
 | 403        | Forbidden             | Der API-Client besitzt einen falschen Scope                                                                 |
-| 415        | Unsupported MediaType | Es wurde ein anderer content-type angegeben
+| 415        | Unsupported MediaType | Es wurde ein falscher content-type angegeben
 
 #### GraphQL Errors
 
@@ -92,7 +92,8 @@ Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 |------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
 | 400        | Bad Request           | Request Format ist ungültig, z.B. Pflichtfelder fehlen, Parameternamen, -typen oder -werte sind falsch, ... |
 | 403        | Forbidden             | Der authentifizierte Nutzer besitzt nicht die nötigen Rechte                                                |
-
+| 404        | NOT FOUND             | Der Vorgang existiert nicht                                                                                 |
+| 410        | GONE                  | Der Vorgang wurde zwischenzeitlich gelöscht                                                                 |
 
 ## Finanzierungswunsch anpassen
 
