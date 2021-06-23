@@ -1,10 +1,12 @@
-# KEX-Vorgang-Update-API 
+# KEX-Vorgang-Update-API
 
-## Allgemeines
+## Legacy
 
 Dies ist eine Sammlung von verschiedenen Schnittstellen, die es ermöglichen Daten zu einem __existierenden__ Vorgang hinzuzufügen oder zu ändern.
 
-## Authentifizierung
+> ⚠️ Diese APIs sind deprecated. Sie werden nicht mehr weiterentwickelt und nur noch supported, bis eine Alternative zur Verfügung steht.
+
+### Authentifizierung
 
 Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
 
@@ -24,7 +26,7 @@ Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit
 Hat der Client keine Berechtigung die Resource abzurufen, erhält der Aufrufer eine HTTP Response mit Statuscode **403 FORBIDDEN**.
 
 
-## TraceId zur Nachverfolgbarkeit von Requests
+### TraceId zur Nachverfolgbarkeit von Requests
 
 Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE 2 System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse erleichtert.
 
@@ -35,7 +37,7 @@ wenn er nicht gesetzt ist, wird eine ID vom System generiert.
 |:--------------------|:---------------------------------|:-----------|
 | X-TraceId           | eindeutige Id für jeden Request  |sys12345678 |
 
-## Content-Type
+### Content-Type
 
 Die Schnittstelle akzeptiert Daten mit Content-Type "**application/json**".
 
@@ -45,7 +47,7 @@ Entsprechend muss im Request der Content-Type Header gesetzt werden und zusätzl
 |:--------------------|:-------------------|
 | Content-Type        | application/json |
 
-## Fehlercodes
+### Fehlercodes
 
 Wenn der Request nicht erfolgreich verarbeitet werden konnte, liefert die Schnittstelle einen Fehlercode, auf den die aufrufende Anwendung reagieren kann, zurück.
 
@@ -59,7 +61,7 @@ Wenn der Request nicht erfolgreich verarbeitet werden konnte, liefert die Schnit
 Weitere Fehlercodes und ihre Bedeutung siehe Wikipedia: [HTTP-Statuscode](https://de.wikipedia.org/wiki/HTTP-Statuscode)
 
 
-# Dokumente
+### Dokumente
 
 Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in
 einen existierenden **Kredit**Smart-Vorgang.
@@ -74,7 +76,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
 
-## Request Format
+### Request Format
 
 Die Angaben werden als JSON im Body des Requests gesendet.
 
@@ -85,7 +87,7 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 
 Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
 
-### Request Beispiel:
+#### Request Beispiel:
 
 ```bash
 curl -X POST \
@@ -99,7 +101,7 @@ curl -X POST \
 ```
 
 
-# Kommentare
+### Kommentare
 
 Diese Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in
 einen existierenden **Kredit**Smart-Vorgang.
@@ -114,7 +116,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
 
-## Request Format
+### Request Format
 
 Die Kommentare werden als JSON im Body des Requests gesendet.
 Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt einen neuen Kommentar.
@@ -122,7 +124,7 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 	[ <Kommentar> ]
 
 
-### Request Beispiel:
+#### Request Beispiel:
 
 ```bash
 curl -X POST \
