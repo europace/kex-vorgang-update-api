@@ -55,7 +55,7 @@ Hilfreich für die Analyse ist es, wenn die TraceId mit einem System-Kürzel beg
 |---------------------|---------------------------------|-------------|
 | X-TraceId           | eindeutige ID für jeden Request | sys12345678 |
 
-### Request
+### GraphQL-Requests
 
 Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet.
 Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
@@ -169,7 +169,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
 
 Wenn Daten angepasst werden müssen, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben.
 
-## Legacy
+## Legacy-Update-APIs
 
 Dies ist eine Sammlung von verschiedenen Schnittstellen, die es ermöglichen Daten zu einem __existierenden__ Vorgang hinzuzufügen oder zu ändern.
 
@@ -245,7 +245,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
 
-### Request Format
+#### Request Format
 
 Die Angaben werden als JSON im Body des Requests gesendet.
 
@@ -256,7 +256,7 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 
 Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
 
-#### Request Beispiel:
+##### Request Beispiel:
 
 ```bash
 curl -X POST \
@@ -285,7 +285,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
 
-### Request Format
+#### Request Format
 
 Die Kommentare werden als JSON im Body des Requests gesendet.
 Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt einen neuen Kommentar.
@@ -293,7 +293,7 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 	[ <Kommentar> ]
 
 
-#### Request Beispiel:
+##### Request Beispiel:
 
 ```bash
 curl -X POST \
