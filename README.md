@@ -94,7 +94,7 @@ Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 | 403        | Forbidden             | Der authentifizierte Nutzer besitzt nicht die nötigen Rechte                                                |
 
 
-## Mutation updateFinanzierungswunsch
+## Finanzierungswunsch anpassen
 
 #### Hinweise
 
