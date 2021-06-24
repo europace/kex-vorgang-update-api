@@ -1,10 +1,31 @@
-# KEX-Vorgang-Update-API 
+# KEX-Vorgang-Update-API
+
+> ⚠️ Die neue API befindet sich gerade noch im Aufbau und kann daher jederzeit größere Änderungen beinhalten.  
+> Die alten Update-Endpunkte sind [hier](#legacy) dokumentiert.
+
 
 ## Allgemeines
 
-Dies ist eine Sammlung von verschiedenen Schnittstellen, die es ermöglichen Daten zu einem __existierenden__ Vorgang hinzuzufügen oder zu ändern.
+Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
+Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/).
+Die URL ist:
 
-## Authentifizierung
+    https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+
+> ⚠️ Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
+> von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
+> tolerant gegenüber kompatiblen API-Änderungen beim Lesen und Prozessieren der Daten sind:
+>
+> 1. unbekannte Felder dürfen keine Fehler verursachen
+>
+> 2. Strings mit eingeschränktem Wertebereich (Enums) müssen mit neuen, unbekannten Werten umgehen können
+>
+> 3. sinnvoller Umgang mit HTTP-Statuscodes, die nicht explizit dokumentiert sind
+>
+
+<!-- https://opensource.zalando.com/restful-api-guidelines/#108 -->
+
+### Authentifizierung
 
 Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
 
@@ -14,52 +35,146 @@ Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierun
 
 
 Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden.
-Dazu wird ein Client benötigt, der vorher von einer berechtigten Person über das Partnermanagement angelegt wurde.
+Dazu wird ein Client benötigt der vorher von einer berechtigten Person über das Partnermanagement angelegt wurde.
 Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
 
-Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.  
+Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
+
 
 Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
 
-Hat der Client keine Berechtigung die Resource abzurufen, erhält der Aufrufer eine HTTP Response mit Statuscode **403 FORBIDDEN**.
 
+### Nachverfolgbarkeit von Requests
 
-## TraceId zur Nachverfolgbarkeit von Requests
+Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse erleichtert.  
+Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional.
+Wenn er nicht gesetzt ist, wird eine ID vom System generiert.
+Hilfreich für die Analyse ist es, wenn die TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
 
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE 2 System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse erleichtert.
+| Request Header Name | Beschreibung                    | Beispiel    |
+|---------------------|---------------------------------|-------------|
+| X-TraceId           | eindeutige ID für jeden Request | sys12345678 |
 
-Die Übermittlung der X-TraceId erfolgt über einen HTTP Header. Dieser Header ist optional,
-wenn er nicht gesetzt ist, wird eine ID vom System generiert.  
+### GraphQL-Requests
 
-| Request Header Name | Beschreibung                     | Beispiel   |
-|:--------------------|:---------------------------------|:-----------|
-| X-TraceId           | eindeutige Id für jeden Request  |sys12345678 |
+Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet.
+Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
 
-## Content-Type
+Die Schnittstelle unterstützt alle gängigen GraphQL Formate, genaueres kann man z.B. unter [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/) nachlesen.
 
-Die Schnittstelle akzeptiert Daten mit Content-Type "**application/json**".
+Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query
+Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der Query
+Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden.
+In unseren Beispielen nutzen wir die Notation mit Variablen.
 
-Entsprechend muss im Request der Content-Type Header gesetzt werden und zusätzlich das Encoding, wenn es nicht UTF-8 ist.
+    {
+      "query": "...",
+      "variables": { ... }
+    }
 
-| Request Header Name | Header Value       |
-|:--------------------|:-------------------|
-| Content-Type        | application/json |
+### Fehlercodes
 
-## Fehlercodes
+Die Besonderheit in GraphQL ist u.a., dass die meisten Fehler nicht über HTTP-Fehlercodes wiedergegeben werden.
+In vielen Fällen bekommt man einen Status 200 zurück, obwohl ein Fehler aufgetreten ist. Dafür gibt es das Attribut `errors` in der Response.
+Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 
-Wenn der Request nicht erfolgreich verarbeitet werden konnte, liefert die Schnittstelle einen Fehlercode, auf den die aufrufende Anwendung reagieren kann, zurück.
+#### HTTP-Status Errors
 
-| Fehlercode | Nachricht    | Erklärung                                                                   |
-|:-----------|:-------------|:----------------------------------------------------------------------------|
-| 400        | Bad Request  | Die Daten entsprechen nicht dem erwarteten Format oder Pflichtfelder fehlen |
-| 401        | Unauthorized | Authentifizierung ist fehlgeschlagen                                        |
-| 403        | Forbidden    | Autorisierung ist fehlgeschlagen                                            |
-| 410        | Gone         | Vorgang ist gelöscht                                                        |
+| Fehlercode | Nachricht             | Erklärung                                                                                                   |
+|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized          | Authentifizierung ist fehlgeschlagen                                                                        |
+| 403        | Forbidden             | Der API-Client besitzt einen falschen Scope                                                                 |
+| 415        | Unsupported MediaType | Es wurde ein falscher content-type angegeben
 
-Weitere Fehlercodes und ihre Bedeutung siehe Wikipedia: [HTTP-Statuscode](https://de.wikipedia.org/wiki/HTTP-Statuscode)
+#### GraphQL Errors
 
+| Fehlercode | Nachricht             | Erklärung                                                                                                   |
+|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| 400        | Bad Request           | Request Format ist ungültig, z.B. Pflichtfelder fehlen, Parameternamen, -typen oder -werte sind falsch, ... |
+| 403        | Forbidden             | Der authentifizierte Nutzer besitzt nicht die nötigen Rechte                                                |
+| 404        | NOT FOUND             | Der Vorgang existiert nicht                                                                                 |
+| 410        | GONE                  | Der Vorgang wurde zwischenzeitlich gelöscht                                                                 |
 
-# Dokumente
+## Finanzierungswunsch anpassen
+
+Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+
+### Request
+
+| Parametername       | Typ                                          | Default         | Bemerkung                     |
+|---------------------|----------------------------------------------|-----------------|-------------------------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |                               |
+| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) | Leere Felder löschen den Wert |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
+        updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
+            messages
+          }
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+## Request-Datentypen
+
+### Finanzierungswunsch
+
+    {
+        laufzeitInMonaten: Integer
+        ratenzahlungstermin: Ratenzahlungstermin
+        provisionswunschInProzent: BigDecimal
+        kreditbetrag: BigDecimal
+        rateMonatlich: BigDecimal
+    }
+
+#### Ratenzahlungstermin
+
+    {
+        MONATSENDE
+        MONATSMITTE
+    }
+
+## Response-Datentypen
+
+### Meldungen (Liste von Strings)
+
+Wenn Daten angepasst werden müssen, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben.
+
+## Legacy-Update-APIs
+
+> ⚠️ Diese APIs sind deprecated. Sie werden nicht mehr weiterentwickelt und nur noch supported, bis eine Alternative zur Verfügung steht.
+
+### Dokumente
 
 Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in
 einen existierenden **Kredit**Smart-Vorgang.
@@ -74,7 +189,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
 
-## Request Format
+#### Request Format
 
 Die Angaben werden als JSON im Body des Requests gesendet.
 
@@ -85,7 +200,7 @@ Die Angaben werden als JSON im Body des Requests gesendet.
 
 Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
 
-### Request Beispiel:
+##### Request Beispiel:
 
 ```bash
 curl -X POST \
@@ -99,7 +214,7 @@ curl -X POST \
 ```
 
 
-# Kommentare
+### Kommentare
 
 Diese Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in
 einen existierenden **Kredit**Smart-Vorgang.
@@ -114,7 +229,7 @@ Die Daten werden als JSON im Body des POST Requests übermittelt.
 
 Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
 
-## Request Format
+#### Request Format
 
 Die Kommentare werden als JSON im Body des Requests gesendet.
 Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt einen neuen Kommentar.
@@ -122,7 +237,7 @@ Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erze
 	[ <Kommentar> ]
 
 
-### Request Beispiel:
+##### Request Beispiel:
 
 ```bash
 curl -X POST \
