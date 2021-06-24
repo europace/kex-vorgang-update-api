@@ -97,28 +97,26 @@ Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 
 ## Finanzierungswunsch anpassen
 
-#### Hinweise
+### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 
-#### Request
+### Request
 
-Die GraphQL-Mutation heißt `updateFinanzierungswunsch` und hat folgende Parameter:
+| Parametername       | Typ                                          | Default         | Bemerkung                     |
+|---------------------|----------------------------------------------|-----------------|-------------------------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |                               |
+| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) | Leere Felder löschen den Wert |
 
-| Parametername       | Typ                  | Default         | Bemerkung                          |
-|---------------------|----------------------|-----------------|------------------------------------|
-| vorgangsnummer      | String!              | - (Pflichtfeld) |                                    |
-| finanzierungswunsch | Finanzierungswunsch! | - (Pflichtfeld) | Leere Felder löschen den Wert      |
-
-#### Response
+### Response
 
 Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
 
-#### Beispiel
+### Beispiel
 
-##### POST Request
+#### POST Request
 
     POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
     Authorization: Bearer xxxx
@@ -136,7 +134,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
       }
     }
 
-##### POST Response
+#### POST Response
 
     {
       "data": {
