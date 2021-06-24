@@ -97,6 +97,8 @@ Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 
 ## Finanzierungswunsch anpassen
 
+Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+
 ### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
