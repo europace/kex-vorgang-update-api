@@ -105,6 +105,7 @@ Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
+* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` leer ist, wird hier `MONATSENDE` als Defaultwert gesetzt.
 
 ### Request
 
