@@ -104,6 +104,7 @@ Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
 
 ### Request
 
