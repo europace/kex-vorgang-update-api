@@ -106,13 +106,14 @@ Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
 * Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
 ### Request
 
-| Parametername       | Typ                                          | Default         | Bemerkung                     |
-|---------------------|----------------------------------------------|-----------------|-------------------------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |                               |
-| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) | Leere Felder löschen den Wert |
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) |
 
 ### Response
 
