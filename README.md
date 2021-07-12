@@ -117,7 +117,7 @@ Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](
 
 ### Response
 
-Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
 
 ### Beispiel
 
@@ -130,6 +130,57 @@ Diese Mutation liefert als Rückgabewert eine Liste von Meldungen.
     {
       "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
         updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
+            messages
+          }
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+## Kommentare hinzufügen
+
+Mit der Mutation `addKommentare` kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Leere Strings werden ignoriert und nicht als Kommentar importiert
+
+### Request
+
+| Parametername       | Typ        | Default         |
+|---------------------|------------|-----------------|
+| vorgangsnummer      | String!    | - (Pflichtfeld) |
+| kommentare          | [String!]! | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation kommentare($vorgangsnummer: String!) {  
+        addKommentare(vorgangsnummer: $vorgangsnummer, kommentare: ["kommentar 1", "kommentar 2"]){
             messages
           }
         }
