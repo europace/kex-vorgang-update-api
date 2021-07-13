@@ -1,6 +1,5 @@
 # KEX-Vorgang-Update-API
 
-> ⚠️ Die neue API befindet sich gerade noch im Aufbau und kann daher jederzeit größere Änderungen beinhalten.  
 > Die alten Update-Endpunkte sind [hier](#legacy) dokumentiert.
 
 
