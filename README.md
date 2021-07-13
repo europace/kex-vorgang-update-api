@@ -1,6 +1,5 @@
 # KEX-Vorgang-Update-API
 
-> ⚠️ Die neue API befindet sich gerade noch im Aufbau und kann daher jederzeit größere Änderungen beinhalten.  
 > Die alten Update-Endpunkte sind [hier](#legacy) dokumentiert.
 
 
@@ -266,40 +265,6 @@ curl -X POST \
 	"base64Content": "JVBERi0xLjMKJcTl8uXrp"
 }'
 ```
-
-
-### Kommentare
-
-Diese Schnittstelle ermöglicht das automatisierte Importieren von Kommentaren in
-einen existierenden **Kredit**Smart-Vorgang.
-
-Kommentare können per **HTTP POST** importiert werden.
-
-Die URL ist:
-
-    https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/kommentare
-
-Die Daten werden als JSON im Body des POST Requests übermittelt.
-
-Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **200 OK**.
-
-#### Request Format
-
-Die Kommentare werden als JSON im Body des Requests gesendet.
-Es kann eine Liste von Strings übermittelt werden. Jedes Element der Liste erzeugt einen neuen Kommentar.
-
-	[ <Kommentar> ]
-
-
-##### Request Beispiel:
-
-```bash
-curl -X POST \
-  https://www.europace2.de/kreditsmart/kex/vorgang/123456/kommentare \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer xxxxxxx' \
-  -d '["Testkommentar"]'
-  ```
 
 ## Nutzungsbedingungen
 Die APIs werden unter folgenden [Nutzungsbedingungen](https://docs.api.europace.de/nutzungsbedingungen/) zur Verfügung gestellt
