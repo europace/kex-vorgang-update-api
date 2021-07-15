@@ -1,6 +1,6 @@
 # KEX-Vorgang-Update-API
 
-> Die alten Update-Endpunkte sind [hier](#legacy) dokumentiert.
+> Die alten Update-Endpunkte sind [hier](#legacy-update-apis) dokumentiert.
 
 
 ## Allgemeines
@@ -156,7 +156,7 @@ Mit der Mutation `addKommentare` kann man ein oder mehrere Kommentare zu einem V
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Leere Strings werden ignoriert und nicht als Kommentar importiert
+* Leere Strings werden ignoriert und nicht als Kommentar importiert.
 
 ### Request
 
