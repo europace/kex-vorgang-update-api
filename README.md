@@ -119,8 +119,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
         updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
-            messages
-          }
+          messages
         }
       }",
       "variables": {
@@ -170,8 +169,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "query": "mutation kommentare($vorgangsnummer: String!) {  
         addKommentare(vorgangsnummer: $vorgangsnummer, kommentare: ["kommentar 1", "kommentar 2"]){
-            messages
-          }
+          messages
         }
       }",
       "variables": {
