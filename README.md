@@ -2,12 +2,10 @@
 
 > Die alten Update-Endpunkte sind [hier](#legacy-update-apis) dokumentiert.
 
-
 ## Allgemeines
 
 Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
-Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/).
-Die URL ist:
+Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/). Die URL ist:
 
     https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
@@ -32,23 +30,19 @@ Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierun
 |---------------------|------------------------|
 | Authorization       | OAuth 2.0 Bearer Token |
 
-
-Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden.
-Dazu wird ein Client benötigt der vorher von einer berechtigten Person über das Partnermanagement angelegt wurde.
-Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
+Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden. Dazu wird ein Client benötigt der vorher von einer berechtigten
+Person über das Partnermanagement angelegt wurde. Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
 
 Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
 
-
 Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
-
 
 ### Nachverfolgbarkeit von Requests
 
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse erleichtert.  
-Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional.
-Wenn er nicht gesetzt ist, wird eine ID vom System generiert.
-Hilfreich für die Analyse ist es, wenn die TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
+Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse
+erleichtert.  
+Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional. Wenn er nicht gesetzt ist, wird eine ID vom System generiert. Hilfreich für die Analyse ist es, wenn die
+TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
 
 | Request Header Name | Beschreibung                    | Beispiel    |
 |---------------------|---------------------------------|-------------|
@@ -56,15 +50,12 @@ Hilfreich für die Analyse ist es, wenn die TraceId mit einem System-Kürzel beg
 
 ### GraphQL-Requests
 
-Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet.
-Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
+Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet. Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
 
 Die Schnittstelle unterstützt alle gängigen GraphQL Formate, genaueres kann man z.B. unter [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/) nachlesen.
 
-Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query
-Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der Query
-Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden.
-In unseren Beispielen nutzen wir die Notation mit Variablen.
+Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der
+Query Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden. In unseren Beispielen nutzen wir die Notation mit Variablen.
 
     {
       "query": "...",
@@ -73,9 +64,8 @@ In unseren Beispielen nutzen wir die Notation mit Variablen.
 
 ### Fehlercodes
 
-Die Besonderheit in GraphQL ist u.a., dass die meisten Fehler nicht über HTTP-Fehlercodes wiedergegeben werden.
-In vielen Fällen bekommt man einen Status 200 zurück, obwohl ein Fehler aufgetreten ist. Dafür gibt es das Attribut `errors` in der Response.
-Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
+Die Besonderheit in GraphQL ist u.a., dass die meisten Fehler nicht über HTTP-Fehlercodes wiedergegeben werden. In vielen Fällen bekommt man einen Status 200 zurück, obwohl ein Fehler aufgetreten ist.
+Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
 
 #### HTTP-Status Errors
 
@@ -129,8 +119,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
         updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
-            messages
-          }
+          messages
         }
       }",
       "variables": {
@@ -180,12 +169,81 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "query": "mutation kommentare($vorgangsnummer: String!) {  
         addKommentare(vorgangsnummer: $vorgangsnummer, kommentare: ["kommentar 1", "kommentar 2"]){
-            messages
-          }
+          messages
         }
       }",
       "variables": {
         "vorgangsnummer": "ABC123"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+## Beschäftigung anpassen
+
+Mit der Mutation `updateBeschaeftigung` kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| beschaeftigung      | [Beschaeftigung](#beschaeftigung)!           | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation beschaeftigung($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateBeschaeftigung(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, beschaeftigung: { 
+          beschaeftigungsart:ARBEITER,
+          arbeiter: {
+            beschaeftigungsverhaeltnis: {
+              nettoeinkommenMonatlich: 2345.67,
+              befristung: UNBEFRISTET,
+              beschaeftigtSeit: "2009-01-02",
+              arbeitgeber: {
+                name: "Firmenname",
+                branche: INFORMATION_KOMMUNIKATION,
+                anschrift: {
+                  ort: "Berlin"
+                }
+              }
+            }
+          }
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
       }
     }
 
@@ -217,6 +275,171 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
         MONATSMITTE
     }
 
+### Beschaeftigung
+
+    {
+        "beschaeftigungsart": "ANGESTELLTER" | "ARBEITER" | "ARBEITSLOSER" | "BEAMTER" | "FREIBERUFLER" | "HAUSFRAU" | "RENTNER" | "SELBSTSTAENDIGER",
+        "arbeiter": Arbeiter,
+        "angestellter": Angestellter,                
+        "arbeitsloser": Arbeitsloser,
+        "beamter": Beamter,
+        "selbststaendiger": Selbstständiger,
+        "freiberufler": Freiberufler,
+        "hausfrau": Hausfrau,
+        "rentner": Rentner
+    }
+
+Die `Beschaeftigungsart` bestimmt die Beschäftigung und damit das dazu korrespondierende Feld. Beispielsweise wird für die `beschaeftigungsart=ARBEITER`
+die Daten unter dem Knoten `arbeiter` genutzt, bei der `beschaeftigungsart=BEAMTER` entsprechend der Knoten `beamter`. Werden darüber hinaus weitere Felder befüllt so werden diese ignoriert.<BR/>
+Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsart passende Knoten nicht befüllt, werden alle Felder ignoriert.
+
+#### Arbeiter
+
+    {
+        "beschaeftigungsverhaeltnis": {
+            "berufsbezeichnung": String,
+            "nettoeinkommenMonatlich": Decimal,
+            "arbeitgeber": Firma,
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "befristung": "BEFRISTET" | "UNBEFRISTET",
+            "befristetBis": "YYYY-MM-DD",
+            "inProbezeit": true | false
+        },
+        "vorherigesBeschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "beschaeftigtBis": "YYYY-MM-DD"
+        }
+    }
+
+#### Angestellter
+
+    {
+        "beschaeftigungsverhaeltnis": {
+            "berufsbezeichnung": String,
+            "nettoeinkommenMonatlich": Decimal,
+            "arbeitgeber": Firma,
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "befristung": "BEFRISTET" | "UNBEFRISTET",
+            "befristetBis": "YYYY-MM-DD",
+            "inProbezeit": true | false
+        },
+        "vorherigesBeschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "beschaeftigtBis": "YYYY-MM-DD"
+        }
+    }
+
+#### Arbeitsloser
+
+    {
+        "sonstigesEinkommenMonatlich": Decimal
+    }
+
+#### Beamter
+
+    {
+        "beschaeftigungsverhaeltnis": {
+            "berufsbezeichnung": String,
+            "inProbezeit": true | false,
+            "nettoeinkommenMonatlich": Decimal,
+            "verbeamtetSeit": "YYYY-MM-DD",
+            "arbeitgeber": Firma,
+            "beschaeftigtSeit": "YYYY-MM-DD"
+        },
+        "vorherigesBeschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma,
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "beschaeftigtBis": "YYYY-MM-DD"
+        }
+    }
+
+#### Selbstständiger
+
+    {
+        "berufsbezeichnung": String,
+        "selbststaendigSeit": "YYYY-MM-DD",
+        "firma": Firma,
+        "nettoeinkommenJaehrlich": Decimal,
+        "bruttoEinkommenLaufendesJahr": Decimal,
+        "einkommenssteuerLaufendesJahr": Decimal,
+        "abschreibungenLaufendesJahr": Decimal,
+        "bruttoEinkommenLetztesJahr": Decimal,
+        "einkommenssteuerLetztesJahr": Decimal,
+        "abschreibungenLetztesJahr": Decimal,
+        "einkommenssteuerVor2Jahren": Decimal,
+        "bruttoEinkommenVor2Jahren": Decimal,
+        "abschreibungenVor2Jahren": Decimal,
+        "bruttoEinkommenVor3Jahren": Decimal,
+        "einkommenssteuerVor3Jahren": Decimal,
+        "abschreibungenVor3Jahren": Decimal
+    }
+
+#### Freiberufler
+
+    {
+        "berufsbezeichnung": String,
+        "selbststaendigSeit": "YYYY-MM-DD",
+        "firma": Firma,
+        "nettoeinkommenJaehrlich": Decimal,
+        "bruttoEinkommenLaufendesJahr": Decimal,
+        "einkommenssteuerLaufendesJahr": Decimal,
+        "abschreibungenLaufendesJahr": Decimal,
+        "bruttoEinkommenLetztesJahr": Decimal,
+        "einkommenssteuerLetztesJahr": Decimal,
+        "abschreibungenLetztesJahr": Decimal,
+        "einkommenssteuerVor2Jahren": Decimal,
+        "bruttoEinkommenVor2Jahren": Decimal,
+        "abschreibungenVor2Jahren": Decimal,
+        "bruttoEinkommenVor3Jahren": Decimal,
+        "einkommenssteuerVor3Jahren": Decimal,
+        "abschreibungenVor3Jahren": Decimal
+    }
+
+#### Hausfrau
+
+    {
+        "sonstigesEinkommenMonatlich": Decimal
+    }
+
+#### Rentner
+
+    {
+        "staatlicheRenteMonatlich": Decimal,
+        "rentnerSeit": "YYYY-MM-DD",
+        "rentenversicherung": {
+            "name": String,
+            "anschrift": Anschrift
+        }
+    }
+
+#### Anschrift
+
+    {
+        "strasse": String,
+        "hausnummer": String,
+        "plz": String,
+        "ort": String,
+        "land": Country
+    }
+
+#### Country
+
+Die Übermittlung erfolgt im Format [ISO-3166/ALPHA-2](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)
+
+Zusätzlich gibt es den Wert "SONSTIGE"
+
+    "AD" | "AE" | "AF" | "AG" | "AL" | "AM" | "AO" | "AR" | "AT" | "AU" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BN" | "BO" | "BR" | "BS" | "BT" | "BW" | "BY" | "BZ" | "CA" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "XK" | "CU" | "CV" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FM" | "FR" | "GA" | "GB" | "GD" | "GE" | "GH" | "GM" | "GN" | "GQ" | "GR" | "GT" | "GW" | "GY" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IN" | "IQ" | "IR" | "IS" | "IT" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MR" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NE" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PG" | "PH" | "PK" | "PL" | "PS" | "PT" | "PW" | "PY" | "QA" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SI" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SY" | "SZ" | "TD" | "TG" | "TH" | "TJ" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TZ" | "UA" | "UG" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VN" | "VU" | "WS" | "YE" | "ZA" | "ZM" | "ZW" | "SONSTIGE"
+
+#### Firma
+
+    {
+        "name": String,
+        "anschrift": Anschrift,
+        "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+    }
+
 ## Response-Datentypen
 
 ### Meldungen (Liste von Strings)
@@ -229,8 +452,7 @@ Wenn Daten angepasst werden müssen, um eine valide Verarbeitung zu gewährleist
 
 ### Dokumente
 
-Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in
-einen existierenden **Kredit**Smart-Vorgang.
+Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in einen existierenden **Kredit**Smart-Vorgang.
 
 Dokumente können per **HTTP POST** importiert werden.
 
@@ -267,4 +489,5 @@ curl -X POST \
 ```
 
 ## Nutzungsbedingungen
+
 Die APIs werden unter folgenden [Nutzungsbedingungen](https://docs.api.europace.de/nutzungsbedingungen/) zur Verfügung gestellt
