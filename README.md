@@ -293,7 +293,7 @@ Die `Beschaeftigungsart` bestimmt die Beschäftigung und damit das dazu korrespo
 die Daten unter dem Knoten `arbeiter` genutzt, bei der `beschaeftigungsart=BEAMTER` entsprechend der Knoten `beamter`. Werden darüber hinaus weitere Felder befüllt so werden diese ignoriert.<BR/>
 Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsart passende Knoten nicht befüllt, werden alle Felder ignoriert.
 
-#### Arbeiter
+#### Arbeiter & Angestellter
 
     {
         "beschaeftigungsverhaeltnis": {
@@ -310,31 +310,6 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
             "beschaeftigtSeit": "YYYY-MM-DD",
             "beschaeftigtBis": "YYYY-MM-DD"
         }
-    }
-
-#### Angestellter
-
-    {
-        "beschaeftigungsverhaeltnis": {
-            "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": Decimal,
-            "arbeitgeber": Firma,
-            "beschaeftigtSeit": "YYYY-MM-DD",
-            "befristung": "BEFRISTET" | "UNBEFRISTET",
-            "befristetBis": "YYYY-MM-DD",
-            "inProbezeit": true | false
-        },
-        "vorherigesBeschaeftigungsverhaeltnis": {
-            "arbeitgeber": Firma
-            "beschaeftigtSeit": "YYYY-MM-DD",
-            "beschaeftigtBis": "YYYY-MM-DD"
-        }
-    }
-
-#### Arbeitsloser
-
-    {
-        "sonstigesEinkommenMonatlich": Decimal
     }
 
 #### Beamter
@@ -355,7 +330,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         }
     }
 
-#### Selbstständiger
+#### Selbstständiger & Freiberufler
 
     {
         "berufsbezeichnung": String,
@@ -376,28 +351,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "abschreibungenVor3Jahren": Decimal
     }
 
-#### Freiberufler
-
-    {
-        "berufsbezeichnung": String,
-        "selbststaendigSeit": "YYYY-MM-DD",
-        "firma": Firma,
-        "nettoeinkommenJaehrlich": Decimal,
-        "bruttoEinkommenLaufendesJahr": Decimal,
-        "einkommenssteuerLaufendesJahr": Decimal,
-        "abschreibungenLaufendesJahr": Decimal,
-        "bruttoEinkommenLetztesJahr": Decimal,
-        "einkommenssteuerLetztesJahr": Decimal,
-        "abschreibungenLetztesJahr": Decimal,
-        "einkommenssteuerVor2Jahren": Decimal,
-        "bruttoEinkommenVor2Jahren": Decimal,
-        "abschreibungenVor2Jahren": Decimal,
-        "bruttoEinkommenVor3Jahren": Decimal,
-        "einkommenssteuerVor3Jahren": Decimal,
-        "abschreibungenVor3Jahren": Decimal
-    }
-
-#### Hausfrau
+#### Hausfrau & Arbeitsloser
 
     {
         "sonstigesEinkommenMonatlich": Decimal
