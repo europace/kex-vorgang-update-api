@@ -256,6 +256,62 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       "errors": []
     }
 
+## Personendaten anpassen
+
+Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| personendaten       | [Personendaten](#personendaten)!             | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation personendaten($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updatePersonendaten(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, personendaten: { 
+          vorname: "Max"
+          nachname: "Mustermann"
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 ## Request-Datentypen
 
 ### Finanzierungswunsch
@@ -438,6 +494,23 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "name": String,
         "anschrift": Anschrift,
         "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+    }
+
+### Personendaten
+
+    {
+        anrede: "FRAU" | "HERR"
+        email: String
+        familienstand: "LEDIG" | "VERHEIRATET" | "GESCHIEDEN" | "VERWITWET" | "GETRENNT_LEBEND" | "EHEAEHNLICHE_LEBENSGEMEINSCHAFT" | "EINGETRAGENE_LEBENSPARTNERSCHAFT"
+        geburtsdatum: "YYYY-MM-DD"
+        geburtsland: Country
+        geburtsname: String
+        geburtsort: String
+        nachname: String
+        telefonGeschaeftlich: String
+        telefonPrivat: String
+        titel: [ "DOKTOR" | "PROFESSOR" ]
+        vorname: String
     }
 
 ## Response-Datentypen
