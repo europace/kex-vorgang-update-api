@@ -312,6 +312,62 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       "errors": []
     }
 
+## Wohnsituation anpassen
+
+Mit der Mutation `updateWohnsituation` kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| wohnsituation       | [Wohnsituation](#wohnsituation)!             | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation wohnsituation($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateWohnsituation(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, wohnsituation: { 
+          wohnart: ZUR_MIETE
+          anzahlPersonenImHaushalt: 1
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 ## Request-Datentypen
 
 ### Finanzierungswunsch
@@ -511,6 +567,28 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         telefonPrivat: String
         titel: [ "DOKTOR" | "PROFESSOR" ]
         vorname: String
+    }
+
+### Wohnsituation
+
+    {
+        "anschrift": Wohnanschrift,
+        "gemeinsamerHaushalt": true | false,
+        "wohnart": "ZUR_MIETE" | "ZUR_UNTERMIETE" | "IM_EIGENEN_HAUS" | "BEI_DEN_ELTERN",
+        "anzahlPersonenImHaushalt": Integer,
+        "anzahlPkw": Integer,
+        "voranschrift": Wohnanschrift
+    }
+
+#### Wohnanschrift
+
+    {
+        "strasse": String,
+        "hausnummer": String,
+        "plz": String,
+        "ort": String,
+        "land": Country,
+        "wohnhaftSeit": "YYYY-MM-DD"
     }
 
 ## Response-Datentypen
