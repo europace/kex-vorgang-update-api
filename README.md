@@ -552,17 +552,17 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 ### Personendaten
 
     {
-        "anrede": "FRAU" | "HERR"
-        "email": String
-        "familienstand": "LEDIG" | "VERHEIRATET" | "GESCHIEDEN" | "VERWITWET" | "GETRENNT_LEBEND" | "EHEAEHNLICHE_LEBENSGEMEINSCHAFT" | "EINGETRAGENE_LEBENSPARTNERSCHAFT"
-        "geburtsdatum": "YYYY-MM-DD"
-        "geburtsland": Country
-        "geburtsname": String
-        "geburtsort": String
-        "nachname": String
-        "telefonGeschaeftlich": String
-        "telefonPrivat": String
-        "titel": [ "DOKTOR" | "PROFESSOR" ]
+        "anrede": "FRAU" | "HERR",
+        "email": String,
+        "familienstand": "LEDIG" | "VERHEIRATET" | "GESCHIEDEN" | "VERWITWET" | "GETRENNT_LEBEND" | "EHEAEHNLICHE_LEBENSGEMEINSCHAFT" | "EINGETRAGENE_LEBENSPARTNERSCHAFT",
+        "geburtsdatum": "YYYY-MM-DD",
+        "geburtsland": Country,
+        "geburtsname": String,
+        "geburtsort": String,
+        "nachname": String,
+        "telefonGeschaeftlich": String,
+        "telefonPrivat": String,
+        "titel": [ "DOKTOR" | "PROFESSOR" ],
         "vorname": String
     }
 
