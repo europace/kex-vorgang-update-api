@@ -359,6 +359,53 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       }
     }
 
+## Herkunft anpassen
+
+Mit der Mutation `updateHerkunft` kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| herkunft            | [Herkunft](#herkunft)!                       | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation herkunft($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateHerkunft(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, herkunft: { 
+          staatsangehoerigkeit: DE
+          steuerId: "11345678904"
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
 #### POST Response
 
     {
@@ -547,6 +594,18 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "name": String,
         "anschrift": Anschrift,
         "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+    }
+
+### Herkunft
+
+    {
+        "arbeitserlaubnisVorhanden": true | false,
+        "aufenthaltBefristetBis": "YYYY-MM-DD",
+        "arbeitserlaubnisBefristetBis": "YYYY-MM-DD",
+        "inDeutschlandSeit": "YYYY-MM-DD",
+        "staatsangehoerigkeit": Country,
+        "aufenthaltstitel": "VISUM" | "AUFENTHALTSERLAUBNIS" | "NIEDERLASSUNGSERLAUBNIS" | "ERLAUBNIS_ZUM_DAUERAUFENTHALT_EU",
+        "steuerId": String
     }
 
 ### Personendaten
