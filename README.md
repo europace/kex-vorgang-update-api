@@ -454,7 +454,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
     {
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD",
             "befristung": "BEFRISTET" | "UNBEFRISTET",
@@ -473,7 +473,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
     {
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD",
             "befristung": "BEFRISTET" | "UNBEFRISTET",
@@ -490,7 +490,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
 #### Arbeitsloser
 
     {
-        "sonstigesEinkommenMonatlich": Decimal
+        "sonstigesEinkommenMonatlich": BigDecimal
     }
 
 #### Beamter
@@ -499,7 +499,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
             "inProbezeit": true | false,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "verbeamtetSeit": "YYYY-MM-DD",
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD"
@@ -517,19 +517,19 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "berufsbezeichnung": String,
         "selbststaendigSeit": "YYYY-MM-DD",
         "firma": Firma,
-        "nettoeinkommenJaehrlich": Decimal,
-        "bruttoEinkommenLaufendesJahr": Decimal,
-        "einkommenssteuerLaufendesJahr": Decimal,
-        "abschreibungenLaufendesJahr": Decimal,
-        "bruttoEinkommenLetztesJahr": Decimal,
-        "einkommenssteuerLetztesJahr": Decimal,
-        "abschreibungenLetztesJahr": Decimal,
-        "einkommenssteuerVor2Jahren": Decimal,
-        "bruttoEinkommenVor2Jahren": Decimal,
-        "abschreibungenVor2Jahren": Decimal,
-        "bruttoEinkommenVor3Jahren": Decimal,
-        "einkommenssteuerVor3Jahren": Decimal,
-        "abschreibungenVor3Jahren": Decimal
+        "nettoeinkommenJaehrlich": BigDecimal,
+        "bruttoEinkommenLaufendesJahr": BigDecimal,
+        "einkommenssteuerLaufendesJahr": BigDecimal,
+        "abschreibungenLaufendesJahr": BigDecimal,
+        "bruttoEinkommenLetztesJahr": BigDecimal,
+        "einkommenssteuerLetztesJahr": BigDecimal,
+        "abschreibungenLetztesJahr": BigDecimal,
+        "einkommenssteuerVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor2Jahren": BigDecimal,
+        "abschreibungenVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor3Jahren": BigDecimal,
+        "einkommenssteuerVor3Jahren": BigDecimal,
+        "abschreibungenVor3Jahren": BigDecimal
     }
 
 #### Freiberufler
@@ -538,31 +538,31 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "berufsbezeichnung": String,
         "selbststaendigSeit": "YYYY-MM-DD",
         "firma": Firma,
-        "nettoeinkommenJaehrlich": Decimal,
-        "bruttoEinkommenLaufendesJahr": Decimal,
-        "einkommenssteuerLaufendesJahr": Decimal,
-        "abschreibungenLaufendesJahr": Decimal,
-        "bruttoEinkommenLetztesJahr": Decimal,
-        "einkommenssteuerLetztesJahr": Decimal,
-        "abschreibungenLetztesJahr": Decimal,
-        "einkommenssteuerVor2Jahren": Decimal,
-        "bruttoEinkommenVor2Jahren": Decimal,
-        "abschreibungenVor2Jahren": Decimal,
-        "bruttoEinkommenVor3Jahren": Decimal,
-        "einkommenssteuerVor3Jahren": Decimal,
-        "abschreibungenVor3Jahren": Decimal
+        "nettoeinkommenJaehrlich": BigDecimal,
+        "bruttoEinkommenLaufendesJahr": BigDecimal,
+        "einkommenssteuerLaufendesJahr": BigDecimal,
+        "abschreibungenLaufendesJahr": BigDecimal,
+        "bruttoEinkommenLetztesJahr": BigDecimal,
+        "einkommenssteuerLetztesJahr": BigDecimal,
+        "abschreibungenLetztesJahr": BigDecimal,
+        "einkommenssteuerVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor2Jahren": BigDecimal,
+        "abschreibungenVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor3Jahren": BigDecimal,
+        "einkommenssteuerVor3Jahren": BigDecimal,
+        "abschreibungenVor3Jahren": BigDecimal
     }
 
 #### Hausfrau
 
     {
-        "sonstigesEinkommenMonatlich": Decimal
+        "sonstigesEinkommenMonatlich": BigDecimal
     }
 
 #### Rentner
 
     {
-        "staatlicheRenteMonatlich": Decimal,
+        "staatlicheRenteMonatlich": BigDecimal,
         "rentnerSeit": "YYYY-MM-DD",
         "rentenversicherung": {
             "name": String,
