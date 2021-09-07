@@ -415,6 +415,60 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       "errors": []
     }
 
+## Immbilie hinzufügen
+
+Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorgangs hinzufügen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die in dem feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und bereits vorhande Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername  | Typ                      | Default         |
+|----------------|--------------------------|-----------------|
+| vorgangsnummer | String!                  | - (Pflichtfeld) |
+| immobilie      | [Immobilie](#immobilie)! | - (Pflichtfeld) |
+
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation immobilie($vorgangsnummer: String!) {  
+        addImmobilie(vorgangsnummer: $vorgangsnummer, immobilie: { 
+          bezeichnung: "meine Immobilie"
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 ## Request-Datentypen
 
 ### Finanzierungswunsch
@@ -454,7 +508,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
     {
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD",
             "befristung": "BEFRISTET" | "UNBEFRISTET",
@@ -473,7 +527,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
     {
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD",
             "befristung": "BEFRISTET" | "UNBEFRISTET",
@@ -490,7 +544,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
 #### Arbeitsloser
 
     {
-        "sonstigesEinkommenMonatlich": Decimal
+        "sonstigesEinkommenMonatlich": BigDecimal
     }
 
 #### Beamter
@@ -499,7 +553,7 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "beschaeftigungsverhaeltnis": {
             "berufsbezeichnung": String,
             "inProbezeit": true | false,
-            "nettoeinkommenMonatlich": Decimal,
+            "nettoeinkommenMonatlich": BigDecimal,
             "verbeamtetSeit": "YYYY-MM-DD",
             "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD"
@@ -517,19 +571,19 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "berufsbezeichnung": String,
         "selbststaendigSeit": "YYYY-MM-DD",
         "firma": Firma,
-        "nettoeinkommenJaehrlich": Decimal,
-        "bruttoEinkommenLaufendesJahr": Decimal,
-        "einkommenssteuerLaufendesJahr": Decimal,
-        "abschreibungenLaufendesJahr": Decimal,
-        "bruttoEinkommenLetztesJahr": Decimal,
-        "einkommenssteuerLetztesJahr": Decimal,
-        "abschreibungenLetztesJahr": Decimal,
-        "einkommenssteuerVor2Jahren": Decimal,
-        "bruttoEinkommenVor2Jahren": Decimal,
-        "abschreibungenVor2Jahren": Decimal,
-        "bruttoEinkommenVor3Jahren": Decimal,
-        "einkommenssteuerVor3Jahren": Decimal,
-        "abschreibungenVor3Jahren": Decimal
+        "nettoeinkommenJaehrlich": BigDecimal,
+        "bruttoEinkommenLaufendesJahr": BigDecimal,
+        "einkommenssteuerLaufendesJahr": BigDecimal,
+        "abschreibungenLaufendesJahr": BigDecimal,
+        "bruttoEinkommenLetztesJahr": BigDecimal,
+        "einkommenssteuerLetztesJahr": BigDecimal,
+        "abschreibungenLetztesJahr": BigDecimal,
+        "einkommenssteuerVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor2Jahren": BigDecimal,
+        "abschreibungenVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor3Jahren": BigDecimal,
+        "einkommenssteuerVor3Jahren": BigDecimal,
+        "abschreibungenVor3Jahren": BigDecimal
     }
 
 #### Freiberufler
@@ -538,31 +592,31 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
         "berufsbezeichnung": String,
         "selbststaendigSeit": "YYYY-MM-DD",
         "firma": Firma,
-        "nettoeinkommenJaehrlich": Decimal,
-        "bruttoEinkommenLaufendesJahr": Decimal,
-        "einkommenssteuerLaufendesJahr": Decimal,
-        "abschreibungenLaufendesJahr": Decimal,
-        "bruttoEinkommenLetztesJahr": Decimal,
-        "einkommenssteuerLetztesJahr": Decimal,
-        "abschreibungenLetztesJahr": Decimal,
-        "einkommenssteuerVor2Jahren": Decimal,
-        "bruttoEinkommenVor2Jahren": Decimal,
-        "abschreibungenVor2Jahren": Decimal,
-        "bruttoEinkommenVor3Jahren": Decimal,
-        "einkommenssteuerVor3Jahren": Decimal,
-        "abschreibungenVor3Jahren": Decimal
+        "nettoeinkommenJaehrlich": BigDecimal,
+        "bruttoEinkommenLaufendesJahr": BigDecimal,
+        "einkommenssteuerLaufendesJahr": BigDecimal,
+        "abschreibungenLaufendesJahr": BigDecimal,
+        "bruttoEinkommenLetztesJahr": BigDecimal,
+        "einkommenssteuerLetztesJahr": BigDecimal,
+        "abschreibungenLetztesJahr": BigDecimal,
+        "einkommenssteuerVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor2Jahren": BigDecimal,
+        "abschreibungenVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor3Jahren": BigDecimal,
+        "einkommenssteuerVor3Jahren": BigDecimal,
+        "abschreibungenVor3Jahren": BigDecimal
     }
 
 #### Hausfrau
 
     {
-        "sonstigesEinkommenMonatlich": Decimal
+        "sonstigesEinkommenMonatlich": BigDecimal
     }
 
 #### Rentner
 
     {
-        "staatlicheRenteMonatlich": Decimal,
+        "staatlicheRenteMonatlich": BigDecimal,
         "rentnerSeit": "YYYY-MM-DD",
         "rentenversicherung": {
             "name": String,
@@ -594,6 +648,30 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "name": String,
         "anschrift": Anschrift,
         "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+    }
+
+### Immobilie
+
+    {
+        "antragstellerIds": [String],
+        "bezeichnung": String,
+        "darlehen": [Darlehen],
+        "immobilienart": "EIGENTUMSWOHNUNG" | "EINFAMILIENHAUS" | "MEHRFAMILIENHAUS" | "BUEROGEBAEUDE",
+        "mieteinnahmenKaltMonatlich": BigDecimal,
+        "mieteinnahmenWarmMonatlich": BigDecimal,
+        "nebenkostenMonatlich": BigDecimal,
+        "nutzungsart": "EIGENGENUTZT" | "VERMIETET" | "EIGENGENUTZT_UND_VERMIETET",
+        "vermieteteWohnflaeche": Integer,
+        "wert": BigDecimal,
+        "wohnflaeche": Integer
+    }
+
+#### Darlehen
+
+    {
+        "rateMonatlich": BigDecimal,
+        "restschuld": BigDecimal,
+        "zinsbindungBis": "YYYY-MM-DD"
     }
 
 ### Herkunft
