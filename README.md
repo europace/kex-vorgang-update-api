@@ -438,6 +438,7 @@ Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorg
 ### Response
 
 Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+Zusätzlich wird die ID, die beim Anlegen der Immobilie generiert wurde, zurückgegeben. Sie kann zum Ändern und Löschen dieser Immobilie verwendet werden.
 
 ### Beispiel
 
@@ -453,6 +454,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
           bezeichnung: "meine Immobilie"
         }) { 
           messages
+          id
         } 
       }",
       "variables": {
@@ -465,6 +467,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "data": {
         "messages": []
+        "id": "mocked-ID"
       },
       "errors": []
     }
@@ -729,7 +732,7 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ### Meldungen (Liste von Strings)
 
-Wenn Daten angepasst werden müssen, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben.
+Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind KEINE Fehlermeldungen.
 
 ## Legacy-Update-APIs
 
