@@ -438,7 +438,7 @@ Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorg
 ### Response
 
 Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-Zusätzlich wird die ID, die bei dem Anlegen der Immobilie generiert wurde, zurückgegeben, die für Änderungen und Löschungen verwendet wreden kann.
+Zusätzlich wird die ID, die beim Anlegen der Immobilie generiert wurde, zurückgegeben. Sie kann zum Ändern und Löschen dieser Immobilie verwendet werden.
 
 ### Beispiel
 
