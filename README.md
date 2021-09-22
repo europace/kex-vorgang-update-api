@@ -194,7 +194,7 @@ Mit der Mutation `updateBeschaeftigung` kann man die [Beschaeftigung](#beschaeft
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
@@ -264,7 +264,7 @@ Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendat
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
@@ -320,7 +320,7 @@ Mit der Mutation `updateWohnsituation` kann man die [Wohnsituation](#wohnsituati
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
@@ -367,7 +367,7 @@ Mit der Mutation `updateHerkunft` kann man die [Herkunft](#herkunft) für einen 
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und einen bereits vorhanden Antragsteller referenzieren.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
@@ -415,7 +415,7 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       "errors": []
     }
 
-## Immbilie hinzufügen
+## Immobilie hinzufügen
 
 Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorgangs hinzufügen.
 
@@ -423,7 +423,7 @@ Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorg
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die in dem feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und bereits vorhande Antragsteller referenzieren.
+* Die in dem Feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und auf bereits vorhandene Antragsteller referenzieren.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
@@ -656,9 +656,9 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 ### Immobilie
 
     {
-        "antragstellerIds": [String],
+        "antragstellerIds": [ String ],
         "bezeichnung": String,
-        "darlehen": [Darlehen],
+        "darlehen": [ Darlehen ],
         "immobilienart": "EIGENTUMSWOHNUNG" | "EINFAMILIENHAUS" | "MEHRFAMILIENHAUS" | "BUEROGEBAEUDE",
         "mieteinnahmenKaltMonatlich": BigDecimal,
         "mieteinnahmenWarmMonatlich": BigDecimal,
