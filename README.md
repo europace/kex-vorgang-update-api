@@ -84,50 +84,229 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 | 404        | NOT FOUND             | Der Vorgang existiert nicht                                                                                 |
 | 410        | GONE                  | Der Vorgang wurde zwischenzeitlich gelöscht                                                                 |
 
-## Finanzierungswunsch anpassen
+## Antragstellerdaten anpassen
 
-Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+### Personendaten anpassen
 
-### Hinweise
+Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
+
+#### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
-* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
-### Request
+#### Request
 
 | Parametername       | Typ                                          | Default         |
 |---------------------|----------------------------------------------|-----------------|
 | vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| personendaten       | [Personendaten](#personendaten)!             | - (Pflichtfeld) |
 
-### Response
+#### Response
 
 Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
 
-### Beispiel
+#### Beispiel
 
-#### POST Request
+##### POST Request
 
     POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
     Authorization: Bearer xxxx
     Content-Type: application/json
 
     {
-      "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
-        updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
+      "query": "mutation personendaten($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updatePersonendaten(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, personendaten: { 
+          vorname: "Max"
+          nachname: "Mustermann"
+        }) { 
           messages
-        }
+        } 
       }",
       "variables": {
-        "vorgangsnummer": "ABC123"
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
       }
     }
 
-#### POST Response
+##### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+### Wohnsituation anpassen
+
+Mit der Mutation `updateWohnsituation` kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
+
+#### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+#### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| wohnsituation       | [Wohnsituation](#wohnsituation)!             | - (Pflichtfeld) |
+
+#### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+#### Beispiel
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation wohnsituation($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateWohnsituation(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, wohnsituation: { 
+          wohnart: ZUR_MIETE
+          anzahlPersonenImHaushalt: 1
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
+### Herkunft anpassen
+
+Mit der Mutation `updateHerkunft` kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
+
+#### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+#### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| herkunft            | [Herkunft](#herkunft)!                       | - (Pflichtfeld) |
+
+#### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+#### Beispiel
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation herkunft($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateHerkunft(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, herkunft: { 
+          staatsangehoerigkeit: DE
+          steuerId: "11345678904"
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
+##### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+### Beschäftigung anpassen
+
+Mit der Mutation `updateBeschaeftigung` kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
+
+#### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
+* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+#### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| antragstellerId     | String!                                      | - (Pflichtfeld) |
+| beschaeftigung      | [Beschaeftigung](#beschaeftigung)!           | - (Pflichtfeld) |
+
+#### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+#### Beispiel
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation beschaeftigung($vorgangsnummer: String!, $antragstellerId: String!) {  
+        updateBeschaeftigung(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, beschaeftigung: { 
+          beschaeftigungsart:ARBEITER,
+          arbeiter: {
+            beschaeftigungsverhaeltnis: {
+              nettoeinkommenMonatlich: 2345.67,
+              befristung: UNBEFRISTET,
+              beschaeftigtSeit: "2009-01-02",
+              arbeitgeber: {
+                name: "Firmenname",
+                branche: INFORMATION_KOMMUNIKATION,
+                anschrift: {
+                  ort: "Berlin"
+                }
+              }
+            }
+          }
+        }) { 
+          messages
+        } 
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
+      }
+    }
+
+##### POST Response
 
     {
       "data": {
@@ -174,235 +353,6 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       }",
       "variables": {
         "vorgangsnummer": "ABC123"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-## Beschäftigung anpassen
-
-Mit der Mutation `updateBeschaeftigung` kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
-
-### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| beschaeftigung      | [Beschaeftigung](#beschaeftigung)!           | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-
-### Beispiel
-
-#### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation beschaeftigung($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateBeschaeftigung(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, beschaeftigung: { 
-          beschaeftigungsart:ARBEITER,
-          arbeiter: {
-            beschaeftigungsverhaeltnis: {
-              nettoeinkommenMonatlich: 2345.67,
-              befristung: UNBEFRISTET,
-              beschaeftigtSeit: "2009-01-02",
-              arbeitgeber: {
-                name: "Firmenname",
-                branche: INFORMATION_KOMMUNIKATION,
-                anschrift: {
-                  ort: "Berlin"
-                }
-              }
-            }
-          }
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-## Personendaten anpassen
-
-Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
-
-### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| personendaten       | [Personendaten](#personendaten)!             | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-
-### Beispiel
-
-#### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation personendaten($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updatePersonendaten(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, personendaten: { 
-          vorname: "Max"
-          nachname: "Mustermann"
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-## Wohnsituation anpassen
-
-Mit der Mutation `updateWohnsituation` kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
-
-### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| wohnsituation       | [Wohnsituation](#wohnsituation)!             | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-
-### Beispiel
-
-#### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation wohnsituation($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateWohnsituation(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, wohnsituation: { 
-          wohnart: ZUR_MIETE
-          anzahlPersonenImHaushalt: 1
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-## Herkunft anpassen
-
-Mit der Mutation `updateHerkunft` kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
-
-### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| herkunft            | [Herkunft](#herkunft)!                       | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-
-### Beispiel
-
-#### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation herkunft($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateHerkunft(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, herkunft: { 
-          staatsangehoerigkeit: DE
-          steuerId: "11345678904"
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
       }
     }
 
@@ -732,7 +682,8 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ### Meldungen (Liste von Strings)
 
-Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind KEINE Fehlermeldungen.
+Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind
+KEINE Fehlermeldungen.
 
 ## Legacy-Update-APIs
 
