@@ -467,7 +467,7 @@ Zusätzlich wird die ID, die beim Anlegen der Immobilie generiert wurde, zurück
     {
       "data": {
         "messages": []
-        "id": "mocked-ID"
+        "id": "abcd123-xyz"
       },
       "errors": []
     }
