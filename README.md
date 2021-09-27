@@ -680,6 +680,19 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ## Response-Datentypen
 
+### BasicResponse
+
+    {
+        "messages" [ String ]
+    }
+
+### BasicCreatedResponse
+
+    {
+        "messages": [ String ]
+        "id": String
+    }
+
 ### Meldungen (Liste von Strings)
 
 Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind
