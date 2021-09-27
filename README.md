@@ -315,6 +315,80 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
       "errors": []
     }
 
+## Haushaltspositionen anpassen
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Die in dem Feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und auf bereits vorhandene Antragsteller referenzieren.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+* Die im Feld `id` verwendete ID muss eine existierend Haushaltsposition vom entsprechenden Typ referenzieren.
+
+### Immobilie
+
+**addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+    
+> Eine Immobilie einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Immobilie. Diese `id` kann als Referenz für weiter Änderungen benutzt werden.
+
+**updateImmobilie** ( vorgangsnummer: String!, id: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Immobilie ändern. Die Immobilie wird per `id` referenziert.
+
+
+## Finanzierungswunsch anpassen
+
+Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+
+### Hinweise
+
+* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
+* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
+* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
+* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+
+### Request
+
+| Parametername       | Typ                                          | Default         |
+|---------------------|----------------------------------------------|-----------------|
+| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
+| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) |
+
+### Response
+
+Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+
+### Beispiel
+
+#### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
+        updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
+          messages
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123"
+      }
+    }
+
+#### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 ## Kommentare hinzufügen
 
 Mit der Mutation `addKommentare` kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
@@ -361,63 +435,6 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
     {
       "data": {
         "messages": []
-      },
-      "errors": []
-    }
-
-## Immobilie hinzufügen
-
-Mit der Mutation `addImmobilie` kann man eine [Immobilie](#immobilie) einem Vorgangs hinzufügen.
-
-### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die in dem Feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und auf bereits vorhandene Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername  | Typ                      | Default         |
-|----------------|--------------------------|-----------------|
-| vorgangsnummer | String!                  | - (Pflichtfeld) |
-| immobilie      | [Immobilie](#immobilie)! | - (Pflichtfeld) |
-
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
-Zusätzlich wird die ID, die beim Anlegen der Immobilie generiert wurde, zurückgegeben. Sie kann zum Ändern und Löschen dieser Immobilie verwendet werden.
-
-### Beispiel
-
-#### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation immobilie($vorgangsnummer: String!) {  
-        addImmobilie(vorgangsnummer: $vorgangsnummer, immobilie: { 
-          bezeichnung: "meine Immobilie"
-        }) { 
-          messages
-          id
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-        "id": "abcd123-xyz"
       },
       "errors": []
     }
@@ -693,7 +710,7 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "id": String
     }
 
-### Meldungen (Liste von Strings)
+### Meldungen - Messages
 
 Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind
 KEINE Fehlermeldungen.
