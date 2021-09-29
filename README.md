@@ -86,11 +86,7 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 ## Antragstellerdaten anpassen
 
-### Personendaten anpassen
-
-Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
-
-#### Hinweise
+### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
@@ -98,17 +94,11 @@ Mit der Mutation `updatePersonendaten` kann man die [Personendaten](#personendat
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
-#### Request
+### Personendaten anpassen
 
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| personendaten       | [Personendaten](#personendaten)!             | - (Pflichtfeld) |
+**updatePersonendaten** ( vorgangsnummer: String!, antragstellerId: String!, personendaten: [Personendaten](#personendaten)! ) -> [BasicResponse](#basicresponse)!
 
-#### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+> Mit dieser Mutation kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
 
 #### Beispiel
 
@@ -144,27 +134,9 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
 
 ### Wohnsituation anpassen
 
-Mit der Mutation `updateWohnsituation` kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
+**updateWohnsituation** ( vorgangsnummer: String!, antragstellerId: String!, wohnsituation: [Wohnsituation](#wohnsituation)! ) -> [BasicResponse](#basicresponse)!
 
-#### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-#### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| wohnsituation       | [Wohnsituation](#wohnsituation)!             | - (Pflichtfeld) |
-
-#### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+> Mit dieser Mutation kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
 
 #### Beispiel
 
@@ -191,27 +163,9 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
 
 ### Herkunft anpassen
 
-Mit der Mutation `updateHerkunft` kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
+**updateHerkunft** ( vorgangsnummer: String!, antragstellerId: String!, herkunft: [Herkunft](#herkunft)!  ) -> [BasicResponse](#basicresponse)!
 
-#### Hinweise
-
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-#### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| herkunft            | [Herkunft](#herkunft)!                       | - (Pflichtfeld) |
-
-#### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
+> Mit dieser Mutation kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
 
 #### Beispiel
 
@@ -247,28 +201,13 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
 
 ### Beschäftigung anpassen
 
-Mit der Mutation `updateBeschaeftigung` kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
+**updateBeschaeftigung** ( vorgangsnummer: String!, antragstellerId: String!, beschaeftigung: [Beschaeftigung](#beschaeftigung)! ) -> [BasicResponse](#basicresponse)!
+
+> Mit dieser Mutation kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
 
 #### Hinweise
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
 * Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-#### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| antragstellerId     | String!                                      | - (Pflichtfeld) |
-| beschaeftigung      | [Beschaeftigung](#beschaeftigung)!           | - (Pflichtfeld) |
-
-#### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
 
 #### Beispiel
 
@@ -329,17 +268,18 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
 ### Immobilie
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
-    
+
 > Eine Immobilie einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Immobilie. Diese `id` kann als Referenz für weiter Änderungen benutzt werden.
 
 **updateImmobilie** ( vorgangsnummer: String!, id: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicResponse](#basicresponse)!
 
 > Eine existierende Immobilie ändern. Die Immobilie wird per `id` referenziert.
 
-
 ## Finanzierungswunsch anpassen
 
-Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+**updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
+
+> Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
 
 ### Hinweise
 
@@ -349,17 +289,6 @@ Mit der Mutation `updateFinanzierungswunsch` kann man den [Finanzierungswunsch](
 * Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
 * Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-
-### Request
-
-| Parametername       | Typ                                          | Default         |
-|---------------------|----------------------------------------------|-----------------|
-| vorgangsnummer      | String!                                      | - (Pflichtfeld) |
-| finanzierungswunsch | [Finanzierungswunsch](#finanzierungswunsch)! | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
 
 ### Beispiel
 
@@ -391,7 +320,9 @@ Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-l
 
 ## Kommentare hinzufügen
 
-Mit der Mutation `addKommentare` kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+**addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
+
+> Mit dieser Mutation kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
 
 ### Hinweise
 
@@ -399,17 +330,6 @@ Mit der Mutation `addKommentare` kann man ein oder mehrere Kommentare zu einem V
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Leere Strings werden ignoriert und nicht als Kommentar importiert.
-
-### Request
-
-| Parametername       | Typ        | Default         |
-|---------------------|------------|-----------------|
-| vorgangsnummer      | String!    | - (Pflichtfeld) |
-| kommentare          | [String!]! | - (Pflichtfeld) |
-
-### Response
-
-Diese Mutation liefert als Rückgabewert eine Liste von [Meldungen](#meldungen-liste-von-strings).
 
 ### Beispiel
 
