@@ -617,6 +617,8 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ## Response-Datentypen
 
+> Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind KEINE Fehlermeldungen.
+
 ### BasicResponse
 
     {
@@ -629,11 +631,6 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "messages": [ String ]
         "id": String
     }
-
-### Meldungen - Messages
-
-Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind
-KEINE Fehlermeldungen.
 
 ## Legacy-Update-APIs
 
