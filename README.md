@@ -265,7 +265,7 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 * Die im Feld `id` verwendete ID muss eine existierend Haushaltsposition vom entsprechenden Typ referenzieren.
 
-### Immobilie
+### Immobilie anpassen
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
