@@ -275,6 +275,10 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 > Eine existierende Immobilie ändern. Die Immobilie wird per `id` referenziert.
 
+**deleteImmobilie** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Immobilie löschen. Die Immobilie wird per `id` referenziert.
+
 ## Finanzierungswunsch anpassen
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
