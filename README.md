@@ -5,7 +5,7 @@
 ## Allgemeines
 
 Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
-Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/). Die URL ist:
+Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/).  Die URL ist:
 
     https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
@@ -24,43 +24,8 @@ Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://do
 
 ### Authentifizierung
 
-Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
-
-| Request Header Name | Beschreibung           |
-|---------------------|------------------------|
-| Authorization       | OAuth 2.0 Bearer Token |
-
-Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden. Dazu wird ein Client benötigt der vorher von einer berechtigten
-Person über das Partnermanagement angelegt wurde. Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
-
+Diese API ist mit [OAuth](https://docs.api.europace.de/common/authentifizierung/authorization-api/) besichert. 
 Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
-
-Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
-
-### Nachverfolgbarkeit von Requests
-
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse
-erleichtert.  
-Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional. Wenn er nicht gesetzt ist, wird eine ID vom System generiert. Hilfreich für die Analyse ist es, wenn die
-TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
-
-| Request Header Name | Beschreibung                    | Beispiel    |
-|---------------------|---------------------------------|-------------|
-| X-TraceId           | eindeutige ID für jeden Request | sys12345678 |
-
-### GraphQL-Requests
-
-Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet. Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
-
-Die Schnittstelle unterstützt alle gängigen GraphQL Formate, genaueres kann man z.B. unter [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/) nachlesen.
-
-Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der
-Query Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden. In unseren Beispielen nutzen wir die Notation mit Variablen.
-
-    {
-      "query": "...",
-      "variables": { ... }
-    }
 
 ### Fehlercodes
 
@@ -94,165 +59,26 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
-### Personendaten anpassen
+### Mutationen
 
 **updatePersonendaten** ( vorgangsnummer: String!, antragstellerId: String!, personendaten: [Personendaten](#personendaten)! ) -> [BasicResponse](#basicresponse)!
 
 > Mit dieser Mutation kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
 
-#### Beispiel
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation personendaten($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updatePersonendaten(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, personendaten: { 
-          vorname: "Max"
-          nachname: "Mustermann"
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-### Wohnsituation anpassen
-
 **updateWohnsituation** ( vorgangsnummer: String!, antragstellerId: String!, wohnsituation: [Wohnsituation](#wohnsituation)! ) -> [BasicResponse](#basicresponse)!
 
 > Mit dieser Mutation kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
-
-#### Beispiel
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation wohnsituation($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateWohnsituation(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, wohnsituation: { 
-          wohnart: ZUR_MIETE
-          anzahlPersonenImHaushalt: 1
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-### Herkunft anpassen
 
 **updateHerkunft** ( vorgangsnummer: String!, antragstellerId: String!, herkunft: [Herkunft](#herkunft)!  ) -> [BasicResponse](#basicresponse)!
 
 > Mit dieser Mutation kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
 
-#### Beispiel
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation herkunft($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateHerkunft(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, herkunft: { 
-          staatsangehoerigkeit: DE
-          steuerId: "11345678904"
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-### Beschäftigung anpassen
-
 **updateBeschaeftigung** ( vorgangsnummer: String!, antragstellerId: String!, beschaeftigung: [Beschaeftigung](#beschaeftigung)! ) -> [BasicResponse](#basicresponse)!
 
 > Mit dieser Mutation kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
-
-#### Hinweise
-
-* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
-
-#### Beispiel
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation beschaeftigung($vorgangsnummer: String!, $antragstellerId: String!) {  
-        updateBeschaeftigung(vorgangsnummer: $vorgangsnummer, antragstellerId: $antragstellerId, beschaeftigung: { 
-          beschaeftigungsart:ARBEITER,
-          arbeiter: {
-            beschaeftigungsverhaeltnis: {
-              nettoeinkommenMonatlich: 2345.67,
-              befristung: UNBEFRISTET,
-              beschaeftigtSeit: "2009-01-02",
-              arbeitgeber: {
-                name: "Firmenname",
-                branche: INFORMATION_KOMMUNIKATION,
-                anschrift: {
-                  ort: "Berlin"
-                }
-              }
-            }
-          }
-        }) { 
-          messages
-        } 
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "antragstellerId": "12345678-abcd-wxyz-0987-1234567890ab"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
+>  
+> Hinweise:  
+> * Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
 
 ## Haushaltspositionen anpassen
 
@@ -279,11 +105,7 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 > Eine existierende Immobilie löschen. Die Immobilie wird per `id` referenziert.
 
-## Finanzierungswunsch anpassen
-
-**updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
-
-> Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+## Finanzbedarf anpassen
 
 ### Hinweise
 
@@ -294,74 +116,28 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 * Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
-### Beispiel
+### Mutationen 
 
-#### POST Request
+**updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
 
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
+> Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
 
-    {
-      "query": "mutation finanzierungswunsch($vorgangsnummer: String!) {  
-        updateFinanzierungswunsch(vorgangsnummer: $vorgangsnummer, finanzierungswunsch: { kreditbetrag: 10000 }){
-          messages
-        }
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
-## Kommentare hinzufügen
-
-**addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
-
-> Mit dieser Mutation kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+## Vorgangsdaten anpassen
 
 ### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Leere Strings werden ignoriert und nicht als Kommentar importiert.
 
-### Beispiel
+### Mutationen 
 
-#### POST Request
+**addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
 
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation kommentare($vorgangsnummer: String!) {  
-        addKommentare(vorgangsnummer: $vorgangsnummer, kommentare: ["kommentar 1", "kommentar 2"]){
-          messages
-        }
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123"
-      }
-    }
-
-#### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
+> Mit dieser Mutation kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+>  
+> Hinweise:
+> * Leere Strings werden ignoriert und nicht als Kommentar importiert.
 
 ## Request-Datentypen
 
