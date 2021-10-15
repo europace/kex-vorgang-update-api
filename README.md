@@ -5,9 +5,9 @@
 ## Allgemeines
 
 Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
-Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/).  Die URL ist:
+Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/).  
 
-    https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+Die URL ist https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
 > ⚠️ Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
@@ -112,8 +112,6 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
 * Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
-* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 
 ### Mutationen 
@@ -121,6 +119,10 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
 
 > Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+>
+> Hinweise:
+> * Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
+> * Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
 
 ## Vorgangsdaten anpassen
 
