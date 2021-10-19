@@ -24,8 +24,12 @@ Die URL ist https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
 ### Authentifizierung
 
-Diese API ist mit [OAuth](https://docs.api.europace.de/common/authentifizierung/authorization-api/) besichert. 
-Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
+Bitte benutze [OAuth](https://docs.api.europace.de/baufinanzierung/authentifizierung/), um Zugang zur API bekommen.  
+Um die API verwenden zu können, benötigt der OAuth2-Client folgende Scopes:
+
+| Scope                            | API-Usecase                            |
+|----------------------------------|----------------------------------------|
+| `privatkredit:vorgang:schreiben` | KreditSmart-Vorgänge anlegen/verändern |
 
 ### Fehlercodes
 
