@@ -279,6 +279,20 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 > Eine existierende Immobilie löschen. Die Immobilie wird per `id` referenziert.
 
+### Mietausgabe anpassen
+
+**addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Eine Mietausgabe einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Mietausgabe. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+
+**updateMietausgabe** ( vorgangsnummer: String!, id: String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Mietausgabe ändern. Die Mietausgabe wird per `id` referenziert.
+
+**deleteMietausgabe** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Mietausgabe löschen. Die Mietausgabe wird per `id` referenziert.
+
 ## Finanzierungswunsch anpassen
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
@@ -578,6 +592,13 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "staatsangehoerigkeit": Country,
         "aufenthaltstitel": "VISUM" | "AUFENTHALTSERLAUBNIS" | "NIEDERLASSUNGSERLAUBNIS" | "ERLAUBNIS_ZUM_DAUERAUFENTHALT_EU",
         "steuerId": String
+    }
+
+### Mietausgabe
+
+    {
+        "antragstellerIds": [ String ],
+        "BigDecimal": BigDecimal
     }
 
 ### Personendaten
