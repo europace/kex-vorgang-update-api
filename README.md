@@ -265,6 +265,25 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 * Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
 * Die im Feld `id` verwendete ID muss eine existierend Haushaltsposition vom entsprechenden Typ referenzieren.
 
+### Einkunft aus Nebentaetigkeit anpassen
+
+#### Hinweise
+
+* Eine Einkunft aus einer Nebentätigkeit kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+  ENTITY.
+
+**addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Eine Einkunft aus einer Nebentätigkeit einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+
+**updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Einkunft aus einer Nebentätigkeit ändern. Die Haushaltsposition wird per `id` referenziert.
+
+**deleteEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende Einkunft aus einer Nebentätigkeit löschen. Die Haushaltsposition wird per `id` referenziert.
+
 ### Immobilie anpassen
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -556,6 +575,14 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "name": String,
         "anschrift": Anschrift,
         "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+    }
+
+### EinkunftAusNebentaetigkeit
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal,
+        "beginnDerTaetigkeit": "YYYY-MM-DD"
     }
 
 ### Immobilie
