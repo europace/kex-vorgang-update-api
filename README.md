@@ -364,7 +364,7 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 ### Hinweise
 
 * Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
+* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates Übernahmerechte auf den Kundenbetreuer haben.
 * Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
 * Leere Strings werden ignoriert und nicht als Kommentar importiert.
 
