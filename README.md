@@ -312,6 +312,26 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 > Eine existierende Mietausgabe löschen. Die Mietausgabe wird per `id` referenziert.
 
+### Private Krankenversicherung anpassen
+
+#### Hinweise
+
+* Eine private Krankenversicherung kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+  ENTITY.
+
+**addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Eine private Krankenversicherung einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+
+**updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! )
+-> [BasicResponse](#basicresponse)!
+
+> Eine existierende private Krankenversicherung ändern. Die Haushaltsposition wird per `id` referenziert.
+
+**deletePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Eine existierende private Krankenversicherung löschen. Die Haushaltsposition wird per `id` referenziert.
+
 ## Finanzierungswunsch anpassen
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
@@ -643,6 +663,13 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "telefonPrivat": String,
         "titel": [ "DOKTOR" | "PROFESSOR" ],
         "vorname": String
+    }
+
+### Private Krankenversicherung
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### Wohnsituation
