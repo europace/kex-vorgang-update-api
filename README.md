@@ -1,86 +1,73 @@
 # KEX-Vorgang-Update-API
 
-## Allgemeines
+> ⚠️ You'll find German domain-specific terms in the documentation, for translations and further explanations please refer to our [glossary](https://docs.api.europace.de/common/glossary/)
 
-Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
-Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/). Die URL ist:
+## General
+
+APIs for updating data in KreditSmart-Vorgängen.  
+All APIs documented here are [GraphQL-APIs](https://docs.api.europace.de/privatkredit/graphql/).
 
     https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
-> ⚠️ Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
-> von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
-> tolerant gegenüber kompatiblen API-Änderungen beim Lesen und Prozessieren der Daten sind:
+> ⚠️ This API is continuously developed. Therefore we expect
+> all users to align with the "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)", which requires clients to be
+> tolerant towards compatible API-Changes when reading and processing the data. This means:
 >
-> 1. unbekannte Felder dürfen keine Fehler verursachen
+> 1. unknown properties must not result in errors
 >
-> 2. Strings mit eingeschränktem Wertebereich (Enums) müssen mit neuen, unbekannten Werten umgehen können
+> 2. Strings with a restricted set of values (Enums) must support new unknown values
 >
-> 3. sinnvoller Umgang mit HTTP-Statuscodes, die nicht explizit dokumentiert sind
+> 3. sensible usage of HTTP-Statuscodes, even if they are not explicitly documented
 >
 
 <!-- https://opensource.zalando.com/restful-api-guidelines/#108 -->
 
-### Authentifizierung
+### Authentication
 
-Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
+These APIs are secured by the OAuth client credentials flow using the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/).
+To use these APIs your OAuth2-Client needs the following Scopes:
 
-| Request Header Name | Beschreibung           |
-|---------------------|------------------------|
-| Authorization       | OAuth 2.0 Bearer Token |
-
-Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden. Dazu wird ein Client benötigt der vorher von einer berechtigten
-Person über das Partnermanagement angelegt wurde. Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
-
-Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
-
-Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
-
-### Nachverfolgbarkeit von Requests
-
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse
-erleichtert.  
-Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional. Wenn er nicht gesetzt ist, wird eine ID vom System generiert. Hilfreich für die Analyse ist es, wenn die
-TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
-
-| Request Header Name | Beschreibung                    | Beispiel    |
-|---------------------|---------------------------------|-------------|
-| X-TraceId           | eindeutige ID für jeden Request | sys12345678 |
+| Scope                          | Label in Partnermanagement             | Description                  |
+|--------------------------------|----------------------------------------|------------------------------|
+| privatkredit:vorgang:schreiben | KreditSmart-Vorgänge anlegen/verändern | Scope for updating a Vorgang |
 
 ### GraphQL-Requests
 
-Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet. Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
+These APIs accept data with the Content-Type "**application/json**" with UTF-8 encoding.
+The fields inside a block can be sent in any order.
 
-Die Schnittstelle unterstützt alle gängigen GraphQL Formate, genaueres kann man z.B. unter [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/) nachlesen.
+The APIs support all common GraphQL formats. More information can be found at [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/).
 
-Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der
-Query Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden. In unseren Beispielen nutzen wir die Notation mit Variablen.
+The body of a GraphQL request contains the field `query`, which includes the GraphQL query as a String. Parameters can be set directly in the query or defined as variables. The variables can be sent in the `variables` field of the body as a key-value-map.
+All our examples use variables.
 
     {
       "query": "...",
       "variables": { ... }
     }
 
-### Fehlercodes
+### Error Codes
 
-Die Besonderheit in GraphQL ist u.a., dass die meisten Fehler nicht über HTTP-Fehlercodes wiedergegeben werden. In vielen Fällen bekommt man einen Status 200 zurück, obwohl ein Fehler aufgetreten ist.
-Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
+One of the special features in GraphQL is that most errors are not reflected via HTTP error codes.
+In many cases you receive a status code 200, even though an error has occurred. These GraphQL errors can be found in the `errors` field of the response body.
+More information about error codes can be found [here](https://docs.api.europace.de/privatkredit/graphql/#error-handling).
 
-#### HTTP-Status Errors
+### HTTP-Status Errors
 
-| Fehlercode | Nachricht             | Erklärung                                                                                                   |
-|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
-| 401        | Unauthorized          | Authentifizierung ist fehlgeschlagen                                                                        |
-| 403        | Forbidden             | Der API-Client besitzt einen falschen Scope                                                                 |
-| 415        | Unsupported MediaType | Es wurde ein falscher content-type angegeben
+| Error Code | Message               | Description                     |
+|------------|-----------------------|---------------------------------|
+| 401        | Unauthorized          | Authentication failed           |
+| 403        | Forbidden             | The API client misses a scope   |
+| 415        | Unsupported MediaType | The wrong content type was used |
 
 #### GraphQL Errors
 
-| Fehlercode | Nachricht             | Erklärung                                                                                                   |
-|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
-| 400        | Bad Request           | Request Format ist ungültig, z.B. Pflichtfelder fehlen, Parameternamen, -typen oder -werte sind falsch, ... |
-| 403        | Forbidden             | Der authentifizierte Nutzer besitzt nicht die nötigen Rechte                                                |
-| 404        | NOT FOUND             | Der Vorgang existiert nicht                                                                                 |
-| 410        | GONE                  | Der Vorgang wurde zwischenzeitlich gelöscht                                                                 |
+| Error Code | Message     | Description                                                                                    |
+|------------|-------------|------------------------------------------------------------------------------------------------|
+| 400        | Bad Request | Request format is invalid (mandatory fields are missing, wrong parameter names or values, ...) |
+| 403        | Forbidden   | The authenticated user does not have sufficient rights                                         |
+| 404        | Not Found   | The Vorgang does not exist                                                                     |
+| 410        | Gone        | The Vorgang was deleted in the meantime                                                        |
 
 ## Antragstellerdaten anpassen
 
