@@ -69,23 +69,23 @@ More information about error codes can be found [here](https://docs.api.europace
 | 404        | Not Found   | The Vorgang does not exist                                                                     |
 | 410        | Gone        | The Vorgang was deleted in the meantime                                                        |
 
-## Antragstellerdaten anpassen
+## Update data of Antragsteller
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+* The Vorgang has to be aktiv, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The `antragstellerId` has correspond to an Antragsteller in the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Personendaten anpassen
+### Update Personendaten
 
 **updatePersonendaten** ( vorgangsnummer: String!, antragstellerId: String!, personendaten: [Personendaten](#personendaten)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Personendaten](#personendaten) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -117,13 +117,13 @@ More information about error codes can be found [here](https://docs.api.europace
       "errors": []
     }
 
-### Wohnsituation anpassen
+### Update Wohnsituation
 
 **updateWohnsituation** ( vorgangsnummer: String!, antragstellerId: String!, wohnsituation: [Wohnsituation](#wohnsituation)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Wohnsituation](#wohnsituation) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -146,13 +146,13 @@ More information about error codes can be found [here](https://docs.api.europace
       }
     }
 
-### Herkunft anpassen
+### Update Herkunft
 
 **updateHerkunft** ( vorgangsnummer: String!, antragstellerId: String!, herkunft: [Herkunft](#herkunft)!  ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Herkunft](#herkunft) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -184,17 +184,17 @@ More information about error codes can be found [here](https://docs.api.europace
       "errors": []
     }
 
-### Beschäftigung anpassen
+### Update Beschäftigung
 
 **updateBeschaeftigung** ( vorgangsnummer: String!, antragstellerId: String!, beschaeftigung: [Beschaeftigung](#beschaeftigung)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Beschaeftigung](#beschaeftigung) for an Antragsteller of a Vorgang.
 
-#### Hinweise
+#### Hints
 
-* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
+* The [Beschaeftigung](#beschaeftigung) is only taking one Beschäftigungsart into acocunt and uses only the corresponding fields for the update.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -241,98 +241,98 @@ More information about error codes can be found [here](https://docs.api.europace
 
 ## Haushaltspositionen anpassen
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die in dem Feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und auf bereits vorhandene Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-* Die im Feld `id` verwendete ID muss eine existierend Haushaltsposition vom entsprechenden Typ referenzieren.
+* The Vorgang has to be aktiv, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* Every entry in `antragstellerIds` has to correspond to an Antragsteller in the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
+* The value of the field `id` has to correspond to a Haushaltsposition in the Vorgang with the corresponding type.
 
 ### Einkunft aus Nebentaetigkeit anpassen
 
-#### Hinweise
+#### Hints
 
-* Eine Einkunft aus einer Nebentätigkeit kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+* The Haushaltsposition `Einkunft aus einer Nebentätigkeit` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Einkunft aus einer Nebentätigkeit einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Einkunft aus einer Nebentätigkeit ändern. Die Haushaltsposition wird per `id` referenziert.
+> Update an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 **deleteEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Einkunft aus einer Nebentätigkeit löschen. Die Haushaltsposition wird per `id` referenziert.
+> Delete an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 ### Immobilie anpassen
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Immobilie einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Immobilie. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add an Immobilie to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateImmobilie** ( vorgangsnummer: String!, id: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Immobilie ändern. Die Immobilie wird per `id` referenziert.
+> Update an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
 **deleteImmobilie** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Immobilie löschen. Die Immobilie wird per `id` referenziert.
+> Delete an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
 ### Mietausgabe anpassen
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Mietausgabe einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Mietausgabe. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a Mietausgabe to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateMietausgabe** ( vorgangsnummer: String!, id: String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Mietausgabe ändern. Die Mietausgabe wird per `id` referenziert.
+> Update an existing Mietausgabe. The Haushaltsposition is referenced by the `id`.
 
 **deleteMietausgabe** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Mietausgabe löschen. Die Mietausgabe wird per `id` referenziert.
+> Delete an existing Mietausgabe. The Haushaltsposition is referenced by the `id`.
 
 ### Private Krankenversicherung anpassen
 
-#### Hinweise
+#### Hints
 
-* Eine private Krankenversicherung kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+* The Haushaltsposition `private Krankenversicherung` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine private Krankenversicherung einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a private Krankenversicherung to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! )
 -> [BasicResponse](#basicresponse)!
 
-> Eine existierende private Krankenversicherung ändern. Die Haushaltsposition wird per `id` referenziert.
+> Update an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
 **deletePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende private Krankenversicherung löschen. Die Haushaltsposition wird per `id` referenziert.
+> Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
 ## Finanzierungswunsch anpassen
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+> This mutation is for updating the [Finanzierungswunsch](#finanzierungswunsch) of a Vorgang.
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
-* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+* The Vorgang has to be aktiv, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* The field `Finanzierungswunsch.rateMonatlich` is only processed, if the field `laufzeitInMonaten` is not set.
+* If the field `Finanzierungswunsch.ratenzahlungstermin` is not specified, the default value `MONATSENDE` is used.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Beispiel
+### Example
 
 #### POST Request
 
@@ -364,16 +364,16 @@ More information about error codes can be found [here](https://docs.api.europace
 
 **addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+> This mutation is for adding one or more Kommentare to a Vorgang.
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates Übernahmerechte auf den Kundenbetreuer haben.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Leere Strings werden ignoriert und nicht als Kommentar importiert.
+* The Vorgang has to be aktiv, which means it must not be archived.
+* The authenticated user has to have Übernahmerechte to the Kundenbetreuer.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Empty Strings will be ignored.
 
-### Beispiel
+### Example
 
 #### POST Request
 
@@ -431,9 +431,8 @@ More information about error codes can be found [here](https://docs.api.europace
         "rentner": Rentner
     }
 
-Die `Beschaeftigungsart` bestimmt die Beschäftigung und damit das dazu korrespondierende Feld. Beispielsweise wird für die `beschaeftigungsart=ARBEITER`
-die Daten unter dem Knoten `arbeiter` genutzt, bei der `beschaeftigungsart=BEAMTER` entsprechend der Knoten `beamter`. Werden darüber hinaus weitere Felder befüllt so werden diese ignoriert.<BR/>
-Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsart passende Knoten nicht befüllt, werden alle Felder ignoriert.
+The `Beschaeftigungsart` determines which data is used. For example the `beschaeftigungsart=ARBEITER` means that all data of field `arbeiter` is used, for `beschaeftigungsart=BEAMTER` the data of field `beamter` is used. All other fields will be ignored.
+If there is no value for `Beschaeftigungsart` or the corresponding field to a `Beschaeftigungsart` is empty, all data is ignored.
 
 #### Arbeiter
 
@@ -568,9 +567,9 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
 
 #### Country
 
-Die Übermittlung erfolgt im Format [ISO-3166/ALPHA-2](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)
+This Type uses the format [ISO-3166/ALPHA-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
 
-Zusätzlich gibt es den Wert "SONSTIGE"
+In addition there is the value "SONSTIGE" ("other")
 
     "AD" | "AE" | "AF" | "AG" | "AL" | "AM" | "AO" | "AR" | "AT" | "AU" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BN" | "BO" | "BR" | "BS" | "BT" | "BW" | "BY" | "BZ" | "CA" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "XK" | "CU" | "CV" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FM" | "FR" | "GA" | "GB" | "GD" | "GE" | "GH" | "GM" | "GN" | "GQ" | "GR" | "GT" | "GW" | "GY" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IN" | "IQ" | "IR" | "IS" | "IT" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MR" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NE" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PG" | "PH" | "PK" | "PL" | "PS" | "PT" | "PW" | "PY" | "QA" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SI" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SY" | "SZ" | "TD" | "TG" | "TH" | "TJ" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TZ" | "UA" | "UG" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VN" | "VU" | "WS" | "YE" | "ZA" | "ZM" | "ZW" | "SONSTIGE"
 
@@ -681,7 +680,7 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ## Response-Datentypen
 
-> Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind KEINE Fehlermeldungen.
+> If we do server-side adapions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, they are NEVER any errors in the `messages` field. These will be shown in the `errors` field instead.
 
 ### BasicResponse
 
@@ -696,6 +695,5 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "id": String
     }
 
-## Nutzungsbedingungen
-
-Die APIs werden unter folgenden [Nutzungsbedingungen](https://docs.api.europace.de/nutzungsbedingungen/) zur Verfügung gestellt
+## Terms of use
+The APIs are made available under the following [Terms of Use](https://docs.api.europace.de/terms/).
