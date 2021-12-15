@@ -259,7 +259,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add a Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add a Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
 
@@ -273,7 +273,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add an Immobilie to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add an Immobilie to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateImmobilie** ( vorgangsnummer: String!, id: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicResponse](#basicresponse)!
 
@@ -287,7 +287,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add a Mietausgabe to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add a Mietausgabe to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateMietausgabe** ( vorgangsnummer: String!, id: String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicResponse](#basicresponse)!
 
@@ -306,7 +306,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add a private Krankenversicherung to a Vorgang. The Response contains the `id` of the creates Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add a private Krankenversicherung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! )
 -> [BasicResponse](#basicresponse)!
@@ -680,7 +680,7 @@ In addition there is the value "SONSTIGE" ("other")
 
 ## Response-Datentypen
 
-> If we do server-side adapions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, they are NEVER any errors in the `messages` field. These will be shown in the `errors` field instead.
+> If we do server-side adapions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
 
 ### BasicResponse
 
