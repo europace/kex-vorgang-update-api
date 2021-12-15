@@ -1,7 +1,5 @@
 # KEX-Vorgang-Update-API
 
-> Die alten Update-Endpunkte sind [hier](#legacy-update-apis) dokumentiert.
-
 ## Allgemeines
 
 Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
@@ -710,48 +708,6 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "messages": [ String ]
         "id": String
     }
-
-## Legacy-Update-APIs
-
-> ⚠️ Diese APIs sind deprecated. Sie werden nicht mehr weiterentwickelt und nur noch supported, bis eine Alternative zur Verfügung steht.
-
-### Dokumente
-
-Diese Schnittstelle ermöglicht das automatisierte Importieren von Dokumenten in einen existierenden **Kredit**Smart-Vorgang.
-
-Dokumente können per **HTTP POST** importiert werden.
-
-Die URL ist:
-
-    https://www.europace2.de/kreditsmart/kex/vorgang/{vorgangsnummer}/dokument
-
-Die Daten werden als JSON im Body des POST Requests übermittelt.
-
-Ein erfolgreicher Aufruf resultiert in einer Response mit dem HTTP Statuscode **201 CREATED**.
-
-#### Request Format
-
-Die Angaben werden als JSON im Body des Requests gesendet.
-
-	{
-		"filename": String,
-		"base64Content": String
-	}
-
-Beide Felder müssen befüllt sein um das Dokument erfolgreich importieren zu können.
-
-##### Request Beispiel:
-
-```bash
-curl -X POST \
-  https://www.europace2.de/kreditsmart/kex/vorgang/123456/dokument \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer xxxxxxx' \
-  -d '{
-	"filename": "Test.pdf",
-	"base64Content": "JVBERi0xLjMKJcTl8uXrp"
-}'
-```
 
 ## Nutzungsbedingungen
 
