@@ -1,104 +1,91 @@
 # KEX-Vorgang-Update-API
 
-## Allgemeines
+> ⚠️ You'll find German domain-specific terms in the documentation, for translations and further explanations please refer to our [glossary](https://docs.api.europace.de/common/glossary/)
 
-Schnittstelle für das Ändern von KreditSmart-Vorgängen.  
-Alle hier dokumentierten Schnittstellen sind [GraphQL-Schnittstellen](https://docs.api.europace.de/privatkredit/graphql/). Die URL ist:
+## General
+
+APIs for updating data in KreditSmart-Vorgängen.  
+All APIs documented here are [GraphQL-APIs](https://docs.api.europace.de/privatkredit/graphql/).
 
     https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
-> ⚠️ Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
-> von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
-> tolerant gegenüber kompatiblen API-Änderungen beim Lesen und Prozessieren der Daten sind:
+> ⚠️ This API is continuously developed. Therefore we expect
+> all users to align with the "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)", which requires clients to be
+> tolerant towards compatible API-Changes when reading and processing the data. This means:
 >
-> 1. unbekannte Felder dürfen keine Fehler verursachen
+> 1. unknown properties must not result in errors
 >
-> 2. Strings mit eingeschränktem Wertebereich (Enums) müssen mit neuen, unbekannten Werten umgehen können
+> 2. Strings with a restricted set of values (Enums) must support new unknown values
 >
-> 3. sinnvoller Umgang mit HTTP-Statuscodes, die nicht explizit dokumentiert sind
+> 3. sensible usage of HTTP-Statuscodes, even if they are not explicitly documented
 >
 
 <!-- https://opensource.zalando.com/restful-api-guidelines/#108 -->
 
-### Authentifizierung
+### Authentication
 
-Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
+These APIs are secured by the OAuth client credentials flow using the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/).
+To use these APIs your OAuth2-Client needs the following Scopes:
 
-| Request Header Name | Beschreibung           |
-|---------------------|------------------------|
-| Authorization       | OAuth 2.0 Bearer Token |
-
-Das Bearer Token kann über die [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/) angefordert werden. Dazu wird ein Client benötigt der vorher von einer berechtigten
-Person über das Partnermanagement angelegt wurde. Eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
-
-Damit der Client für diese API genutzt werden kann, muss im Partnermanagement die Berechtigung **KreditSmart-Vorgänge anlegen/verändern** (Scope `privatkredit:vorgang:schreiben`) aktiviert sein.
-
-Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
-
-### Nachverfolgbarkeit von Requests
-
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE System nachverfolgbar macht und so bei etwaigen Problemen oder Fehlern die systemübergreifende Analyse
-erleichtert.  
-Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional. Wenn er nicht gesetzt ist, wird eine ID vom System generiert. Hilfreich für die Analyse ist es, wenn die
-TraceId mit einem System-Kürzel beginnt (im Beispiel unten 'sys').
-
-| Request Header Name | Beschreibung                    | Beispiel    |
-|---------------------|---------------------------------|-------------|
-| X-TraceId           | eindeutige ID für jeden Request | sys12345678 |
+| Scope                          | Label in Partnermanagement             | Description                  |
+|--------------------------------|----------------------------------------|------------------------------|
+| privatkredit:vorgang:schreiben | KreditSmart-Vorgänge anlegen/verändern | Scope for updating a Vorgang |
 
 ### GraphQL-Requests
 
-Die Angaben werden als JSON mit UTF-8 Encoding im Body des Requests gesendet. Die Attribute innerhalb eines Blocks können dabei in beliebiger Reihenfolge angegeben werden.
+These APIs accept data with the Content-Type "**application/json**" with UTF-8 encoding.
+The fields inside a block can be sent in any order.
 
-Die Schnittstelle unterstützt alle gängigen GraphQL Formate, genaueres kann man z.B. unter [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/) nachlesen.
+The APIs support all common GraphQL formats. More information can be found at [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/).
 
-Im Body des Requests wird die GraphQL-Query als String im Property `query` mitgeschickt. Falls die Query Parameter enthält, können diese Werte direkt in der Query gesetzt werden oder es können in der
-Query Variablen definiert werden, deren konkrete Werte dann im Property `variables` als Key-Value-Map übermittelt werden. In unseren Beispielen nutzen wir die Notation mit Variablen.
+The body of a GraphQL request contains the field `query`, which includes the GraphQL query as a String. Parameters can be set directly in the query or defined as variables. The variables can be sent in the `variables` field of the body as a key-value-map.
+All our examples use variables.
 
     {
       "query": "...",
       "variables": { ... }
     }
 
-### Fehlercodes
+### Error Codes
 
-Die Besonderheit in GraphQL ist u.a., dass die meisten Fehler nicht über HTTP-Fehlercodes wiedergegeben werden. In vielen Fällen bekommt man einen Status 200 zurück, obwohl ein Fehler aufgetreten ist.
-Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hier](https://docs.api.europace.de/privatkredit/graphql/)
+One of the special features in GraphQL is that most errors are not reflected via HTTP error codes.
+In many cases you receive a status code 200, even though an error has occurred. These GraphQL errors can be found in the `errors` field of the response body.
+More information about error codes can be found [here](https://docs.api.europace.de/privatkredit/graphql/#error-handling).
 
-#### HTTP-Status Errors
+### HTTP-Status Errors
 
-| Fehlercode | Nachricht             | Erklärung                                                                                                   |
-|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
-| 401        | Unauthorized          | Authentifizierung ist fehlgeschlagen                                                                        |
-| 403        | Forbidden             | Der API-Client besitzt einen falschen Scope                                                                 |
-| 415        | Unsupported MediaType | Es wurde ein falscher content-type angegeben
+| Error Code | Message               | Description                     |
+|------------|-----------------------|---------------------------------|
+| 401        | Unauthorized          | Authentication failed           |
+| 403        | Forbidden             | The API client misses a scope   |
+| 415        | Unsupported MediaType | The wrong content type was used |
 
 #### GraphQL Errors
 
-| Fehlercode | Nachricht             | Erklärung                                                                                                   |
-|------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
-| 400        | Bad Request           | Request Format ist ungültig, z.B. Pflichtfelder fehlen, Parameternamen, -typen oder -werte sind falsch, ... |
-| 403        | Forbidden             | Der authentifizierte Nutzer besitzt nicht die nötigen Rechte                                                |
-| 404        | NOT FOUND             | Der Vorgang existiert nicht                                                                                 |
-| 410        | GONE                  | Der Vorgang wurde zwischenzeitlich gelöscht                                                                 |
+| Error Code | Message     | Description                                                                                    |
+|------------|-------------|------------------------------------------------------------------------------------------------|
+| 400        | Bad Request | Request format is invalid (mandatory fields are missing, wrong parameter names or values, ...) |
+| 403        | Forbidden   | The authenticated user does not have sufficient rights                                         |
+| 404        | Not Found   | The Vorgang does not exist                                                                     |
+| 410        | Gone        | The Vorgang was deleted in the meantime                                                        |
 
-## Antragstellerdaten anpassen
+## Update data of Antragsteller
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die `antragstellerId` muss in dem Vorgang vorhanden sein und auf einen bereits vorhandenen Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The `antragstellerId` has torefer to an existing Antragsteller in the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Personendaten anpassen
+### Update Personendaten
 
 **updatePersonendaten** ( vorgangsnummer: String!, antragstellerId: String!, personendaten: [Personendaten](#personendaten)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Personendaten](#personendaten) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Personendaten](#personendaten) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -130,13 +117,13 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
       "errors": []
     }
 
-### Wohnsituation anpassen
+### Update Wohnsituation
 
 **updateWohnsituation** ( vorgangsnummer: String!, antragstellerId: String!, wohnsituation: [Wohnsituation](#wohnsituation)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Wohnsituation](#wohnsituation) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Wohnsituation](#wohnsituation) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -159,13 +146,13 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
       }
     }
 
-### Herkunft anpassen
+### Update Herkunft
 
 **updateHerkunft** ( vorgangsnummer: String!, antragstellerId: String!, herkunft: [Herkunft](#herkunft)!  ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Herkunft](#herkunft) für einen Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Herkunft](#herkunft) for an Antragsteller of a Vorgang.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -197,17 +184,17 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
       "errors": []
     }
 
-### Beschäftigung anpassen
+### Update Beschäftigung
 
 **updateBeschaeftigung** ( vorgangsnummer: String!, antragstellerId: String!, beschaeftigung: [Beschaeftigung](#beschaeftigung)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man die [Beschaeftigung](#beschaeftigung) zu einem Antragsteller eines Vorgangs anpassen.
+> This mutation is for updating the [Beschaeftigung](#beschaeftigung) for an Antragsteller of a Vorgang.
 
-#### Hinweise
+#### Hints
 
-* Die [Beschaeftigung](#beschaeftigung) berücksichtigt genau eine Beschäftigungsart und nutzt dann das dazu korrespondierende Feld für die Aktualisierung.
+* The [Beschaeftigung](#beschaeftigung) is only taking one Beschäftigungsart into account and uses only the corresponding fields for the update.
 
-#### Beispiel
+#### Example
 
 ##### POST Request
 
@@ -254,98 +241,98 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 ## Haushaltspositionen anpassen
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Die in dem Feld `antragstellerIds` verwendeten IDs müssen in dem Vorgang vorhanden sein und auf bereits vorhandene Antragsteller referenzieren.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
-* Die im Feld `id` verwendete ID muss eine existierend Haushaltsposition vom entsprechenden Typ referenzieren.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* Every entry in `antragstellerIds` has to correspond to an Antragsteller in the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
+* The value of the field `id` has to correspond to a Haushaltsposition in the Vorgang with the corresponding type.
 
 ### Einkunft aus Nebentaetigkeit anpassen
 
-#### Hinweise
+#### Hints
 
-* Eine Einkunft aus einer Nebentätigkeit kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+* The Haushaltsposition `Einkunft aus einer Nebentätigkeit` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Einkunft aus einer Nebentätigkeit einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Einkunft aus einer Nebentätigkeit ändern. Die Haushaltsposition wird per `id` referenziert.
+> Update an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 **deleteEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Einkunft aus einer Nebentätigkeit löschen. Die Haushaltsposition wird per `id` referenziert.
+> Delete an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 ### Immobilie anpassen
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Immobilie einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Immobilie. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add an Immobilie to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateImmobilie** ( vorgangsnummer: String!, id: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Immobilie ändern. Die Immobilie wird per `id` referenziert.
+> Update an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
 **deleteImmobilie** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Immobilie löschen. Die Immobilie wird per `id` referenziert.
+> Delete an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
 ### Mietausgabe anpassen
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine Mietausgabe einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Mietausgabe. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a Mietausgabe to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateMietausgabe** ( vorgangsnummer: String!, id: String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Mietausgabe ändern. Die Mietausgabe wird per `id` referenziert.
+> Update an existing Mietausgabe. The Haushaltsposition is referenced by the `id`.
 
 **deleteMietausgabe** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende Mietausgabe löschen. Die Mietausgabe wird per `id` referenziert.
+> Delete an existing Mietausgabe. The Haushaltsposition is referenced by the `id`.
 
 ### Private Krankenversicherung anpassen
 
-#### Hinweise
+#### Hints
 
-* Eine private Krankenversicherung kann nur einem Antragsteller zugeordnet sein. Falls mehrere Antragsteller angegeben werden gibt es einen GraphQL-Fehler mit dem Fehlercode 422 - UNPROCESSABLE
+* The Haushaltsposition `private Krankenversicherung` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Eine private Krankenversicherung einem Vorgang hinzufügen. Die Response enthält die `id` der angelegten Haushaltsposition. Diese `id` kann als Referenz für weitere Änderungen benutzt werden.
+> Add a private Krankenversicherung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! )
 -> [BasicResponse](#basicresponse)!
 
-> Eine existierende private Krankenversicherung ändern. Die Haushaltsposition wird per `id` referenziert.
+> Update an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
 **deletePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Eine existierende private Krankenversicherung löschen. Die Haushaltsposition wird per `id` referenziert.
+> Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
 ## Finanzierungswunsch anpassen
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man den [Finanzierungswunsch](#finanzierungswunsch) eines Vorgangs anpassen.
+> This mutation is for updating the [Finanzierungswunsch](#finanzierungswunsch) of a Vorgang.
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates der Bearbeiter des Vorgangs sein.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Das Feld `Finanzierungswunsch.rateMonatlich` wird nur berücksichtigt, wenn keine `laufzeitInMonaten` angegeben ist.
-* Wenn das Feld `Finanzierungswunsch.ratenzahlungstermin` nicht angegeben wird, wird der Wert `MONATSENDE` verwendet.
-* Wenn Felder, die keinen Default Wert besitzen, nicht angegeben werden, werden die vorigen Werte entfernt.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* The field `Finanzierungswunsch.rateMonatlich` is only processed, if the field `laufzeitInMonaten` is not set.
+* If the field `Finanzierungswunsch.ratenzahlungstermin` is not specified, the default value `MONATSENDE` is used.
+* Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Beispiel
+### Example
 
 #### POST Request
 
@@ -377,16 +364,16 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
 
 **addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
 
-> Mit dieser Mutation kann man ein oder mehrere Kommentare zu einem Vorgang hinzufügen.
+> This mutation is for adding one or more Kommentare to a Vorgang.
 
-### Hinweise
+### Hints
 
-* Der Vorgang muss aktiv, d.h. nicht archiviert, sein.
-* Der authentifizierte Nutzer muss zum Zeitpunkt des Updates Übernahmerechte auf den Kundenbetreuer haben.
-* Der Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) muss zum Zeitpunkt des Updates für den authentifizierten Nutzer erlaubt sein.
-* Leere Strings werden ignoriert und nicht als Kommentar importiert.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to have Übernahmerechte to the Kundenbetreuer.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Empty Strings will be ignored.
 
-### Beispiel
+### Example
 
 #### POST Request
 
@@ -444,9 +431,8 @@ Dafür gibt es das Attribut `errors` in der Response. Weitere Infos gibt es [hie
         "rentner": Rentner
     }
 
-Die `Beschaeftigungsart` bestimmt die Beschäftigung und damit das dazu korrespondierende Feld. Beispielsweise wird für die `beschaeftigungsart=ARBEITER`
-die Daten unter dem Knoten `arbeiter` genutzt, bei der `beschaeftigungsart=BEAMTER` entsprechend der Knoten `beamter`. Werden darüber hinaus weitere Felder befüllt so werden diese ignoriert.<BR/>
-Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsart passende Knoten nicht befüllt, werden alle Felder ignoriert.
+The `Beschaeftigungsart` determines which data is used. For example the `beschaeftigungsart=ARBEITER` means that all data of field `arbeiter` is used, for `beschaeftigungsart=BEAMTER` the data of field `beamter` is used. All other fields will be ignored.
+If there is no value for `Beschaeftigungsart` or the corresponding field to a `Beschaeftigungsart` is empty, all data is ignored.
 
 #### Arbeiter
 
@@ -581,9 +567,9 @@ Ist keine `Beschaeftigungsart` gesetzt oder der zur angegebenen Beschäftigungsa
 
 #### Country
 
-Die Übermittlung erfolgt im Format [ISO-3166/ALPHA-2](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)
+This Type uses the format [ISO-3166/ALPHA-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
 
-Zusätzlich gibt es den Wert "SONSTIGE"
+In addition there is the value "SONSTIGE" ("other")
 
     "AD" | "AE" | "AF" | "AG" | "AL" | "AM" | "AO" | "AR" | "AT" | "AU" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BN" | "BO" | "BR" | "BS" | "BT" | "BW" | "BY" | "BZ" | "CA" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "XK" | "CU" | "CV" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FM" | "FR" | "GA" | "GB" | "GD" | "GE" | "GH" | "GM" | "GN" | "GQ" | "GR" | "GT" | "GW" | "GY" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IN" | "IQ" | "IR" | "IS" | "IT" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MR" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NE" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PG" | "PH" | "PK" | "PL" | "PS" | "PT" | "PW" | "PY" | "QA" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SI" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SY" | "SZ" | "TD" | "TG" | "TH" | "TJ" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TZ" | "UA" | "UG" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VN" | "VU" | "WS" | "YE" | "ZA" | "ZM" | "ZW" | "SONSTIGE"
 
@@ -694,7 +680,7 @@ Zusätzlich gibt es den Wert "SONSTIGE"
 
 ## Response-Datentypen
 
-> Wenn serverseitig Daten angepasst werden mussten, um eine valide Verarbeitung zu gewährleisten, werden diese Anpassungen als Meldungen zurückgegeben, um den Client zu informieren. Diese Meldungen sind KEINE Fehlermeldungen.
+> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
 
 ### BasicResponse
 
@@ -709,6 +695,5 @@ Zusätzlich gibt es den Wert "SONSTIGE"
         "id": String
     }
 
-## Nutzungsbedingungen
-
-Die APIs werden unter folgenden [Nutzungsbedingungen](https://docs.api.europace.de/nutzungsbedingungen/) zur Verfügung gestellt
+## Terms of use
+The APIs are made available under the following [Terms of Use](https://docs.api.europace.de/terms/).
