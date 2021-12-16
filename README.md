@@ -192,7 +192,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 #### Hints
 
-* The [Beschaeftigung](#beschaeftigung) is only taking one Beschäftigungsart into acocunt and uses only the corresponding fields for the update.
+* The [Beschaeftigung](#beschaeftigung) is only taking one Beschäftigungsart into account and uses only the corresponding fields for the update.
 
 #### Example
 
@@ -680,7 +680,7 @@ In addition there is the value "SONSTIGE" ("other")
 
 ## Response-Datentypen
 
-> If we do server-side adapions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
+> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
 
 ### BasicResponse
 
