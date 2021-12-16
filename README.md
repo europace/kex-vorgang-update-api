@@ -75,7 +75,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 * The Vorgang has to be aktiv, which means it must not be archived.
 * The authenticated user has to be the Bearbeiter of the Vorgang.
-* The `antragstellerId` has correspond to an Antragsteller in the Vorgang.
+* The `antragstellerId` has torefer to an existing Antragsteller in the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
