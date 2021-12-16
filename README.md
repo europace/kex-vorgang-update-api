@@ -73,7 +73,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 ### Hints
 
-* The Vorgang has to be aktiv, which means it must not be archived.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to be the Bearbeiter of the Vorgang.
 * The `antragstellerId` has torefer to an existing Antragsteller in the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
@@ -243,7 +243,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 ### Hints
 
-* The Vorgang has to be aktiv, which means it must not be archived.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to be the Bearbeiter of the Vorgang.
 * Every entry in `antragstellerIds` has to correspond to an Antragsteller in the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
@@ -325,7 +325,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 ### Hints
 
-* The Vorgang has to be aktiv, which means it must not be archived.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to be the Bearbeiter of the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * The field `Finanzierungswunsch.rateMonatlich` is only processed, if the field `laufzeitInMonaten` is not set.
@@ -368,7 +368,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 ### Hints
 
-* The Vorgang has to be aktiv, which means it must not be archived.
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to have Übernahmerechte to the Kundenbetreuer.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Empty Strings will be ignored.
