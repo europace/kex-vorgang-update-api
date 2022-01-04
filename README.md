@@ -4,28 +4,29 @@
 
 ## General
 
-APIs for updating data in KreditSmart-Vorgängen.  
-All APIs documented here are [GraphQL-APIs](https://docs.api.europace.de/privatkredit/graphql/).
+APIs for updating data in KreditSmart-Vorgängen. The URL for this service is:
 
     https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
 
+All APIs documented here are [GraphQL-APIs](https://docs.api.europace.de/privatkredit/graphql/).
+
 > ⚠️ This API is continuously developed. Therefore we expect
 > all users to align with the "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)", which requires clients to be
-> tolerant towards compatible API-Changes when reading and processing the data. This means:
+> tolerant towards compatible API changes when reading and processing the data. This means:
 >
 > 1. unknown properties must not result in errors
 >
 > 2. Strings with a restricted set of values (Enums) must support new unknown values
 >
-> 3. sensible usage of HTTP-Statuscodes, even if they are not explicitly documented
+> 3. sensible usage of HTTP status codes, even if they are not explicitly documented
 >
 
 <!-- https://opensource.zalando.com/restful-api-guidelines/#108 -->
 
 ### Authentication
 
-These APIs are secured by the OAuth client credentials flow using the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/).
-To use these APIs your OAuth2-Client needs the following Scopes:
+These APIs are secured by the OAuth 2.0 client credentials flow using the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizierung/).
+To use these APIs your OAuth2-Client needs the following scopes:
 
 | Scope                          | Label in Partnermanagement             | Description                  |
 |--------------------------------|----------------------------------------|------------------------------|
@@ -33,12 +34,12 @@ To use these APIs your OAuth2-Client needs the following Scopes:
 
 ### GraphQL-Requests
 
-These APIs accept data with the Content-Type "**application/json**" with UTF-8 encoding.
+These APIs accept data with the content-type **application/json** with UTF-8 encoding.
 The fields inside a block can be sent in any order.
 
 The APIs support all common GraphQL formats. More information can be found at [https://graphql.org/learn/queries/](https://graphql.org/learn/queries/).
 
-The body of a GraphQL request contains the field `query`, which includes the GraphQL query as a String. Parameters can be set directly in the query or defined as variables. The variables can be sent in the `variables` field of the body as a key-value-map.
+The body of a GraphQL request contains the field `query`, which includes the GraphQL query as a String. Parameters can be set directly in the query or defined as variables. The variables can be sent in the `variables` field of the body as a key-value map.
 All our examples use variables.
 
     {
@@ -254,7 +255,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 #### Hints
 
-* The Haushaltsposition `Einkunft aus einer Nebentätigkeit` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
+* The Haushaltsposition `Einkunft aus einer Nebentätigkeit` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -301,7 +302,7 @@ More information about error codes can be found [here](https://docs.api.europace
 
 #### Hints
 
-* The Haushaltsposition `private Krankenversicherung` can only be related to 1 Antragsteller. If you provide more than 1 `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
+* The Haushaltsposition `private Krankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code 422 - UNPROCESSABLE
   ENTITY.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -431,8 +432,8 @@ More information about error codes can be found [here](https://docs.api.europace
         "rentner": Rentner
     }
 
-The `Beschaeftigungsart` determines which data is used. For example the `beschaeftigungsart=ARBEITER` means that all data of field `arbeiter` is used, for `beschaeftigungsart=BEAMTER` the data of field `beamter` is used. All other fields will be ignored.
-If there is no value for `Beschaeftigungsart` or the corresponding field to a `Beschaeftigungsart` is empty, all data is ignored.
+The `beschaeftigungsart` determines which data is used. For example the `beschaeftigungsart=ARBEITER` means that all data of field `arbeiter` is used, for `beschaeftigungsart=BEAMTER` the data of field `beamter` is used. All other fields will be ignored.
+If there is no value for `beschaeftigungsart` or the corresponding field to a `beschaeftigungsart` is empty, all data is ignored.
 
 #### Arbeiter
 
