@@ -238,7 +238,7 @@ can be found in the `errors` field of the response body. More information about 
       "errors": []
     }
 
-## Haushaltspositionen anpassen
+## Update Haushaltspositionen
 
 ### Hints
 
@@ -249,7 +249,7 @@ can be found in the `errors` field of the response body. More information about 
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 * The value of the field `id` has to correspond to a Haushaltsposition in the Vorgang with the corresponding type.
 
-### Einkunft aus Nebentaetigkeit anpassen
+### Update Einkunft aus Nebentaetigkeit
 
 #### Hints
 
@@ -268,7 +268,7 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
-### Immobilie anpassen
+### Update Immobilie
 
 **addImmobilie** ( vorgangsnummer: String!, immobilie: [Immobilie](#immobilie)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -282,7 +282,7 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
-### Mietausgabe anpassen
+### Update Mietausgabe
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -296,12 +296,12 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Mietausgabe. The Haushaltsposition is referenced by the `id`.
 
-### Private Krankenversicherung anpassen
+### Update Private Krankenversicherung
 
 #### Hints
 
 * The Haushaltsposition `private Krankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code 422
-  - UNPROCESSABLE ENTITY.
+    - UNPROCESSABLE ENTITY.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -316,7 +316,7 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
-## Finanzbedarf anpassen
+## Update Finanzbedarf
 
 ### Hints
 
@@ -325,7 +325,7 @@ can be found in the `errors` field of the response body. More information about 
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Finanzierungswunsch anpassen
+### Update Finanzierungswunsch
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
 
