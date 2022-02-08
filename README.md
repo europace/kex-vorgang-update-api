@@ -318,24 +318,29 @@ More information about error codes can be found [here](https://docs.api.europace
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
-## Finanzierungswunsch anpassen
-
-**updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
-
-> This mutation is for updating the [Finanzierungswunsch](#finanzierungswunsch) of a Vorgang.
+## Finanzbedarf anpassen
 
 ### Hints
 
 * The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to be the Bearbeiter of the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
-* The field `Finanzierungswunsch.rateMonatlich` is only processed, if the field `laufzeitInMonaten` is not set.
-* If the field `Finanzierungswunsch.ratenzahlungstermin` is not specified, the default value `MONATSENDE` is used.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
-### Example
+### Finanzierungswunsch anpassen
 
-#### POST Request
+**updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
+
+> This mutation is for updating the [Finanzierungswunsch](#finanzierungswunsch) of a Vorgang.
+
+#### Hints
+
+* The field `Finanzierungswunsch.rateMonatlich` is only processed, if the field `laufzeitInMonaten` is not set.
+* If the field `Finanzierungswunsch.ratenzahlungstermin` is not specified, the default value `MONATSENDE` is used.
+
+#### Example
+
+##### POST Request
 
     POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
     Authorization: Bearer xxxx
@@ -352,7 +357,7 @@ More information about error codes can be found [here](https://docs.api.europace
       }
     }
 
-#### POST Response
+##### POST Response
 
     {
       "data": {
@@ -360,6 +365,17 @@ More information about error codes can be found [here](https://docs.api.europace
       },
       "errors": []
     }
+
+### Update Ratenschutz
+
+**updateRatenschutz** ( vorgangsnummer: String!, antragstellerId: String!, ratenschutz: [Ratenschutz](#ratenschutz)! ) -> [BasicResponse](#basicresponse)!
+
+> This mutation is for updating the [Ratenschutz](#ratenschutz) for an Antragsteller of a Vorgang.
+
+#### Hints
+
+* The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
+* The agent must be allowed to sell payment protection insurances.
 
 ## Kommentare hinzufügen
 
@@ -403,20 +419,6 @@ More information about error codes can be found [here](https://docs.api.europace
     }
 
 ## Request-Datentypen
-
-### Finanzierungswunsch
-
-    {
-        "laufzeitInMonaten": Integer
-        "ratenzahlungstermin": Ratenzahlungstermin
-        "provisionswunschInProzent": BigDecimal
-        "kreditbetrag": BigDecimal
-        "rateMonatlich": BigDecimal
-    }
-
-#### Ratenzahlungstermin
-
-        "MONATSENDE" | "MONATSMITTE"
 
 ### Beschaeftigung
 
@@ -590,6 +592,20 @@ In addition there is the value "SONSTIGE" ("other")
         "beginnDerTaetigkeit": "YYYY-MM-DD"
     }
 
+### Finanzierungswunsch
+
+    {
+        "laufzeitInMonaten": Integer
+        "ratenzahlungstermin": Ratenzahlungstermin
+        "provisionswunschInProzent": BigDecimal
+        "kreditbetrag": BigDecimal
+        "rateMonatlich": BigDecimal
+    }
+
+#### Ratenzahlungstermin
+
+        "MONATSENDE" | "MONATSMITTE"
+
 ### Immobilie
 
     {
@@ -655,6 +671,23 @@ In addition there is the value "SONSTIGE" ("other")
     {
         "antragstellerIds": [ String ],
         "betragMonatlich": BigDecimal
+    }
+
+### Ratenschutz
+
+    {
+        "arbeitslosigkeitAbsicherung": RatenschutzAbsicherung
+        "arbeitsunfaehigkeitAbsicherung": RatenschutzAbsicherung
+        "todesfallAbsicherung": RatenschutzAbsicherung
+    }
+
+#### RatenschutzAbsicherung
+
+    {
+        "vorhanden": Boolean
+        "kommentar": String
+        "gewuenscht": Boolean
+        "wichtig": Boolean
     }
 
 ### Wohnsituation
