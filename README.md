@@ -422,52 +422,52 @@ can be found in the `errors` field of the response body. More information about 
 
     {
         "beschaeftigungsart": "ANGESTELLTER" | "ARBEITER" | "ARBEITSLOSER" | "BEAMTER" | "FREIBERUFLER" | "HAUSFRAU" | "RENTNER" | "SELBSTSTAENDIGER",
-        "arbeiter": Arbeiter,
-        "angestellter": Angestellter,                
+        "angestellter": Angestellter,
+        "arbeiter": Arbeiter,              
         "arbeitsloser": Arbeitsloser,
         "beamter": Beamter,
-        "selbststaendiger": Selbstständiger,
         "freiberufler": Freiberufler,
         "hausfrau": Hausfrau,
-        "rentner": Rentner
+        "rentner": Rentner,
+        "selbststaendiger": Selbstständiger
     }
 
 The `beschaeftigungsart` determines which data is used. For example the `beschaeftigungsart=ARBEITER` means that all data of field `arbeiter` is used, for `beschaeftigungsart=BEAMTER` the data of
 field `beamter` is used. All other fields will be ignored. If there is no value for `beschaeftigungsart` or the corresponding field to a `beschaeftigungsart` is empty, all data is ignored.
 
-#### Arbeiter
-
-    {
-        "beschaeftigungsverhaeltnis": {
-            "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": BigDecimal,
-            "arbeitgeber": Firma,
-            "beschaeftigtSeit": "YYYY-MM-DD",
-            "befristung": "BEFRISTET" | "UNBEFRISTET",
-            "befristetBis": "YYYY-MM-DD",
-            "inProbezeit": true | false
-        },
-        "vorherigesBeschaeftigungsverhaeltnis": {
-            "arbeitgeber": Firma
-            "beschaeftigtSeit": "YYYY-MM-DD",
-            "beschaeftigtBis": "YYYY-MM-DD"
-        }
-    }
-
 #### Angestellter
 
     {
         "beschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma,   
             "berufsbezeichnung": String,
-            "nettoeinkommenMonatlich": BigDecimal,
-            "arbeitgeber": Firma,
-            "beschaeftigtSeit": "YYYY-MM-DD",
             "befristung": "BEFRISTET" | "UNBEFRISTET",
             "befristetBis": "YYYY-MM-DD",
-            "inProbezeit": true | false
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "inProbezeit": true | false,
+            "nettoeinkommenMonatlich": BigDecimal
         },
         "vorherigesBeschaeftigungsverhaeltnis": {
-            "arbeitgeber": Firma
+            "arbeitgeber": Firma,
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "beschaeftigtBis": "YYYY-MM-DD"
+        }
+    }
+    
+#### Arbeiter
+
+    {
+        "beschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma,   
+            "berufsbezeichnung": String,
+            "befristung": "BEFRISTET" | "UNBEFRISTET",
+            "befristetBis": "YYYY-MM-DD",
+            "beschaeftigtSeit": "YYYY-MM-DD",
+            "inProbezeit": true | false,
+            "nettoeinkommenMonatlich": BigDecimal
+        },
+        "vorherigesBeschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma,
             "beschaeftigtSeit": "YYYY-MM-DD",
             "beschaeftigtBis": "YYYY-MM-DD"
         }
@@ -483,12 +483,12 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
 
     {
         "beschaeftigungsverhaeltnis": {
+            "arbeitgeber": Firma,
             "berufsbezeichnung": String,
+            "beschaeftigtSeit": "YYYY-MM-DD",
             "inProbezeit": true | false,
             "nettoeinkommenMonatlich": BigDecimal,
-            "verbeamtetSeit": "YYYY-MM-DD",
-            "arbeitgeber": Firma,
-            "beschaeftigtSeit": "YYYY-MM-DD"
+            "verbeamtetSeit": "YYYY-MM-DD"
         },
         "vorherigesBeschaeftigungsverhaeltnis": {
             "arbeitgeber": Firma,
@@ -496,34 +496,13 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
             "beschaeftigtBis": "YYYY-MM-DD"
         }
     }
-
-#### Selbstständiger
-
-    {
-        "berufsbezeichnung": String,
-        "selbststaendigSeit": "YYYY-MM-DD",
-        "firma": Firma,
-        "nettoeinkommenJaehrlich": BigDecimal,
-        "bruttoEinkommenLaufendesJahr": BigDecimal,
-        "einkommenssteuerLaufendesJahr": BigDecimal,
-        "abschreibungenLaufendesJahr": BigDecimal,
-        "bruttoEinkommenLetztesJahr": BigDecimal,
-        "einkommenssteuerLetztesJahr": BigDecimal,
-        "abschreibungenLetztesJahr": BigDecimal,
-        "einkommenssteuerVor2Jahren": BigDecimal,
-        "bruttoEinkommenVor2Jahren": BigDecimal,
-        "abschreibungenVor2Jahren": BigDecimal,
-        "bruttoEinkommenVor3Jahren": BigDecimal,
-        "einkommenssteuerVor3Jahren": BigDecimal,
-        "abschreibungenVor3Jahren": BigDecimal
-    }
-
+    
 #### Freiberufler
 
     {
         "berufsbezeichnung": String,
-        "selbststaendigSeit": "YYYY-MM-DD",
         "firma": Firma,
+        "selbststaendigSeit": "YYYY-MM-DD", 
         "nettoeinkommenJaehrlich": BigDecimal,
         "bruttoEinkommenLaufendesJahr": BigDecimal,
         "einkommenssteuerLaufendesJahr": BigDecimal,
@@ -538,7 +517,7 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
         "einkommenssteuerVor3Jahren": BigDecimal,
         "abschreibungenVor3Jahren": BigDecimal
     }
-
+    
 #### Hausfrau
 
     {
@@ -548,12 +527,33 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
 #### Rentner
 
     {
-        "staatlicheRenteMonatlich": BigDecimal,
-        "rentnerSeit": "YYYY-MM-DD",
         "rentenversicherung": {
             "name": String,
             "anschrift": Anschrift
-        }
+        },
+        "rentnerSeit": "YYYY-MM-DD",
+        "staatlicheRenteMonatlich": BigDecimal
+    }
+
+#### Selbstständiger
+
+    {
+        "berufsbezeichnung": String,
+        "firma": Firma,
+        "selbststaendigSeit": "YYYY-MM-DD",
+        "nettoeinkommenJaehrlich": BigDecimal,
+        "bruttoEinkommenLaufendesJahr": BigDecimal,
+        "einkommenssteuerLaufendesJahr": BigDecimal,
+        "abschreibungenLaufendesJahr": BigDecimal,
+        "bruttoEinkommenLetztesJahr": BigDecimal,
+        "einkommenssteuerLetztesJahr": BigDecimal,
+        "abschreibungenLetztesJahr": BigDecimal,
+        "einkommenssteuerVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor2Jahren": BigDecimal,
+        "abschreibungenVor2Jahren": BigDecimal,
+        "bruttoEinkommenVor3Jahren": BigDecimal,
+        "einkommenssteuerVor3Jahren": BigDecimal,
+        "abschreibungenVor3Jahren": BigDecimal
     }
 
 #### Anschrift
@@ -577,39 +577,57 @@ In addition there is the value "SONSTIGE" ("other")
 #### Firma
 
     {
-        "name": String,
         "anschrift": Anschrift,
-        "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN"
+        "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN",
+        "name": String
     }
 
 ### EinkunftAusNebentaetigkeit
 
     {
         "antragstellerIds": [ String ],
-        "betragMonatlich": BigDecimal,
-        "beginnDerTaetigkeit": "YYYY-MM-DD"
+        "beginnDerTaetigkeit": "YYYY-MM-DD",
+        "betragMonatlich": BigDecimal
     }
 
 ### Finanzierungswunsch
 
     {
-        "laufzeitInMonaten": Integer
+        "kreditbetrag": BigDecimal,
+        "laufzeitInMonaten": Integer,
+        "provisionswunschInProzent": BigDecimal,
+        "rateMonatlich": BigDecimal,
         "ratenzahlungstermin": Ratenzahlungstermin
-        "provisionswunschInProzent": BigDecimal
-        "kreditbetrag": BigDecimal
-        "rateMonatlich": BigDecimal
     }
 
 #### Ratenzahlungstermin
 
         "MONATSENDE" | "MONATSMITTE"
 
+### Herkunft
+
+    {
+        "arbeitserlaubnisVorhanden": true | false,
+        "arbeitserlaubnisBefristetBis": "YYYY-MM-DD",
+        "aufenthaltstitel": "VISUM" | "AUFENTHALTSERLAUBNIS" | "NIEDERLASSUNGSERLAUBNIS" | "ERLAUBNIS_ZUM_DAUERAUFENTHALT_EU",
+        "aufenthaltBefristetBis": "YYYY-MM-DD",
+        "inDeutschlandSeit": "YYYY-MM-DD",
+        "staatsangehoerigkeit": Country,
+        "steuerId": String
+    }
+
 ### Immobilie
 
     {
-        "antragstellerIds": [ String ],
         "bezeichnung": String,
-        "darlehen": [ Darlehen ],
+        "darlehen": [
+            {
+                "restschuld": BigDecimal,
+                "zinsbindungBis": "YYYY-MM-DD",
+                "rateMonatlich": BigDecimal
+            }
+        ],
+        "gehoertZuAntragsteller": Antragstellerzuordnung,
         "immobilienart": "EIGENTUMSWOHNUNG" | "EINFAMILIENHAUS" | "MEHRFAMILIENHAUS" | "BUEROGEBAEUDE",
         "mieteinnahmenKaltMonatlich": BigDecimal,
         "mieteinnahmenWarmMonatlich": BigDecimal,
@@ -619,32 +637,12 @@ In addition there is the value "SONSTIGE" ("other")
         "wert": BigDecimal,
         "wohnflaeche": Integer
     }
-
-#### Darlehen
-
-    {
-        "rateMonatlich": BigDecimal,
-        "restschuld": BigDecimal,
-        "zinsbindungBis": "YYYY-MM-DD"
-    }
-
-### Herkunft
-
-    {
-        "arbeitserlaubnisVorhanden": true | false,
-        "aufenthaltBefristetBis": "YYYY-MM-DD",
-        "arbeitserlaubnisBefristetBis": "YYYY-MM-DD",
-        "inDeutschlandSeit": "YYYY-MM-DD",
-        "staatsangehoerigkeit": Country,
-        "aufenthaltstitel": "VISUM" | "AUFENTHALTSERLAUBNIS" | "NIEDERLASSUNGSERLAUBNIS" | "ERLAUBNIS_ZUM_DAUERAUFENTHALT_EU",
-        "steuerId": String
-    }
-
+    
 ### Mietausgabe
 
     {
         "antragstellerIds": [ String ],
-        "BigDecimal": BigDecimal
+        "betragMonatlich": BigDecimal
     }
 
 ### Personendaten
@@ -674,17 +672,17 @@ In addition there is the value "SONSTIGE" ("other")
 ### Ratenschutz
 
     {
-        "arbeitslosigkeitAbsicherung": RatenschutzAbsicherung
-        "arbeitsunfaehigkeitAbsicherung": RatenschutzAbsicherung
+        "arbeitslosigkeitAbsicherung": RatenschutzAbsicherung,
+        "arbeitsunfaehigkeitAbsicherung": RatenschutzAbsicherung,
         "todesfallAbsicherung": RatenschutzAbsicherung
     }
 
 #### RatenschutzAbsicherung
 
     {
-        "vorhanden": Boolean
-        "kommentar": String
-        "gewuenscht": Boolean
+        "gewuenscht": Boolean,
+        "kommentar": String,
+        "vorhanden": Boolean,
         "wichtig": Boolean
     }
 
@@ -692,11 +690,11 @@ In addition there is the value "SONSTIGE" ("other")
 
     {
         "anschrift": Wohnanschrift,
-        "gemeinsamerHaushalt": true | false,
-        "wohnart": "ZUR_MIETE" | "ZUR_UNTERMIETE" | "IM_EIGENEN_HAUS" | "BEI_DEN_ELTERN",
         "anzahlPersonenImHaushalt": Integer,
         "anzahlPkw": Integer,
-        "voranschrift": Wohnanschrift
+        "gemeinsamerHaushalt": true | false,
+        "voranschrift": Wohnanschrift,
+        "wohnart": "ZUR_MIETE" | "ZUR_UNTERMIETE" | "IM_EIGENEN_HAUS" | "BEI_DEN_ELTERN"
     }
 
 #### Wohnanschrift
