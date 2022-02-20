@@ -316,6 +316,20 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
+### Update Unterhaltsverpflichtung
+
+**addUnterhaltsverpflichtung** ( vorgangsnummer String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Unterhaltsverpflichtung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateUnterhaltsverpflichtung** ( vorgangsnummer: String!, id: String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Unterhaltsverpflichtung. The Haushaltsposition is referenced by the `id`.
+
+**deleteUnterhaltsverpflichtung** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Unterhaltsverpflichtung. The Haushaltsposition is referenced by the `id`.
+
 ## Update Finanzbedarf
 
 ### Hints
@@ -684,6 +698,13 @@ In addition there is the value "SONSTIGE" ("other")
         "kommentar": String,
         "vorhanden": Boolean,
         "wichtig": Boolean
+    }
+
+### Unterhaltsverpflichtung
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### Wohnsituation
