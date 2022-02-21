@@ -320,7 +320,7 @@ can be found in the `errors` field of the response body. More information about 
 
 **addUnterhaltsverpflichtung** ( vorgangsnummer String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add a Unterhaltsverpflichtung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add an Unterhaltsverpflichtung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateUnterhaltsverpflichtung** ( vorgangsnummer: String!, id: String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicResponse](#basicresponse)!
 
