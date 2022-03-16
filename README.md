@@ -78,6 +78,25 @@ can be found in the `errors` field of the response body. More information about 
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
+### Update Antragsteller
+
+**addAntragsteller** ( vorgangsnummer: String!, antragsteller: [Antragsteller](#antragsteller)! ) -> [BasicResponse](#basicresponse)!
+
+> Add an Antragsteller to a Vorgang. The Response contains the `id` of the created Antragsteller. This `id` can be used to update or delete this Antragsteller.
+
+#### Hints
+
+* A Vorgang can have at most two Antragsteller.
+* All fields within the Antragsteller are optional, if they are omitted an empty Antragsteller is created.
+
+**deleteAntragsteller** ( vorgangsnummer: String!, id: String! ) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Antragsteller. The Antragsteller is referenced by the `id`.
+
+#### Hints
+
+* A Vorgang must always have at leat one Antragsteller.
+
 ### Update Personendaten
 
 **updatePersonendaten** ( vorgangsnummer: String!, antragstellerId: String!, personendaten: [Personendaten](#personendaten)! ) -> [BasicResponse](#basicresponse)!
@@ -432,6 +451,15 @@ can be found in the `errors` field of the response body. More information about 
 
 ## Request-Datentypen
 
+### Antragsteller
+
+    {
+        "herkunft": Herkunft,
+        "personendaten": Personendaten,
+        "wohnsituation": Wohnsituation,
+        "beschaeftigung": Beschaeftigung
+    }
+
 ### Beschaeftigung
 
     {
@@ -467,7 +495,7 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
             "beschaeftigtBis": "YYYY-MM-DD"
         }
     }
-    
+
 #### Arbeiter
 
     {
@@ -510,7 +538,7 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
             "beschaeftigtBis": "YYYY-MM-DD"
         }
     }
-    
+
 #### Freiberufler
 
     {
@@ -531,7 +559,7 @@ field `beamter` is used. All other fields will be ignored. If there is no value 
         "einkommenssteuerVor3Jahren": BigDecimal,
         "abschreibungenVor3Jahren": BigDecimal
     }
-    
+
 #### Hausfrau
 
     {
@@ -651,7 +679,7 @@ In addition there is the value "SONSTIGE" ("other")
         "wert": BigDecimal,
         "wohnflaeche": Integer
     }
-    
+
 ### Mietausgabe
 
     {
