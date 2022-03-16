@@ -95,7 +95,7 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* A Vorgang must always have at leat one Antragsteller.
+* A Vorgang must always have at least one Antragsteller.
 
 ### Update Personendaten
 
