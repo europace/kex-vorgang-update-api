@@ -301,6 +301,20 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Immobilie. The Haushaltsposition is referenced by the `id`.
 
+### Update Kind
+
+**addKind** ( vorgangsnummer String!, kind [Kind](#kind)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Kind to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateKind** ( vorgangsnummer: String!, id: String!, kind [Kind](#kind)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Kind. The Haushaltsposition is referenced by the `id`.
+
+**deleteKind** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Kind. The Haushaltsposition is referenced by the `id`.
+
 ### Update Mietausgabe
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -678,6 +692,15 @@ In addition there is the value "SONSTIGE" ("other")
         "vermieteteWohnflaeche": Integer,
         "wert": BigDecimal,
         "wohnflaeche": Integer
+    }
+
+### Kind
+
+    {
+        "gehoertZuAntragsteller": Antragstellerzuordnung,
+        "kindergeldFuer": "ERSTES_ODER_ZWEITES_KIND" | "DRITTES_KIND" | "AB_VIERTEM_KIND",
+        "name": String,
+        "unterhaltseinnahmenMonatlich": BigDecimal
     }
 
 ### Mietausgabe
