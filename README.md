@@ -305,7 +305,7 @@ can be found in the `errors` field of the response body. More information about 
 
 **addKind** ( vorgangsnummer String!, kind [Kind](#kind)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add an Kind to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add a Kind to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateKind** ( vorgangsnummer: String!, id: String!, kind [Kind](#kind)! ) -> [BasicResponse](#basicresponse)!
 
@@ -697,10 +697,10 @@ In addition there is the value "SONSTIGE" ("other")
 ### Kind
 
     {
-        "name": String,
+        "gehoertZuAntragsteller": Antragstellerzuordnung,
         "kindergeldFuer": "ERSTES_ODER_ZWEITES_KIND" | "DRITTES_KIND" | "AB_VIERTEM_KIND",
-        "unterhaltseinnahmenMonatlich": BigDecimal,
-        "gehoertZuAntragsteller": Antragstellerzuordnung
+        "name": String,
+        "unterhaltseinnahmenMonatlich": BigDecimal
     }
 
 ### Mietausgabe
