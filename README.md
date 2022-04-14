@@ -315,6 +315,18 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Kind. The Haushaltsposition is referenced by the `id`.
 
+### Update Kontoverbindung
+
+#### Hints
+
+* The Haushaltsposition `Kontoverbindung` has to be related to at least one Antragsteller.
+* The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
+* The Haushaltsposition `Kontoverbindung` is only updateable by valid values for the fields `iban` and `bic`.
+
+**updateKontoverbindung** ( vorgangsnummer: String!, kontoverbindung [Kontoverbindung](#kontoverbindung)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Kontoverbindung.
+
 ### Update Mietausgabe
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -701,6 +713,14 @@ In addition there is the value "SONSTIGE" ("other")
         "kindergeldFuer": "ERSTES_ODER_ZWEITES_KIND" | "DRITTES_KIND" | "AB_VIERTEM_KIND",
         "name": String,
         "unterhaltseinnahmenMonatlich": BigDecimal
+    }
+
+### Kontoverbindung
+
+    {
+        "bic": String,
+        "gehoertZuAntragsteller": Antragstellerzuordnung,
+        "iban": String
     }
 
 ### Mietausgabe
