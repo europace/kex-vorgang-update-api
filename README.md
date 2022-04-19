@@ -317,13 +317,13 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Kontoverbindung
 
-#### Hints
-
-* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
-
 **updateKontoverbindung** ( vorgangsnummer: String!, kontoverbindung [Kontoverbindung](#kontoverbindung)! ) -> [BasicResponse](#basicresponse)!
 
 > Update an existing Kontoverbindung.
+
+#### Hints
+
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
 ### Update Mietausgabe
 
