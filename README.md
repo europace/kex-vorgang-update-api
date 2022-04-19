@@ -319,7 +319,7 @@ can be found in the `errors` field of the response body. More information about 
 
 **updateKontoverbindung** ( vorgangsnummer: String!, kontoverbindung [Kontoverbindung](#kontoverbindung)! ) -> [BasicResponse](#basicresponse)!
 
-> Update an existing Kontoverbindung.
+> Update the Kontoverbindung.
 
 #### Hints
 
