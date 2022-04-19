@@ -716,8 +716,8 @@ In addition there is the value "SONSTIGE" ("other")
 ### Kontoverbindung
 
     {
-        "bic": String,
         "antragstellerIds": [ String ],
+        "bic": String,
         "iban": String
     }
 
