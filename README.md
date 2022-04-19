@@ -319,9 +319,7 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The Haushaltsposition `Kontoverbindung` has to be related to at least one Antragsteller.
-* The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
-* The Haushaltsposition `Kontoverbindung` is only updateable by valid values for the fields `iban` and `bic`.
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
 **updateKontoverbindung** ( vorgangsnummer: String!, kontoverbindung [Kontoverbindung](#kontoverbindung)! ) -> [BasicResponse](#basicresponse)!
 
@@ -719,7 +717,7 @@ In addition there is the value "SONSTIGE" ("other")
 
     {
         "bic": String,
-        "gehoertZuAntragsteller": Antragstellerzuordnung,
+        "antragstellerIds": [ String ],
         "iban": String
     }
 
