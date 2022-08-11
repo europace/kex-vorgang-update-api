@@ -432,6 +432,20 @@ can be found in the `errors` field of the response body. More information about 
 * The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
 * The agent must be allowed to sell payment protection insurances.
 
+## Start Account Check
+
+**accountCheck** ( vorgangsnummer: String! ) -> [AccountCheckResponse](#accountcheckresponse)!
+
+> This mutation creates a session for the digital account check provider tink. It returns a session key that can be used in their account check wizard.
+
+### Hints
+
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* The account check can only be used for vorgaenge with one antragsteller.
+* The vorgang must contain a IBAN in the kontoverbindung.
+
 ## Add Kommentare
 
 **addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
@@ -814,6 +828,12 @@ In addition there is the value "SONSTIGE" ("other")
     {
         "messages": [ String ]
         "id": String
+    }
+
+### AccountCheckResponse
+
+    {
+        "wizardSessionKey": String
     }
 
 ## Terms of use
