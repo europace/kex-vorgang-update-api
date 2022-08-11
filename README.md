@@ -432,7 +432,7 @@ can be found in the `errors` field of the response body. More information about 
 * The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
 * The agent must be allowed to sell payment protection insurances.
 
-## Kommentare hinzufügen
+## Add Kommentare
 
 **addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
 
@@ -800,7 +800,8 @@ In addition there is the value "SONSTIGE" ("other")
 
 ## Response-Datentypen
 
-> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
+> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in
+> the `messages` field. Errors will be only shown in the `errors` field of the response.
 
 ### BasicResponse
 
