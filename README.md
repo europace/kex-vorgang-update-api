@@ -436,7 +436,7 @@ can be found in the `errors` field of the response body. More information about 
 
 **accountCheck** ( vorgangsnummer: String! ) -> [AccountCheckResponse](#accountcheckresponse)!
 
-> This mutation creates a session for the digital account check provider tink. It returns a session key that can be used in their account check wizard.
+> This mutation creates a session for the digital account check provider [tink](https://docs.xs2a.com/). It returns a session key that can be used in their account check wizard.
 
 ### Hints
 
