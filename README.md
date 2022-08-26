@@ -434,7 +434,7 @@ can be found in the `errors` field of the response body. More information about 
 
 ## Start Account Check
 
-**accountCheck** ( vorgangsnummer: String! ) -> [AccountCheckResponse](#accountcheckresponse)!
+**createAccountCheckSession** ( vorgangsnummer: String! ) -> [AccountCheckSessionResponse](#accountchecksessionresponse)!
 
 > This mutation creates a session for the digital account check provider [tink](https://docs.xs2a.com/). It returns a session key that can be used in their account check wizard.
 
@@ -830,7 +830,7 @@ In addition there is the value "SONSTIGE" ("other")
         "id": String
     }
 
-### AccountCheckResponse
+### AccountCheckSessionResponse
 
     {
         "wizardSessionKey": String
