@@ -444,7 +444,7 @@ can be found in the `errors` field of the response body. More information about 
 * The authenticated user has to be the Bearbeiter of the Vorgang.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * The account check can only be used for vorgaenge with one antragsteller.
-* The vorgang must contain a IBAN in the kontoverbindung.
+* The vorgang must contain an IBAN in the kontoverbindung.
 
 ## Add Kommentare
 
