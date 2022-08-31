@@ -432,7 +432,21 @@ can be found in the `errors` field of the response body. More information about 
 * The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
 * The agent must be allowed to sell payment protection insurances.
 
-## Kommentare hinzufügen
+## Start Account Check
+
+**createAccountCheckSession** ( vorgangsnummer: String! ) -> [AccountCheckSessionResponse](#accountchecksessionresponse)!
+
+> This mutation creates a session for the digital account check provider [tink](https://docs.xs2a.com/). It returns a session key that can be used in their account check wizard.
+
+### Hints
+
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* The account check can only be used for vorgaenge with one antragsteller.
+* The vorgang must contain an IBAN in the kontoverbindung.
+
+## Add Kommentare
 
 **addKommentare** ( vorgangsnummer: String!, kommentare: [String!]! ) -> [BasicResponse](#basicresponse)!
 
@@ -800,7 +814,8 @@ In addition there is the value "SONSTIGE" ("other")
 
 ## Response-Datentypen
 
-> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in the `messages` field. Errors will be only shown in the `errors` field of the response.
+> If we do server-side adaptions of the data to ensure a valid dataset, we add hints to the `messages` field of the response. These are purely to inform the client, there are NEVER any errors in
+> the `messages` field. Errors will be only shown in the `errors` field of the response.
 
 ### BasicResponse
 
@@ -813,6 +828,12 @@ In addition there is the value "SONSTIGE" ("other")
     {
         "messages": [ String ]
         "id": String
+    }
+
+### AccountCheckSessionResponse
+
+    {
+        "wizardSessionKey": String
     }
 
 ## Terms of use
