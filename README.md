@@ -325,6 +325,20 @@ can be found in the `errors` field of the response body. More information about 
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
+### Update Leasing
+
+**addLeasing** ( vorgangsnummer String!, leasing [Leasing](#leasing)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Leasing to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateLeasing** ( vorgangsnummer: String!, id: String!, leasing [Leasing](#leasing)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Leasing. The Haushaltsposition is referenced by the `id`.
+
+**deleteLeasing** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Leasing. The Haushaltsposition is referenced by the `id`.
+
 ### Update Mietausgabe
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -733,6 +747,16 @@ In addition there is the value "SONSTIGE" ("other")
         "antragstellerIds": [ String ],
         "bic": String,
         "iban": String
+    }
+
+### Leasing
+
+    {
+        "antragstellerIds": [ String ],
+        "datumLetzteRate": LocalDate,
+        "glaeubiger": String,
+        "rateMonatlich": BigDecimal,
+        "schlussrate": BigDecimal
     }
 
 ### Mietausgabe
