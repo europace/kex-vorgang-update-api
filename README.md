@@ -268,6 +268,20 @@ can be found in the `errors` field of the response body. More information about 
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 * The value of the field `id` has to correspond to a Haushaltsposition in the Vorgang with the corresponding type.
 
+### Update Bausparvertrag
+
+**addBausparvertrag** ( vorgangsnummer String!, bausparvertrag [Bausparvertrag](#bausparvertrag)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Bausparvertrag to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateBausparvertrag** ( vorgangsnummer: String!, id: String!, bausparvertrag [Bausparvertrag](#bausparvertrag)! ) -> [BasicResponse](#basicresponse)!
+
+> Update a existing Bausparvertrag. The Haushaltsposition is referenced by the `id`.
+
+**deleteBausparvertrag**( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete a existing Bausparvertrag. The Haushaltsposition is referenced by the `id`.
+
 ### Update Einkunft aus Nebentaetigkeit
 
 #### Hints
@@ -277,7 +291,7 @@ can be found in the `errors` field of the response body. More information about 
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add a Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add an Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
 
@@ -674,6 +688,14 @@ In addition there is the value "SONSTIGE" ("other")
         "anschrift": Anschrift,
         "branche": "LANDWIRTSCHAFT_FORSTWIRTSCHAFT_FISCHEREI" | "ENERGIE_WASSERVERSORGUNG_BERGBAU" | "VERARBEITENDES_GEWERBE" | "BAUGEWERBE" | "HANDEL" | "VERKEHR_LOGISTIK" | "INFORMATION_KOMMUNIKATION" | "GEMEINNUETZIGE_ORGANISATION" | "KREDITINSTITUTE_VERSICHERUNGEN" | "PRIVATE_HAUSHALTE" | "DIENSTLEISTUNGEN" | "OEFFENTLICHER_DIENST" | "GEBIETSKOERPERSCHAFTEN" | "HOTEL_GASTRONOMIE" | "ERZIEHUNG_UNTERRICHT" | "KULTUR_SPORT_UNTERHALTUNG" | "GESUNDHEIT_SOZIALWESEN",
         "name": String
+    }
+
+### Bausparvertrag
+
+    {
+        "antragstellerIds": [ String ],
+        "sparbeitragMonatlich": BigDecimal,
+        "angesparterBetrag": BigDecimal
     }
 
 ### EinkunftAusNebentaetigkeit
