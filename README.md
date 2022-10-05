@@ -353,6 +353,20 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Leasing. The Haushaltsposition is referenced by the `id`.
 
+### Update Lebensversicherung
+
+**Lebensversicherung** ( vorgangsnummer String!, lebensversicherung [Lebensversicherung](#lebensversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Lebensversicherung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateLebensversicherung** ( vorgangsnummer: String!, id: String!, lebensversicherung [Lebensversicherung](#lebensversicherung)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Lebensversicherung. The Haushaltsposition is referenced by the `id`.
+
+**deleteLebensversicherung** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Lebensversicherung. The Haushaltsposition is referenced by the `id`.
+
 ### Update Mietausgabe
 
 **addMietausgabe** ( vorgangsnummer String!, mietausgabe [Mietausgabe](#mietausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -779,6 +793,14 @@ In addition there is the value "SONSTIGE" ("other")
         "glaeubiger": String,
         "rateMonatlich": BigDecimal,
         "schlussrate": BigDecimal
+    }
+
+### Lebensversicherung
+
+    {
+        "antragstellerIds": [ String ],
+        "rueckkaufswert": BigDecimal,
+        "praemieMonatlich": BigDecimal
     }
 
 ### Mietausgabe
