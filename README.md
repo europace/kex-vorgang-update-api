@@ -405,10 +405,10 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
 Related fields are `bic`, `datumErsteZahlung`, `iban`, `kreditinstitut` and `urspruenglicherKreditbetrag`.
 
-If those values are saved then `bic` and `iban` are validated and sanitized. If they are invalid, they will be set to `null`.
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
 **addSonstigeVerbindlichkeit** ( vorgangsnummer String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeVerbindlichkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
