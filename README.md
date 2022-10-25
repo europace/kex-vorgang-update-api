@@ -401,6 +401,28 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
+### Update sonstige Verbindlichkeit
+
+#### Hints
+
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
+Related fields are `bic`, `datumErsteZahlung`, `iban`, `kreditinstitut` and `urspruenglicherKreditbetrag`.
+
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
+
+**addSonstigeVerbindlichkeit** ( vorgangsnummer String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeVerbindlichkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a sonstige Verbindlichkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#private-krankenversicherung)! )
+-> [BasicResponse](#basicresponse)!
+
+> Update an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
+
+**deleteSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
+
 ### Update Unterhaltsverpflichtung
 
 **addUnterhaltsverpflichtung** ( vorgangsnummer String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -856,6 +878,23 @@ In addition there is the value "SONSTIGE" ("other")
     {
         "antragstellerIds": [ String ],
         "betragMonatlich": BigDecimal
+    }
+
+### SonstigeVerbindlichkeit
+
+    {
+        "abloesen": Boolean,
+        "antragstellerIds": [ String ],
+        "bic": String,
+        "datumErsteZahlung": LocalDate,
+        "datumLetzteRate": LocalDate,
+        "glaeubiger": String,
+        "iban": String,
+        "kreditinstitut": String,
+        "rateMonatlich": BigDecimal,
+        "restschuld": BigDecimal,
+        "schlussrate": BigDeciaml,
+        "urspruenglicherKreditbetrag": BigDecimal
     }
 
 ### Wohnsituation
