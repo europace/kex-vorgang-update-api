@@ -447,7 +447,30 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
-### Update sonstige Verbindlichkeit
+### Update Ratenkredit
+
+#### Hints
+
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields
+  will not be saved.
+  Related fields are `bic`, `datumErsteZahlung`, `iban`, and `urspruenglicherKreditbetrag`.
+
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
+
+**addRatenkredit** ( vorgangsnummer String!, ratenkredit [Ratenkredit](#ratenkredit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a ratenkredit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateRatenkredit** ( vorgangsnummer: String!, id: String!, ratenkredit [Ratenkredit](#ratenkredit)! )
+-> [BasicResponse](#basicresponse)!
+
+> Update an existing ratenkredit. The Haushaltsposition is referenced by the `id`.
+
+**deleteRatenkredit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing ratenkredit. The Haushaltsposition is referenced by the `id`.
+
+### Update Sonstige Verbindlichkeit
 
 #### Hints
 
@@ -461,7 +484,7 @@ can be found in the `errors` field of the response body. More information about 
 
 > Add a sonstige Verbindlichkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sontigeVerbindlichkeit)! )
+**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeVerbindlichkeit)! )
 -> [BasicResponse](#basicresponse)!
 
 > Update an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
@@ -930,6 +953,22 @@ In addition there is the value "SONSTIGE" ("other")
         "betragMonatlich": BigDecimal
     }
 
+### Ratenkredit
+
+    {
+        "abloesen": Boolean,
+        "antragstellerIds": [ String ],
+        "bic": String,
+        "datumErsteZahlung": LocalDate,
+        "datumLetzteRate": LocalDate,
+        "glaeubiger": String,
+        "iban": String,
+        "rateMonatlich": BigDecimal,
+        "restschuld": BigDecimal,
+        "schlussrate": BigDeciaml,
+        "urspruenglicherKreditbetrag": BigDecimal
+    }
+
 ### Ratenschutz
 
     {
@@ -947,13 +986,6 @@ In addition there is the value "SONSTIGE" ("other")
         "wichtig": Boolean
     }
 
-### Unterhaltsverpflichtung
-
-    {
-        "antragstellerIds": [ String ],
-        "betragMonatlich": BigDecimal
-    }
-
 ### SonstigeVerbindlichkeit
 
     {
@@ -968,6 +1000,13 @@ In addition there is the value "SONSTIGE" ("other")
         "restschuld": BigDecimal,
         "schlussrate": BigDeciaml,
         "urspruenglicherKreditbetrag": BigDecimal
+    }
+
+### Unterhaltsverpflichtung
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### Wohnsituation
