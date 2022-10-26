@@ -282,6 +282,28 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete a existing Bausparvertrag. The Haushaltsposition is referenced by the `id`.
 
+### Update Dispositionskredit
+
+#### Hints
+
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
+Related fields are `bic` and `iban`.
+
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
+
+**addDispositionskredit** ( vorgangsnummer String!, dispositionskredit [Dispositionskredit](#dispositionskredit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Dispositionskredit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateDispositionskredit** ( vorgangsnummer: String!, id: String!, dispositionskredit [Dispositionskredit](#dispositionskredit)! )
+-> [BasicResponse](#basicresponse)!
+
+> Update an existing Dispositionskredit. The Haushaltsposition is referenced by the `id`.
+
+**deleteDispositionskredit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Dispositionskredit. The Haushaltsposition is referenced by the `id`.
+
 ### Update Einkunft aus Nebentaetigkeit
 
 #### Hints
@@ -754,6 +776,20 @@ In addition there is the value "SONSTIGE" ("other")
         "antragstellerIds": [ String ],
         "sparbeitragMonatlich": BigDecimal,
         "angesparterBetrag": BigDecimal
+    }
+
+### Dispositionskredit
+
+    {
+        "abloesen": Boolean,
+        "antragstellerIds": [String],
+        "beanspruchterBetrag": BigDecimal,
+        "bic": String,
+        "glaeubiger": String,
+        "iban": String,
+        "kreditinstitut": String,
+        "verfuegungsrahmen": BigDecimal,
+        "zinssatz": BigDecimal,
     }
 
 ### EinkunftAusNebentaetigkeit
