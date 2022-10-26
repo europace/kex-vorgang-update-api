@@ -339,6 +339,28 @@ can be found in the `errors` field of the response body. More information about 
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
+### Update Kreditkarte
+
+#### Hints
+
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
+Related fields are `bic` and `iban`.
+
+* If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
+
+**addKreditkarte** ( vorgangsnummer String!, kreditkarte [Kreditkarte](#kreditkarte)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Kreditkarte to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateKreditkarte** ( vorgangsnummer: String!, id: String!, kreditkarte [Kreditkarte](#kreditkarte)! )
+-> [BasicResponse](#basicresponse)!
+
+> Update an existing Kreditkarte. The Haushaltsposition is referenced by the `id`.
+
+**deleteKreditkarte** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Kreditkarte. The Haushaltsposition is referenced by the `id`.
+
 ### Update Leasing
 
 **addLeasing** ( vorgangsnummer String!, leasing [Leasing](#leasing)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
@@ -414,7 +436,7 @@ Related fields are `bic`, `datumErsteZahlung`, `iban`, `kreditinstitut` and `urs
 
 > Add a sonstige Verbindlichkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#private-krankenversicherung)! )
+**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sontigeVerbindlichkeit)! )
 -> [BasicResponse](#basicresponse)!
 
 > Update an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
@@ -805,6 +827,21 @@ In addition there is the value "SONSTIGE" ("other")
         "antragstellerIds": [ String ],
         "bic": String,
         "iban": String
+    }
+
+### Kreditkarte
+
+    {
+        "abloesen": Boolean,
+        "antragstellerIds: [String],
+        "beanspruchterBetrag": BigDecimal,
+        "bic": String,
+        "glaeubiger": String,
+        "iban": String,
+        "kreditinstitut": String,
+        "rateMonatlich": BigDeciaml,
+        "verfuegungsrahmen": BigDecimal,
+        "zinssatz": BigDecimal
     }
 
 ### Leasing
