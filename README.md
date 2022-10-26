@@ -286,8 +286,9 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
-Related fields are `bic` and `iban`.
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields
+  will not be saved.
+  Related fields are `bic` and `iban`.
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
@@ -365,8 +366,9 @@ Related fields are `bic` and `iban`.
 
 #### Hints
 
-* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
-Related fields are `bic` and `iban`.
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields
+  will not be saved.
+  Related fields are `bic` and `iban`.
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
@@ -449,8 +451,9 @@ Related fields are `bic` and `iban`.
 
 #### Hints
 
-* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields will not be saved.
-Related fields are `bic`, `datumErsteZahlung`, `iban`, `kreditinstitut` and `urspruenglicherKreditbetrag`.
+* If the `finanzierungszweck` of the Vorgang is `FAHRZEUGKAUF` then this position cannot be refinanced. This means that `abloesen` cannot be `true` and will be set to `false` if it is. Related fields
+  will not be saved.
+  Related fields are `bic`, `datumErsteZahlung`, `iban`, and `urspruenglicherKreditbetrag`.
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
@@ -787,7 +790,6 @@ In addition there is the value "SONSTIGE" ("other")
         "bic": String,
         "glaeubiger": String,
         "iban": String,
-        "kreditinstitut": String,
         "verfuegungsrahmen": BigDecimal,
         "zinssatz": BigDecimal,
     }
@@ -874,7 +876,6 @@ In addition there is the value "SONSTIGE" ("other")
         "bic": String,
         "glaeubiger": String,
         "iban": String,
-        "kreditinstitut": String,
         "rateMonatlich": BigDeciaml,
         "verfuegungsrahmen": BigDecimal,
         "zinssatz": BigDecimal
@@ -963,7 +964,6 @@ In addition there is the value "SONSTIGE" ("other")
         "datumLetzteRate": LocalDate,
         "glaeubiger": String,
         "iban": String,
-        "kreditinstitut": String,
         "rateMonatlich": BigDecimal,
         "restschuld": BigDecimal,
         "schlussrate": BigDeciaml,
