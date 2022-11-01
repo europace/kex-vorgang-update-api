@@ -516,6 +516,49 @@ can be found in the `errors` field of the response body. More information about 
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
+### Update Fahrzeugkauf
+
+**updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
+
+> This mutation is for updating the [Fahrzeugkauf](#fahrzeugkauf) of a Vorgang.
+
+#### Example
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation fahrzeugkauf($vorgangsnummer: String!) {  
+        updateFahrzeugkauf(vorgangsnummer: $vorgangsnummer, fahrzeugkauf: {
+        modell: "E230",
+        marke: "Mercedes-Benz",
+        kaufpreis: 59990.99,
+        erstzulassungsdatum: "2020-01-30",
+        laufleistung: 89001,
+        kw: 210,
+        beglicheneKosten: 25990.99,
+        ps: 333,
+        anbieter: "HAENDLER"}){
+          messages
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123"
+      }
+    }
+
+##### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 ### Update Finanzierungswunsch
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
@@ -823,6 +866,20 @@ In addition there is the value "SONSTIGE" ("other")
         "antragstellerIds": [ String ],
         "beginnDerTaetigkeit": "YYYY-MM-DD",
         "betragMonatlich": BigDecimal
+    }
+
+### Fahrzeugkauf
+
+    {
+        "modell": String,
+        "marke": String,
+        "kaufpreis": BigDecimal,
+        "erstzulassungsdatum": "YYYY-MM-DD",
+        "laufleistung": Integer,
+        "kw": Integer,
+        "beglicheneKosten": BigDecimal,
+        "ps": Integer,
+        "anbieter": "HAENDLER" | "PRIVAT"
     }
 
 ### Finanzierungswunsch
