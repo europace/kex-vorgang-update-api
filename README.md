@@ -555,6 +555,12 @@ can be found in the `errors` field of the response body. More information about 
       "errors": []
     }
 
+### Update Finanzierungszweck
+
+**updateFinanzierungszweck** ( vorgangsnummer: String!, finanzierungszweck: [Finanzierungszweck](#finanzierungszweck)!)
+
+> This mutation is for updating the [Finanzierungszweck](#finanzierungszweck) of a Vorgang.
+
 ### Update Ratenschutz
 
 **updateRatenschutz** ( vorgangsnummer: String!, antragstellerId: String!, ratenschutz: [Ratenschutz](#ratenschutz)! ) -> [BasicResponse](#basicresponse)!
@@ -838,6 +844,10 @@ In addition there is the value "SONSTIGE" ("other")
 #### Ratenzahlungstermin
 
         "MONATSENDE" | "MONATSMITTE"
+
+### Finanzierungszweck
+
+        "UMSCHULDUNG" | "FAHRZEUGKAUF" | "MODERNISIERUNG" | "FREIE_VERWENDUNG"
 
 ### Herkunft
 
