@@ -864,6 +864,7 @@ In addition there is the value "SONSTIGE" ("other")
 ### Immobilie
 
     {
+        "antragstellerIds": [ String ],
         "bezeichnung": String,
         "darlehen": [
             {
@@ -885,6 +886,7 @@ In addition there is the value "SONSTIGE" ("other")
 ### Kind
 
     {
+        "antragstellerIds": [ String ],
         "kindergeldFuer": "ERSTES_ODER_ZWEITES_KIND" | "DRITTES_KIND" | "AB_VIERTEM_KIND",
         "name": String,
         "unterhaltseinnahmenMonatlich": BigDecimal
