@@ -872,7 +872,6 @@ In addition there is the value "SONSTIGE" ("other")
                 "rateMonatlich": BigDecimal
             }
         ],
-        "gehoertZuAntragsteller": Antragstellerzuordnung,
         "immobilienart": "EIGENTUMSWOHNUNG" | "EINFAMILIENHAUS" | "MEHRFAMILIENHAUS" | "BUEROGEBAEUDE",
         "mieteinnahmenKaltMonatlich": BigDecimal,
         "mieteinnahmenWarmMonatlich": BigDecimal,
@@ -886,7 +885,6 @@ In addition there is the value "SONSTIGE" ("other")
 ### Kind
 
     {
-        "gehoertZuAntragsteller": Antragstellerzuordnung,
         "kindergeldFuer": "ERSTES_ODER_ZWEITES_KIND" | "DRITTES_KIND" | "AB_VIERTEM_KIND",
         "name": String,
         "unterhaltseinnahmenMonatlich": BigDecimal
