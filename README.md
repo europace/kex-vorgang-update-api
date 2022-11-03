@@ -518,6 +518,12 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Fahrzeugkauf
 
+#### Hints
+
+* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise no data of your request will be saved.
+* If the `finanzierungszweck` of the Vorgang is not `FAHRZEUGKAUF` and you try to update the Vorgang, you will receive an error message and no data of your request will be saved.
+* Changing the `finanzierungszweck` to another than `FAHRZEUGKAUF` will delete previously stored data.
+
 **updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
 
 > This mutation is for updating the [Fahrzeugkauf](#fahrzeugkauf) of a Vorgang.
@@ -541,7 +547,7 @@ can be found in the `errors` field of the response body. More information about 
         kw: 210,
         beglicheneKosten: 25990.99,
         ps: 333,
-        anbieter: "HAENDLER"}){
+        anbieter: HAENDLER}){
           messages
         }
       }",
@@ -554,7 +560,9 @@ can be found in the `errors` field of the response body. More information about 
 
     {
       "data": {
+      "updateFahrzeugkauf": {
         "messages": []
+        }
       },
       "errors": []
     }
