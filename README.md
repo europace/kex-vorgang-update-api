@@ -520,9 +520,9 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise no data of your request will be saved.
-* If the `finanzierungszweck` of the Vorgang is not `FAHRZEUGKAUF` and you try to update the Vorgang, you will receive an error message and no data of your request will be saved.
-* Changing the `finanzierungszweck` to another than `FAHRZEUGKAUF` will delete previously stored data.
+* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise values of any fields in your request won't be saved. Additionally if the `finanzierungszweck` of the Vorgang isn't `FAHRZEUGKAUF` and you try to update the Vorgang, you will receive an error message.
+* Changing the `finanzierungszweck` to another than `FAHRZEUGKAUF` will delete all values of any previously stored fields.
+* The fields `ps` and `kw` don't have default values and also these fields won't be converted.
 
 **updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
 
@@ -560,8 +560,8 @@ can be found in the `errors` field of the response body. More information about 
 
     {
       "data": {
-      "updateFahrzeugkauf": {
-        "messages": []
+        "updateFahrzeugkauf": {
+          "messages": []
         }
       },
       "errors": []
