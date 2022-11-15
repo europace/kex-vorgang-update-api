@@ -516,6 +516,17 @@ can be found in the `errors` field of the response body. More information about 
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 * Values of fields, which do not have a default value and are not specified in the request, will be deleted.
 
+### Update Fahrzeugkauf
+
+#### Hints
+
+* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise the update will be ignored.
+* Changing the `finanzierungszweck` to something other than `FAHRZEUGKAUF` will delete a previously saved `fahrzeugkauf`.
+
+**updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
+
+> Update the [Fahrzeugkauf](#fahrzeugkauf) of a Vorgang.
+
 ### Update Finanzierungswunsch
 
 **updateFinanzierungswunsch** ( vorgangsnummer: String!, finanzierungswunsch: [Finanzierungswunsch](#finanzierungswunsch)! ) -> [BasicResponse](#basicresponse)!
@@ -829,6 +840,20 @@ In addition there is the value "SONSTIGE" ("other")
         "antragstellerIds": [ String ],
         "beginnDerTaetigkeit": "YYYY-MM-DD",
         "betragMonatlich": BigDecimal
+    }
+
+### Fahrzeugkauf
+
+    {
+        "modell": String,
+        "marke": String,
+        "kaufpreis": BigDecimal,
+        "erstzulassungsdatum": "YYYY-MM-DD",
+        "laufleistung": Integer,
+        "kw": Integer,
+        "beglicheneKosten": BigDecimal,
+        "ps": Integer,
+        "anbieter": "HAENDLER" | "PRIVAT"
     }
 
 ### Finanzierungswunsch
