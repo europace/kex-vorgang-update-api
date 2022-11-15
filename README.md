@@ -520,52 +520,13 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise values of any fields in your request won't be saved. Additionally if the `finanzierungszweck` of the Vorgang isn't `FAHRZEUGKAUF` and you try to update the Vorgang, you will receive an error message.
-* Changing the `finanzierungszweck` to another than `FAHRZEUGKAUF` will delete all values of any previously stored fields.
-* The fields `ps` and `kw` don't have default values and also these fields won't be converted.
+* The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise the update will be ignored.
+* Changing the `finanzierungszweck` to something other than `FAHRZEUGKAUF` will delete a previously saved `fahrzeugkauf`.
+* The `ps` and `kw` fields have no default values, nor are they used to calculate the corresponding other value.
 
 **updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
 
-> This mutation is for updating the [Fahrzeugkauf](#fahrzeugkauf) of a Vorgang.
-
-#### Example
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation fahrzeugkauf($vorgangsnummer: String!) {  
-        updateFahrzeugkauf(vorgangsnummer: $vorgangsnummer, fahrzeugkauf: {
-        modell: "E230",
-        marke: "Mercedes-Benz",
-        kaufpreis: 59990.99,
-        erstzulassungsdatum: "2020-01-30",
-        laufleistung: 89001,
-        kw: 210,
-        beglicheneKosten: 25990.99,
-        ps: 333,
-        anbieter: HAENDLER}){
-          messages
-        }
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "updateFahrzeugkauf": {
-          "messages": []
-        }
-      },
-      "errors": []
-    }
+> Update the [Fahrzeugkauf](#fahrzeugkauf) of a Vorgang.
 
 ### Update Finanzierungswunsch
 
