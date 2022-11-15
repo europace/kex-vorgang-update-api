@@ -522,7 +522,6 @@ can be found in the `errors` field of the response body. More information about 
 
 * The `finanzierungszweck` of the Vorgang has to be `FAHRZEUGKAUF` otherwise the update will be ignored.
 * Changing the `finanzierungszweck` to something other than `FAHRZEUGKAUF` will delete a previously saved `fahrzeugkauf`.
-* The `ps` and `kw` fields have no default values, nor are they used to calculate the corresponding other value.
 
 **updateFahrzeugkauf** ( vorgangsnummer: String!, fahrzeugkauf: [Fahrzeugkauf](#fahrzeugkauf)! ) -> [BasicResponse](#basicresponse)!
 
