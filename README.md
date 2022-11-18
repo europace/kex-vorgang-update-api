@@ -572,6 +572,10 @@ can be found in the `errors` field of the response body. More information about 
 
 > This mutation is for updating the [Finanzierungszweck](#finanzierungszweck) of a Vorgang.
 
+#### Hints
+
+* The finanzierungszweck cannot be set to FAHRZEUGKAUF if the Vorgang has a position which should be refinanced, meaning `abloesen` is true. Relevant positions are [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit), [Kreditkarte](#kreditkarte), [Ratenkredit](#ratenkredit) and [Dispositionskredit](#dispositionskredit).
+
 ### Update Ratenschutz
 
 **updateRatenschutz** ( vorgangsnummer: String!, antragstellerId: String!, ratenschutz: [Ratenschutz](#ratenschutz)! ) -> [BasicResponse](#basicresponse)!
