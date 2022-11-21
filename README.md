@@ -574,7 +574,7 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The finanzierungszweck cannot be set to FAHRZEUGKAUF if the Vorgang has a position which should be refinanced, meaning `abloesen` is true. Relevant positions are [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit), [Kreditkarte](#kreditkarte), [Ratenkredit](#ratenkredit) and [Dispositionskredit](#dispositionskredit).
+* The finanzierungszweck cannot be set to `FAHRZEUGKAUF` if the Vorgang has a position which should be refinanced, meaning `abloesen` is true. Relevant positions are [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit), [Kreditkarte](#kreditkarte), [Ratenkredit](#ratenkredit) and [Dispositionskredit](#dispositionskredit).
 
 ### Update Ratenschutz
 
@@ -641,6 +641,87 @@ can be found in the `errors` field of the response body. More information about 
       },
       "errors": []
     }
+
+## Update Partner
+
+### Update Bearbeiter
+**updateBearbeiter** ( vorgangsnummer: String!, partnerId: String! ) -> [BasicResponse](#basicresponse)!
+
+#### Hints
+
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to have Übernahmerechte to the Kundenbetreuer.
+* The partner to be changed has to have Übernahmerechte to the Kundenbetreuer.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+
+#### Example
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation updateBearbeiter($vorgangsnummer: String!, $partnerId: String!) {  
+        updateBearbeiter(vorgangsnummer: $vorgangsnummer, partnerId: $partnerId){
+          messages
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "partnerId": "XXX00"
+      }
+    }
+
+##### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
+### Update Kundenbetreuer
+**updateKundenbetreuer** ( vorgangsnummer: String!, partnerId: String! ) -> [BasicResponse](#basicresponse)!
+
+#### Hints
+
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to have Übernahmerechte to the current Kundenbetreuer and to the partner to be changed to.
+* The partner to be changed has to have Übernahmerechte to the current Kundenbetreuer and must be a person.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+
+#### Example
+
+##### POST Request
+
+    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
+    Authorization: Bearer xxxx
+    Content-Type: application/json
+
+    {
+      "query": "mutation updateKundenbetreuer($vorgangsnummer: String!, $partnerId: String!) {  
+        updateKundenbetreuer(vorgangsnummer: $vorgangsnummer, partnerId: $partnerId){
+          messages
+        }
+      }",
+      "variables": {
+        "vorgangsnummer": "ABC123",
+        "partnerId": "XXX00"
+      }
+    }
+
+##### POST Response
+
+    {
+      "data": {
+        "messages": []
+      },
+      "errors": []
+    }
+
 
 ## Request-Datentypen
 
