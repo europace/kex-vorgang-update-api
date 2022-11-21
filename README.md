@@ -574,7 +574,7 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The finanzierungszweck cannot be set to FAHRZEUGKAUF if the Vorgang has a position which should be refinanced, meaning `abloesen` is true. Relevant positions are [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit), [Kreditkarte](#kreditkarte), [Ratenkredit](#ratenkredit) and [Dispositionskredit](#dispositionskredit).
+* The finanzierungszweck cannot be set to `FAHRZEUGKAUF` if the Vorgang has a position which should be refinanced, meaning `abloesen` is true. Relevant positions are [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit), [Kreditkarte](#kreditkarte), [Ratenkredit](#ratenkredit) and [Dispositionskredit](#dispositionskredit).
 
 ### Update Ratenschutz
 
