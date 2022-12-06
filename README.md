@@ -654,35 +654,6 @@ can be found in the `errors` field of the response body. More information about 
 * The partner to be changed has to have Übernahmerechte to the Kundenbetreuer.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 
-#### Example
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation updateBearbeiter($vorgangsnummer: String!, $partnerId: String!) {  
-        updateBearbeiter(vorgangsnummer: $vorgangsnummer, partnerId: $partnerId){
-          messages
-        }
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "partnerId": "XXX00"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
 ### Update Kundenbetreuer
 **updateKundenbetreuer** ( vorgangsnummer: String!, partnerId: String! ) -> [BasicResponse](#basicresponse)!
 
@@ -692,36 +663,6 @@ can be found in the `errors` field of the response body. More information about 
 * The authenticated user has to have Übernahmerechte to the current Kundenbetreuer and to the partner to be changed to.
 * The partner to be changed has to have Übernahmerechte to the current Kundenbetreuer and must be a person.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
-
-#### Example
-
-##### POST Request
-
-    POST https://kex-vorgaenge.ratenkredit.api.europace.de/vorgaenge
-    Authorization: Bearer xxxx
-    Content-Type: application/json
-
-    {
-      "query": "mutation updateKundenbetreuer($vorgangsnummer: String!, $partnerId: String!) {  
-        updateKundenbetreuer(vorgangsnummer: $vorgangsnummer, partnerId: $partnerId){
-          messages
-        }
-      }",
-      "variables": {
-        "vorgangsnummer": "ABC123",
-        "partnerId": "XXX00"
-      }
-    }
-
-##### POST Response
-
-    {
-      "data": {
-        "messages": []
-      },
-      "errors": []
-    }
-
 
 ## Request-Datentypen
 
