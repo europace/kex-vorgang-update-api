@@ -651,7 +651,7 @@ can be found in the `errors` field of the response body. More information about 
 
 * The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to have Übernahmerechte to the Kundenbetreuer.
-* The partner to be changed has to have Übernahmerechte to the Kundenbetreuer.
+* The partner to be changed to has to have Übernahmerechte to the Kundenbetreuer.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 
 ### Update Kundenbetreuer
@@ -661,7 +661,7 @@ can be found in the `errors` field of the response body. More information about 
 
 * The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
 * The authenticated user has to have Übernahmerechte to the current Kundenbetreuer and to the partner to be changed to.
-* The partner to be changed has to have Übernahmerechte to the current Kundenbetreuer and must be a person.
+* The partner to be changed to has to have Übernahmerechte to the current Kundenbetreuer and must be a person.
 * The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
 
 ## Request-Datentypen
