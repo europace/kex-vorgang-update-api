@@ -470,6 +470,20 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing ratenkredit. The Haushaltsposition is referenced by the `id`.
 
+### Update Sonstige Einnahme
+
+**addSonstigeEinnahme** ( vorgangsnummer String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a sonstige Einnahme to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateSonstigeEinnahme** ( vorgangsnummer: String!, id: String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing sonstige Einnahme. The Haushaltsposition is referenced by the `id`.
+
+**deleteSonstigeEinnahme** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing sonstige Einnahme. The Haushaltsposition is referenced by the `id`.
+
 ### Update Sonstige Verbindlichkeit
 
 #### Hints
@@ -1045,6 +1059,13 @@ In addition there is the value "SONSTIGE" ("other")
         "kommentar": String,
         "vorhanden": Boolean,
         "wichtig": Boolean
+    }
+
+### SonstigeEinnahme
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### SonstigeVerbindlichkeit
