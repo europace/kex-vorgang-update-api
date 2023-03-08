@@ -1075,7 +1075,7 @@ In addition there is the value "SONSTIGE" ("other")
         "wichtig": Boolean
     }
 
-### Ausgabe
+### SonstigeAusgabe
 
     {
         "antragstellerIds": [ String ],
