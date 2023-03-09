@@ -472,6 +472,20 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Sonstige Einnahme
 
+**addSonstigeAusgabe** ( vorgangsnummer String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeAusgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a sonstige Ausgabe to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateSonstigeAusgabe** ( vorgangsnummer: String!, id: String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeAusgabe)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing sonstige Ausgabe. The Haushaltsposition is referenced by the `id`.
+
+**deleteSonstigeAusgabe** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing sonstige Ausgabe. The Haushaltsposition is referenced by the `id`.
+
+### Update Sonstige Einnahme
+
 **addSonstigeEinnahme** ( vorgangsnummer String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a sonstige Einnahme to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
@@ -1059,6 +1073,13 @@ In addition there is the value "SONSTIGE" ("other")
         "kommentar": String,
         "vorhanden": Boolean,
         "wichtig": Boolean
+    }
+
+### SonstigeAusgabe
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### SonstigeEinnahme
