@@ -470,7 +470,7 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing ratenkredit. The Haushaltsposition is referenced by the `id`.
 
-### Update Sonstige Einnahme
+### Update Sonstige Ausgabe 
 
 **addSonstigeAusgabe** ( vorgangsnummer String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeAusgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -520,6 +520,20 @@ can be found in the `errors` field of the response body. More information about 
 **deleteSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
 > Delete an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
+
+### Update Unbefristete Zusatzrente
+
+**addUnbefristeteZusatzrente** ( vorgangsnummer String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristeteZusatzrente)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add an UnbefristeteZusatzrente to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateUnbefristeteZusatzrente** ( vorgangsnummer: String!, id: String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristeteZusatzrente)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing UnbefristeteZusatzrente. The Haushaltsposition is referenced by the `id`.
+
+**deleteUnbefristeteZusatzrente** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing UnbefristeteZusatzrente. The Haushaltsposition is referenced by the `id`.
 
 ### Update Unterhaltsverpflichtung
 
@@ -1103,6 +1117,13 @@ In addition there is the value "SONSTIGE" ("other")
         "restschuld": BigDecimal,
         "schlussrate": BigDeciaml,
         "urspruenglicherKreditbetrag": BigDecimal
+    }
+
+### UnbefristeteZusatzrente
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### Unterhaltsverpflichtung
