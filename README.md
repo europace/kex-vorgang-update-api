@@ -305,6 +305,20 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing Dispositionskredit. The Haushaltsposition is referenced by the `id`.
 
+### Update Ehegattenunterhalt
+
+**addEhegattenunterhalt** ( vorgangsnummer String!, ehegattenunterhalt [Ehegattenunterhalt](#ehegattenunterhalt)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add an Ehegattenunterhalt to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateEhegattenunterhalt** ( vorgangsnummer: String!, id: String!, ehegattenunterhalt [Ehegattenunterhalt](#ehegattenunterhalt)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Ehegattenunterhalt. The Haushaltsposition is referenced by the `id`.
+
+**deleteEhegattenunterhalt** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Ehegattenunterhalt. The Haushaltsposition is referenced by the `id`.
+
 ### Update Einkunft aus Nebentaetigkeit
 
 #### Hints
@@ -314,15 +328,15 @@ can be found in the `errors` field of the response body. More information about 
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
-> Add an Einkunft aus einer Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+> Add an Einkunft aus Nebentätigkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
 **updateEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicResponse](#basicresponse)!
 
-> Update an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
+> Update an existing Einkunft aus Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 **deleteEinkunftAusNebentaetigkeit** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
 
-> Delete an existing Einkunft aus einer Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
+> Delete an existing Einkunft aus Nebentätigkeit. The Haushaltsposition is referenced by the `id`.
 
 ### Update Immobilie
 
@@ -886,6 +900,13 @@ In addition there is the value "SONSTIGE" ("other")
         "iban": String,
         "verfuegungsrahmen": BigDecimal,
         "zinssatz": BigDecimal,
+    }
+
+### Ehegattenunterhalt
+
+    {
+        "antragstellerIds": [ String ],
+        "betragMonatlich": BigDecimal
     }
 
 ### EinkunftAusNebentaetigkeit
