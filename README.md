@@ -453,11 +453,11 @@ can be found in the `errors` field of the response body. More information about 
 * The Haushaltsposition `privateKrankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code `422
     - UNPROCESSABLE ENTITY`.
 
-**addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+**addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#privatekrankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a private Krankenversicherung to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! )
+**updatePrivateKrankenversicherung** ( vorgangsnummer: String!, id: String!, privateKrankenversicherung [PrivateKrankenversicherung](#privatekrankenversicherung)! )
 -> [BasicResponse](#basicresponse)!
 
 > Update an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
@@ -1090,7 +1090,7 @@ In addition there is the value "SONSTIGE" ("other")
         "vorname": String
     }
 
-### Private Krankenversicherung
+### PrivateKrankenversicherung
 
     {
         "antragstellerIds": [ String ],
