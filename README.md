@@ -491,11 +491,11 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Sonstige Ausgabe 
 
-**addSonstigeAusgabe** ( vorgangsnummer String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeAusgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+**addSonstigeAusgabe** ( vorgangsnummer String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeausgabe)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a sonstige Ausgabe to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateSonstigeAusgabe** ( vorgangsnummer: String!, id: String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeAusgabe)! ) -> [BasicResponse](#basicresponse)!
+**updateSonstigeAusgabe** ( vorgangsnummer: String!, id: String!, sonstigeAusgabe [SonstigeAusgabe](#sonstigeausgabe)! ) -> [BasicResponse](#basicresponse)!
 
 > Update an existing sonstige Ausgabe. The Haushaltsposition is referenced by the `id`.
 
@@ -510,11 +510,11 @@ can be found in the `errors` field of the response body. More information about 
 * The Haushaltsposition `sonstigeEinnahme` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
   code `422 - UNPROCESSABLE ENTITY`.
 
-**addSonstigeEinnahme** ( vorgangsnummer String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+**addSonstigeEinnahme** ( vorgangsnummer String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeeinnahme)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a sonstige Einnahme to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateSonstigeEinnahme** ( vorgangsnummer: String!, id: String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicResponse](#basicresponse)!
+**updateSonstigeEinnahme** ( vorgangsnummer: String!, id: String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeeinnahme)! ) -> [BasicResponse](#basicresponse)!
 
 > Update an existing sonstige Einnahme. The Haushaltsposition is referenced by the `id`.
 
@@ -532,11 +532,11 @@ can be found in the `errors` field of the response body. More information about 
 
 * If `iban` or `bic` are invalid, the value will be ignored and set to `null`.
 
-**addSonstigeVerbindlichkeit** ( vorgangsnummer String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeVerbindlichkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+**addSonstigeVerbindlichkeit** ( vorgangsnummer String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a sonstige Verbindlichkeit to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeVerbindlichkeit)! )
+**updateSonstigeVerbindlichkeit** ( vorgangsnummer: String!, id: String!, sonstigeVerbindlichkeit [SonstigeVerbindlichkeit](#sonstigeverbindlichkeit)! )
 -> [BasicResponse](#basicresponse)!
 
 > Update an existing sonstige Verbindlichkeit. The Haushaltsposition is referenced by the `id`.
@@ -552,11 +552,11 @@ can be found in the `errors` field of the response body. More information about 
 * The Haushaltsposition `unbefristeteZusatzrente` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
   code `422 - UNPROCESSABLE ENTITY`.
 
-**addUnbefristeteZusatzrente** ( vorgangsnummer String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristeteZusatzrente)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+**addUnbefristeteZusatzrente** ( vorgangsnummer String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristetezusatzrente)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add an UnbefristeteZusatzrente to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
 
-**updateUnbefristeteZusatzrente** ( vorgangsnummer: String!, id: String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristeteZusatzrente)! ) -> [BasicResponse](#basicresponse)!
+**updateUnbefristeteZusatzrente** ( vorgangsnummer: String!, id: String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristetezusatzrente)! ) -> [BasicResponse](#basicresponse)!
 
 > Update an existing UnbefristeteZusatzrente. The Haushaltsposition is referenced by the `id`.
 
