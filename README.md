@@ -307,6 +307,11 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Ehegattenunterhalt
 
+#### Hints
+
+* The Haushaltsposition `ehegattenunterhalt` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
+  code `422 - UNPROCESSABLE ENTITY`.
+
 **addEhegattenunterhalt** ( vorgangsnummer String!, ehegattenunterhalt [Ehegattenunterhalt](#ehegattenunterhalt)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add an Ehegattenunterhalt to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
@@ -323,8 +328,8 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The Haushaltsposition `Einkunft aus einer Nebentätigkeit` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
-  code 422 - UNPROCESSABLE ENTITY.
+* The Haushaltsposition `einkunftAusNebentätigkeit` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
+  code `422 - UNPROCESSABLE ENTITY`.
 
 **addEinkunftAusNebentaetigkeit** ( vorgangsnummer String!, einkunftAusNebentaetigkeit [EinkunftAusNebentaetigkeit](#einkunftausnebentaetigkeit)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -445,8 +450,8 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The Haushaltsposition `private Krankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code 422
-    - UNPROCESSABLE ENTITY.
+* The Haushaltsposition `privateKrankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code `422
+    - UNPROCESSABLE ENTITY`.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#private-krankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
@@ -500,6 +505,11 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Sonstige Einnahme
 
+#### Hints
+
+* The Haushaltsposition `sonstigeEinnahme` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
+  code `422 - UNPROCESSABLE ENTITY`.
+
 **addSonstigeEinnahme** ( vorgangsnummer String!, sonstigeEinnahme [SonstigeEinnahme](#sonstigeEinnahme)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a sonstige Einnahme to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
@@ -537,6 +547,11 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Unbefristete Zusatzrente
 
+#### Hints
+
+* The Haushaltsposition `unbefristeteZusatzrente` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
+  code `422 - UNPROCESSABLE ENTITY`.
+
 **addUnbefristeteZusatzrente** ( vorgangsnummer String!, unbefristeteZusatzrente [UnbefristeteZusatzrente](#unbefristeteZusatzrente)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add an UnbefristeteZusatzrente to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
@@ -550,6 +565,11 @@ can be found in the `errors` field of the response body. More information about 
 > Delete an existing UnbefristeteZusatzrente. The Haushaltsposition is referenced by the `id`.
 
 ### Update Unterhaltsverpflichtung
+
+#### Hints
+
+* The Haushaltsposition `unterhaltsverpflichtung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error
+  code `422 - UNPROCESSABLE ENTITY`.
 
 **addUnterhaltsverpflichtung** ( vorgangsnummer String!, unterhaltsverpflichtung [Unterhaltsverpflichtung](#unterhaltsverpflichtung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
