@@ -450,8 +450,7 @@ can be found in the `errors` field of the response body. More information about 
 
 #### Hints
 
-* The Haushaltsposition `privateKrankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code `422
-    - UNPROCESSABLE ENTITY`.
+* The Haushaltsposition `privateKrankenversicherung` can only be related to one Antragsteller. If you provide more than one `antragstellerId` you will receive a GraphQL error with the error code `422 - UNPROCESSABLE ENTITY`.
 
 **addPrivateKrankenversicherung** ( vorgangsnummer String!, privateKrankenversicherung [PrivateKrankenversicherung](#privatekrankenversicherung)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
