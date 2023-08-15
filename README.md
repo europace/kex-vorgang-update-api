@@ -918,8 +918,7 @@ In addition there is the value "SONSTIGE" ("other")
 
     {
         "antragstellerIds": [ String ],
-        "sparbeitragMonatlich": BigDecimal,
-        "angesparterBetrag": BigDecimal
+        "sparbeitragMonatlich": BigDecimal
     }
 
 ### Dispositionskredit
@@ -1061,7 +1060,6 @@ In addition there is the value "SONSTIGE" ("other")
 
     {
         "antragstellerIds": [ String ],
-        "rueckkaufswert": BigDecimal,
         "praemieMonatlich": BigDecimal
     }
 
