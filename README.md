@@ -990,6 +990,7 @@ In addition there is the value "SONSTIGE" ("other")
         "aufenthaltBefristetBis": "YYYY-MM-DD",
         "inDeutschlandSeit": "YYYY-MM-DD",
         "staatsangehoerigkeit": Country,
+        "weitereStaatsangehoerigkeiten": [ Country ],
         "steuerId": String
     }
 
