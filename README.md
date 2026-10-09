@@ -465,6 +465,22 @@ can be found in the `errors` field of the response body. More information about 
 
 > Delete an existing private Krankenversicherung. The Haushaltsposition is referenced by the `id`.
 
+### Update Ratenkauf
+
+> ⚠️ **Note:** The new Ratenkauf liability type is available for the technical preparation and implementation of your API integration. Please do not use Ratenkauf in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
+
+**addRatenkauf** ( vorgangsnummer String!, ratenkauf [Ratenkauf](#ratenkauf)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
+
+> Add a Ratenkauf to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
+
+**updateRatenkauf** ( vorgangsnummer: String!, id: String!, ratenkauf [Ratenkauf](#ratenkauf)! ) -> [BasicResponse](#basicresponse)!
+
+> Update an existing Ratenkauf. The Haushaltsposition is referenced by the `id`.
+
+**deleteRatenkauf** ( vorgangsnummer: String!, id: String!) -> [BasicResponse](#basicresponse)!
+
+> Delete an existing Ratenkauf. The Haushaltsposition is referenced by the `id`.
+
 ### Update Ratenkredit
 
 #### Hints
@@ -1093,6 +1109,17 @@ In addition there is the value "SONSTIGE" ("other")
     {
         "antragstellerIds": [ String ],
         "betragMonatlich": BigDecimal
+    }
+
+### Ratenkauf
+
+> ⚠️ **Note:** The new Ratenkauf liability type is available for the technical preparation and implementation of your API integration. Please do not use Ratenkauf in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
+
+    {
+        "antragstellerIds": [ String ],
+        "glaeubiger": String,
+        "rateMonatlich": BigDecimal,
+        "restschuld": BigDecimal
     }
 
 ### Ratenkredit
