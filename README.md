@@ -678,6 +678,21 @@ can be found in the `errors` field of the response body. More information about 
 * The `antragstellerId` has to refer to an existing Antragsteller in the Vorgang.
 * The agent must be allowed to sell payment protection insurances.
 
+## Update Kommunikationsangaben
+
+> ⚠️ **Note:** The new Kommunikationsangaben are available for the technical preparation and implementation of your API integration. Please do not use Kommunikationsangaben in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
+
+**updateKommunikationsangaben** ( vorgangsnummer: String!, kommunikationsangaben: [Kommunikationsangaben](#kommunikationsangaben)! ) -> [BasicResponse](#basicresponse)!
+
+> This mutation is for updating the [Kommunikationsangaben](#kommunikationsangaben) of a Vorgang.
+
+### Hints
+
+* The Vorgang has to have the status=`AKTIV`, which means it must not be archived.
+* The authenticated user has to be the Bearbeiter of the Vorgang.
+* The Datenkontext (TESTUMGEBUNG|ECHTGESCHAEFT) has to be allowed for the authenticated user.
+* Values of fields, which are not specified in the request, will be deleted.
+
 ## Start Account Check
 
 **createAccountCheckSession** ( vorgangsnummer: String! ) -> [AccountCheckSessionResponse](#accountchecksessionresponse)!
@@ -1040,6 +1055,24 @@ In addition there is the value "SONSTIGE" ("other")
         "name": String,
         "unterhaltseinnahmenMonatlich": BigDecimal
     }
+
+### Kommunikationsangaben
+
+> ⚠️ **Note:** The new Kommunikationsangaben are available for the technical preparation and implementation of your API integration. Please do not use Kommunikationsangaben in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
+
+    {
+        "bereitstellungswegSecci": "DIGITAL" | "DIGITAL_PAPIER",
+        "kommunikationswegNachVertragsschluss": "DIGITAL" | "PAPIER",
+        "kommunikationswegErinnerungWiderrufsrecht": "DIGITAL" | "PAPIER",
+        "kommunikationswegWiderruf": "DIGITAL" | "PAPIER"
+    }
+
+The Kommunikationsangaben are stored on Vorgang level and apply to both Antragsteller.
+
+* `bereitstellungswegSecci`: provision of the pre-contractual information (SECCI), either digital only or digital and additionally by post (`DIGITAL_PAPIER`)
+* `kommunikationswegNachVertragsschluss`: communication about changes after conclusion of the contract
+* `kommunikationswegErinnerungWiderrufsrecht`: reminder of the right of withdrawal
+* `kommunikationswegWiderruf`: exercise of a possible withdrawal
 
 ### Kontoverbindung
 
