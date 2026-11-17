@@ -467,8 +467,6 @@ can be found in the `errors` field of the response body. More information about 
 
 ### Update Ratenkauf
 
-> ⚠️ **Note:** The new Ratenkauf liability type is available for the technical preparation and implementation of your API integration. Please do not use Ratenkauf in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
-
 **addRatenkauf** ( vorgangsnummer String!, ratenkauf [Ratenkauf](#ratenkauf)! ) -> [BasicCreatedResponse](#basiccreatedresponse)!
 
 > Add a Ratenkauf to a Vorgang. The Response contains the `id` of the created Haushaltsposition. This `id` can be used to update or delete this Haushaltsposition.
@@ -1145,8 +1143,6 @@ The Kommunikationsangaben are stored on Vorgang level and apply to both Antragst
     }
 
 ### Ratenkauf
-
-> ⚠️ **Note:** The new Ratenkauf liability type is available for the technical preparation and implementation of your API integration. Please do not use Ratenkauf in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
 
     {
         "antragstellerIds": [ String ],
