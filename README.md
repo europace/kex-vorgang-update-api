@@ -680,8 +680,6 @@ can be found in the `errors` field of the response body. More information about 
 
 ## Update Kommunikationsangaben
 
-> ⚠️ **Note:** The new Kommunikationsangaben are available for the technical preparation and implementation of your API integration. Please do not use Kommunikationsangaben in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
-
 **updateKommunikationsangaben** ( vorgangsnummer: String!, kommunikationsangaben: [Kommunikationsangaben](#kommunikationsangaben)! ) -> [BasicResponse](#basicresponse)!
 
 > This mutation is for updating the [Kommunikationsangaben](#kommunikationsangaben) of a Vorgang.
@@ -1057,8 +1055,6 @@ In addition there is the value "SONSTIGE" ("other")
     }
 
 ### Kommunikationsangaben
-
-> ⚠️ **Note:** The new Kommunikationsangaben are available for the technical preparation and implementation of your API integration. Please do not use Kommunikationsangaben in production yet. Production use will be enabled together with the corresponding support in KreditSmart on November 19, 2026.
 
     {
         "bereitstellungswegSecci": "DIGITAL" | "DIGITAL_PAPIER",
